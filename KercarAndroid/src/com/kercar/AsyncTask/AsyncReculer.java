@@ -3,6 +3,7 @@ package com.kercar.AsyncTask;
 import kercar.android.IComAndroid;
 import kercar.comAPI.*;
 import android.os.AsyncTask;
+import android.util.Log;
 
 public class AsyncReculer extends AsyncTask<Void, Void, Void> {
 
@@ -19,6 +20,8 @@ public class AsyncReculer extends AsyncTask<Void, Void, Void> {
 	@Override
 	protected Void doInBackground(Void... params) {
 		try {
+			Log.e("AsyncStop", "ParReculer");
+
 			CMDMoveMessage cmdCommand = new CMDMoveMessage(this.vitesse, true);
 			this.comAndroid.envoyerMessage(cmdCommand);
 		} catch (Exception e) {e.printStackTrace();}

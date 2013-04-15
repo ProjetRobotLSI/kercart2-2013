@@ -1,18 +1,19 @@
 package com.kercar;
 
-import kercar.android.*;
-
-import com.kercar.AsyncTask.AsyncAvancer;
-import com.kercar.AsyncTask.AsyncDroite;
-import com.kercar.AsyncTask.AsyncGauche;
-import com.kercar.AsyncTask.AsyncReculer;
-
+import kercar.android.ComAndroid;
+import kercar.android.IComAndroid;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.view.View.*;
-import android.widget.*;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.SeekBar;
+
+import com.kercar.AsyncTask.AsyncAvancer;
+import com.kercar.AsyncTask.AsyncDroite;
+import com.kercar.AsyncTask.AsyncGauche;
+import com.kercar.AsyncTask.AsyncStop;
 
 public class ControlManuel extends Activity{
 	//Attributs
@@ -41,7 +42,7 @@ public class ControlManuel extends Activity{
 		Photo = (Button)findViewById(R.id.buttonPhoto);
 		vitesse = (SeekBar)findViewById(R.id.barVitesse);
 
-		URL = "http://148.60.14.64:8080/KerCarCommunication/";
+		URL = "http://kercar2013.no-ip.biz:8080/KerCarCommunication/";
 		
 		com = ComAndroid.getManager();
 		com.setURL(URL);
@@ -58,7 +59,7 @@ public class ControlManuel extends Activity{
 		Recule.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				new AsyncReculer(0, com).execute();
+				new AsyncStop(com).execute();
 			}
 		});
 		

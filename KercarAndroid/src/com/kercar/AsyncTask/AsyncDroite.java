@@ -1,7 +1,7 @@
 package com.kercar.AsyncTask;
 
 import kercar.android.IComAndroid;
-import kercar.comAPI.*;
+import kercar.comAPI.CMDTurnMessage;
 import android.os.AsyncTask;
 
 public class AsyncDroite extends AsyncTask<Void, Void, Void> {

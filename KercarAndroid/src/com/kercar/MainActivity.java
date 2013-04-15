@@ -1,13 +1,17 @@
 package com.kercar;
 
-import kercar.android.*;
-
+import kercar.android.ComAndroid;
+import kercar.android.IComAndroid;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.view.View.*;
-import android.widget.*;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+
+import com.kercar.AsyncTask.AsyncAvancer;
+import com.kercar.AsyncTask.AsyncStop;
 
 public class MainActivity extends Activity{
 
@@ -43,14 +47,15 @@ public class MainActivity extends Activity{
 		Avance.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-//				new AsyncAvancer().execute(com);
+				new AsyncAvancer(25, com).execute();
 			}
 		});
 		
 		Recule.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-//				new AsyncReculer().execute(com);
+				Log.e("Listener", "Click sur reculer");
+				new AsyncStop(com).execute();
 			}
 		});
 		

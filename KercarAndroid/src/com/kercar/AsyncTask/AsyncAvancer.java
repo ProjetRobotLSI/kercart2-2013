@@ -1,8 +1,9 @@
 package com.kercar.AsyncTask;
 
 import kercar.android.IComAndroid;
-import kercar.comAPI.*;
+import kercar.comAPI.CMDMoveMessage;
 import android.os.AsyncTask;
+import android.util.Log;
 
 public class AsyncAvancer extends AsyncTask<Void, Void, Void> {
 
@@ -19,8 +20,11 @@ public class AsyncAvancer extends AsyncTask<Void, Void, Void> {
 	@Override
 	protected Void doInBackground(Void... params) {
 		try {
+			
+			Log.v("AsyncAvancer", "Execution de la commande");
 			CMDMoveMessage cmdCommand = new CMDMoveMessage(this.vitesse, false);
 			this.comAndroid.envoyerMessage(cmdCommand);
+			this.comAndroid.lireReponse();
 		} catch (Exception e) {e.printStackTrace();}
 		
 		return null;
