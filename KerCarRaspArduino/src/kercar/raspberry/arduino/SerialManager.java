@@ -6,11 +6,8 @@ import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Enumeration;
-
-import kercar.raspberry.arduino.message.IArduinoMessage;
 
 
 
@@ -36,6 +33,8 @@ public class SerialManager implements SerialPortEventListener {
 	private static final int TIME_OUT = 2000;
 	/** Default bits per second for COM port. */
 	private static final int DATA_RATE = 9600;
+	
+	private SerialListener listener;
 
 	public void initialize() {
 		CommPortIdentifier portId = null;
@@ -104,7 +103,11 @@ public class SerialManager implements SerialPortEventListener {
 				
 				if(bytesRead == 9){
 					bytesRead = 0;
-					onSerialMessage(buffer);
+					if(this.listener != null)
+						this.listener.onSerialMessage(buffer);
+					
+					buffer = new byte[9];
+					tmp = new byte[9];
 				}
 			} catch (Exception e) {
 				System.err.println(e.toString());
@@ -121,16 +124,7 @@ public class SerialManager implements SerialPortEventListener {
     	}
 	}
 	
-	public void onSerialMessage(byte[] data){
-		IArduinoMessage msg = IArduinoMessage.fromBytes(data);
-		System.out.println("ID "+msg.getID());
-		System.out.println("Param 0 "+msg.getParam(0));
-		System.out.println("Param 1 "+msg.getParam(1));
-		System.out.println("Binary content : "+ IArduinoMessage.toBinary(data));
-		switch(0){
-		default:
-			break;
-		}
+	public void setListener(SerialListener listener){
+		this.listener = listener;
 	}
-	
 }

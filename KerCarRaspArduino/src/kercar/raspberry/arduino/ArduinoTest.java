@@ -1,6 +1,6 @@
 package kercar.raspberry.arduino;
 
-import kercar.raspberry.arduino.message.AskGPSInfo;
+import kercar.raspberry.arduino.message.GoForward;
 import kercar.raspberry.arduino.message.IArduinoMessage;
 
 
@@ -10,6 +10,7 @@ public class ArduinoTest {
 		
 		// Initialisation de la classe de com
 		SerialManager main = new SerialManager();
+		main.setListener(new SerialListenerImpl());
 		main.initialize();
 		System.out.println("Started");
 			
@@ -21,7 +22,9 @@ public class ArduinoTest {
 		}
 		
 		// Init du message
-		IArduinoMessage msg = new AskGPSInfo();
+		//Stop msg = new Stop();
+		GoForward msg = new GoForward();
+		msg.setVitesse(40);
 		System.out.println("ID : "+IArduinoMessage.extractID(msg.toBytes()));
 		System.out.println(msg.toString());
 		
