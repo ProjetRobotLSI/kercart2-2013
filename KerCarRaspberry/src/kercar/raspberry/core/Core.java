@@ -4,10 +4,12 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 
 import kercar.comAPI.IMessage;
+import kercar.raspberry.arduino.SerialManager;
 
 public class Core extends Thread {
 
 	BlockingQueue<IMessage> messageQueue;
+	SerialManager serialManager;
 	
 	public synchronized void messageReceived(IMessage message)
 	{
@@ -18,7 +20,9 @@ public class Core extends Thread {
 	public void run()
 	{
 		messageQueue = new LinkedBlockingDeque<IMessage>();
-		MessageHandler handler = new MessageHandler();
+		serialManager = new SerialManager();
+		serialManager.initialize();
+		MessageHandler handler = new MessageHandler(serialManager);
 		
 		while(true)
 		{
