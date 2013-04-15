@@ -1,7 +1,6 @@
 package kercar.raspberry.tomcat;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletContext;
@@ -11,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kercar.comAPI.IMessage;
-import kercar.raspberry.IComRaspberry;
-import kercar.raspberry.core.Core;
+import kercar.comAPI.IRawMessage;
 import kercar.comAPI.json.JSONParser;
+import kercar.raspberry.core.Core;
 
 /**
  * Servlet implementation class ServletRaspberry
@@ -21,8 +20,7 @@ import kercar.comAPI.json.JSONParser;
 public class ServletRaspberry extends HttpServlet {
 	
 	private static final long serialVersionUID = 9159473095987189986L;
-	private IComRaspberry raspberry;
-
+	
     /**
      * Default constructor. 
      */
@@ -38,7 +36,8 @@ public class ServletRaspberry extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String JSONMessage = (String)request.getParameter("message");
+		String JSONMessage = request.getParameter("message");
+		System.out.println("Message reçu");
 		System.out.println(JSONMessage);
 		//int resultat = raspberry.recevoirMessage(message);
 		
@@ -46,10 +45,11 @@ public class ServletRaspberry extends HttpServlet {
 		Core core = (Core) appli.getAttribute(Initializer.INDEX_CORE);
 		
 		JSONParser jso = new JSONParser();
-		IMessage message =jso.decode(JSONMessage);
+		appli.log("Message reçu : " + JSONMessage);
+		IRawMessage message =jso.decode(JSONMessage);
 		
-		core.messageReceived(message);
-		
+		core.messageReceived((IMessage)message);
+		appli.log("Message décodé");
 		PrintWriter out = response.getWriter();
 		
 		try{
