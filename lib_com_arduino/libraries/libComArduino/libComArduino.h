@@ -44,6 +44,12 @@ static inline char* send_order(int id)
 	char* message;
 	longToChar test;
 	message = (char*)malloc(NB_OCTETS);
+	
+	//Initialisation du message
+	int i;
+	for(i = 0; i < NB_OCTETS; i++)
+		message[i] = 0;
+	
 	switch(id)
 	{
 		case BLOCK :
@@ -62,7 +68,7 @@ static inline char* send_order(int id)
 			break;
 		case GETGPSINFO :
 			message[0] = SENDGPSINFO;
-			//ToDo : définir les données à envoyer
+			//ToDO : récupérer info gps
 			break;
 	}
 	return message;//ToDo : faire free du malloc
