@@ -11,14 +11,13 @@
         android:layout_gravity="center"
         android:text="@string/app_name"
         android:textColor="#ff3452"
-        android:textSize="200sp" />
+        android:textSize="80sp" />
 
     <ImageView
         android:id="@+id/imageMenuStart"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_gravity="center"
-        android:layout_marginTop="50dp"
         android:src="@drawable/icone_h2g2" 
         android:contentDescription="@string/image_menu_start"/>
 
@@ -27,9 +26,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="50dp"
         android:text="@string/button_start"
-        android:textSize="120sp" />
+        android:textSize="80sp" />
 
     <Button
         android:id="@+id/buttonAbout"
@@ -37,6 +35,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/button_about"
-        android:textSize="60sp" />
+        android:textSize="40sp" />
 
 </LinearLayout>
