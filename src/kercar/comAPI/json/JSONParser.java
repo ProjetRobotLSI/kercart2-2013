@@ -6,6 +6,7 @@ import kercar.comAPI.IRawMessage;
 import kercar.comAPI.Message;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class JSONParser {
@@ -35,7 +36,7 @@ public class JSONParser {
 	 * @param s Le string JSON a decoder
 	 * @return Un objet de type AbstractMessage
 	 */
-	public static IRawMessage decode(String s){
+	public static IRawMessage decode(String s) throws JSONException {
 		JSONObject jso = new JSONObject(s);
 		Message res = new Message(jso.getInt("type"));
 		res.setMessageNum(jso.getInt("id"));
