@@ -4,12 +4,9 @@ public class WifiIA extends Thread {
 	private WifiManager wifiManager;
 	private boolean run;
 	
-	public static void main(String[] args){
-		new WifiIA();
-	}
 	
-	public WifiIA() {
-		this.wifiManager = WifiManager.getInstance();
+	public WifiIA(String initPath) {
+		this.wifiManager = WifiManager.getInstance(initPath);
 		this.run = true;
 		this.start();
 	}
@@ -17,7 +14,6 @@ public class WifiIA extends Thread {
 	public void run() {
 		while(this.run) {
 			if(!this.wifiManager.isConnected()) {
-				System.out.println("Connecting...");
 				this.wifiManager.connection();
 			} else {
 				try {

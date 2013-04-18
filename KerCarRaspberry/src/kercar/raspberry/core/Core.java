@@ -12,6 +12,10 @@ public class Core extends Thread {
 	BlockingQueue<IMessage> messageQueue;
 	SerialManager serialManager;
 	
+	public Core(String initPath){
+		new WifiIA(initPath);	
+	}
+	
 	public synchronized void messageReceived(IMessage message)
 	{
 		messageQueue.add(message);
@@ -20,7 +24,6 @@ public class Core extends Thread {
 	
 	public void run()
 	{
-		new WifiIA();
 		messageQueue = new LinkedBlockingDeque<IMessage>();
 		serialManager = new SerialManager();
 		serialManager.initialize();
