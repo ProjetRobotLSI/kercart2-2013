@@ -1,5 +1,6 @@
 package com.kercar.raspberry.wifi;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.net.Authenticator;
 import java.net.InetSocketAddress;
@@ -8,6 +9,7 @@ import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Map;
+import java.util.Properties;
 
 public class WifiManager {
 
@@ -17,18 +19,20 @@ public class WifiManager {
 	public final static int URENNES1 = 2;
 	public final static int PHANTOM = 3;
 	
-	private final String WIFSIC_CONF = "wpa_supplicant_wifsic.conf";
-	private final String WFREE_CONF = "wpa_supplicant_wfree.conf";
-	private final String URENNES1_CONF = "wpa_supplicant_urennes1.conf";
+	private final String WIFSIC_CONF = "/opt/apache-tomcat-7.0.35/wpa_supplicant_wifsic.conf";
+	private final String WFREE_CONF = "/opt/apache-tomcat-7.0.35/wpa_supplicant_wfree.conf";
+	private final String URENNES1_CONF = "/opt/apache-tomcat-7.0.35/wpa_supplicant_urennes1.conf";
 	
-	private final static String USER = "gael.goinvic@etudiant.univ-rennes1.fr";
-	private final static String PWD = "NOIP-PASSWORD";
+	private static String USER = "gael.goinvic@etudiant.univ-rennes1.fr";
+	private static String PWD = "NOIP-PASSWORD";
 	
 	private String wifiList;
 	private boolean isIPNotified = false;
 	
 	
-	private WifiManager() {;}
+	private WifiManager() {
+		loadProperties();
+	}
 	
 	public static WifiManager getInstance() {
 		if(instance == null) {
@@ -80,7 +84,7 @@ public class WifiManager {
 	private void stopInterface(){
 		ProcessBuilder pb = new ProcessBuilder("sudo", "-A", "ifconfig", "wlan0", "down");
 		 Map<String, String> env = pb.environment();
-		 env.put("SUDO_ASKPASS", "set_pass.sh");
+		 env.put("SUDO_ASKPASS", "/opt/apache-tomcat-7.0.35/set_pass.sh");
 		try {
 			Process p = pb.start();
 			p.waitFor();
@@ -94,7 +98,7 @@ public class WifiManager {
 	private void wakeInterface(){
 		ProcessBuilder pb = new ProcessBuilder("sudo", "-A", "ifconfig", "wlan0", "up");
 		 Map<String, String> env = pb.environment();
-		 env.put("SUDO_ASKPASS", "set_pass.sh");
+		 env.put("SUDO_ASKPASS", "/opt/apache-tomcat-7.0.35/set_pass.sh");
 		try {
 			Process p = pb.start();
 			p.waitFor();
@@ -110,7 +114,7 @@ public class WifiManager {
 
 		ProcessBuilder pb = new ProcessBuilder("sudo", "-A", "wpa_supplicant", "-B", "-c", configFile, "-i", "wlan0");
 		 Map<String, String> env = pb.environment();
-		 env.put("SUDO_ASKPASS", "set_pass.sh");
+		 env.put("SUDO_ASKPASS", "/opt/apache-tomcat-7.0.35/set_pass.sh");
 		try {
 			Process p = pb.start();
 			p.waitFor();
@@ -125,7 +129,7 @@ public class WifiManager {
 		System.err.println("Connexion..");
 		ProcessBuilder pb = new ProcessBuilder("sudo", "-A", "dhclient", "wlan0");
 		 Map<String, String> env = pb.environment();
-		 env.put("SUDO_ASKPASS", "set_pass.sh");
+		 env.put("SUDO_ASKPASS", "/opt/apache-tomcat-7.0.35/set_pass.sh");
 		try {
 			Process p = pb.start();
 			p.waitFor();
@@ -206,7 +210,7 @@ public class WifiManager {
 	public void getSignalList(){
 		ProcessBuilder pb = new ProcessBuilder("sudo", "-A", "iwlist", "wlan0", "scan");
 		Map<String, String> env = pb.environment();
-		env.put("SUDO_ASKPASS", "set_pass.sh");
+		env.put("SUDO_ASKPASS", "/opt/apache-tomcat-7.0.35/set_pass.sh");
 		try{
 			Process p = pb.start();
 			p.waitFor();
@@ -221,16 +225,16 @@ public class WifiManager {
 		ProcessBuilder pb = null;
 		switch(network){
 		case PHANTOM:
-			pb = new ProcessBuilder("./list_wifi.sh", wifiList, "Phantom");
+			pb = new ProcessBuilder("/opt/apache-tomcat-7.0.35/list_wifi.sh", wifiList, "Phantom");
 			break;
 		case WIFSIC:
-			pb = new ProcessBuilder("./list_wifi.sh", wifiList, "wifsic");
+			pb = new ProcessBuilder("/opt/apache-tomcat-7.0.35/list_wifi.sh", wifiList, "wifsic");
 			break;
 		case WFREE:
-			pb = new ProcessBuilder("./list_wifi.sh", wifiList, "wifsic-free");
+			pb = new ProcessBuilder("/opt/apache-tomcat-7.0.35/list_wifi.sh", wifiList, "wifsic-free");
 			break;
 		case URENNES1:
-			pb = new ProcessBuilder("./list_wifi.sh", wifiList, "universite_rennes1");
+			pb = new ProcessBuilder("/opt/apache-tomcat-7.0.35/list_wifi.sh", wifiList, "Universite_Rennes1");
 			break;
 		default:
 			break;
@@ -242,5 +246,16 @@ public class WifiManager {
 		} catch(Exception e){
 			return 0;
 		}
-	}	
+	}
+	
+	private void loadProperties(){
+		Properties prop = new Properties();
+		try{
+			prop.load(new FileInputStream("/opt/apache-tomcat-7.0.35/config.properties"));
+			USER = prop.getProperty("user");
+			PWD = prop.getProperty("password");
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 }
