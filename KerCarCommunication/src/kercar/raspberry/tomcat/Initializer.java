@@ -31,7 +31,7 @@ public class Initializer extends GenericServlet implements ServletContextListene
 
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
-		Core core = new Core();
+		Core core = new Core(System.getProperty("catalina.home"));
 		core.start();
 		ServletContext appli;
 		appli = arg0.getServletContext();

@@ -1,5 +1,7 @@
 package com.kercar.raspberry.wifi;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.net.Authenticator;
 import java.net.InetSocketAddress;
@@ -8,6 +10,7 @@ import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Map;
+import java.util.Properties;
 
 public class WifiManager {
 
@@ -17,27 +20,33 @@ public class WifiManager {
 	public final static int URENNES1 = 2;
 	public final static int PHANTOM = 3;
 	
-	private final String WIFSIC_CONF = "wpa_supplicant_wifsic.conf";
-	private final String WFREE_CONF = "wpa_supplicant_wfree.conf";
-	private final String URENNES1_CONF = "wpa_supplicant_urennes1.conf";
+	private final String WIFSIC_CONF = "/opt/apache-tomcat-7.0.35/wpa_supplicant_wifsic.conf";
+	private final String WFREE_CONF = "/opt/apache-tomcat-7.0.35/wpa_supplicant_wfree.conf";
+	private final String URENNES1_CONF = "/opt/apache-tomcat-7.0.35/wpa_supplicant_urennes1.conf";
 	
-	private final static String USER = "gael.goinvic@etudiant.univ-rennes1.fr";
-	private final static String PWD = "NOIP-PASSWORD";
+	private static String USER = "gael.goinvic@etudiant.univ-rennes1.fr";
+	private static String PWD = "NOIP-PASSWORD";
 	
 	private String wifiList;
 	private boolean isIPNotified = false;
 	
+	private static String tomPath = "";
 	
-	private WifiManager() {;}
 	
-	public static WifiManager getInstance() {
+	private WifiManager() {
+		loadProperties();
+	}
+	
+	public static WifiManager getInstance(String initPath) {
 		if(instance == null) {
+			tomPath = initPath+"/";
 			instance = new WifiManager();
 		}
 		return instance;
 	}
 				
 	public void connection(){
+		Log("Trying to connect");
 		getSignalList();
 		if(getSignalStrength(PHANTOM) > 50)
 			connect(PHANTOM);
@@ -78,62 +87,62 @@ public class WifiManager {
 	}
 	
 	private void stopInterface(){
+		Log("Stopping interface");
 		ProcessBuilder pb = new ProcessBuilder("sudo", "-A", "ifconfig", "wlan0", "down");
 		 Map<String, String> env = pb.environment();
-		 env.put("SUDO_ASKPASS", "set_pass.sh");
+		 env.put("SUDO_ASKPASS", tomPath+"set_pass.sh");
 		try {
 			Process p = pb.start();
 			p.waitFor();
 			getProcessOutput(p);
 		} catch (Exception e) {
-			System.err.println("Can't wake up interface");
-			e.printStackTrace();
+			Log("Cannot stop interface");
+			Log(e.getMessage());
 		}
 	}
 	
 	private void wakeInterface(){
+		Log("Waking up interface");
 		ProcessBuilder pb = new ProcessBuilder("sudo", "-A", "ifconfig", "wlan0", "up");
 		 Map<String, String> env = pb.environment();
-		 env.put("SUDO_ASKPASS", "set_pass.sh");
+		 env.put("SUDO_ASKPASS", tomPath+"set_pass.sh");
 		try {
 			Process p = pb.start();
 			p.waitFor();
 			getProcessOutput(p);
 		} catch (Exception e) {
-			System.err.println("Can't wake up interface");
-			e.printStackTrace();
+			Log("Cannot wake interface");
+			Log(e.getMessage());
 		}
 	}
 	
 	private void configNetwork(String configFile){
-		System.err.println("Config");
-
+		Log("Configuring network");
 		ProcessBuilder pb = new ProcessBuilder("sudo", "-A", "wpa_supplicant", "-B", "-c", configFile, "-i", "wlan0");
 		 Map<String, String> env = pb.environment();
-		 env.put("SUDO_ASKPASS", "set_pass.sh");
+		 env.put("SUDO_ASKPASS", tomPath+"set_pass.sh");
 		try {
 			Process p = pb.start();
 			p.waitFor();
 			getProcessOutput(p);
 		} catch (Exception e) {
-			System.err.println("Can't config network");
-			e.printStackTrace();
+			Log("Can't config network");
+			Log(e.getMessage());
 		}
 	}
 	
 	private void connectNetwork(){
-		System.err.println("Connexion..");
+		Log("Connexion..");
 		ProcessBuilder pb = new ProcessBuilder("sudo", "-A", "dhclient", "wlan0");
 		 Map<String, String> env = pb.environment();
-		 env.put("SUDO_ASKPASS", "set_pass.sh");
+		 env.put("SUDO_ASKPASS", tomPath+"set_pass.sh");
 		try {
 			Process p = pb.start();
 			p.waitFor();
 			getProcessOutput(p);
-			System.out.println("Connecte !");
 		} catch (Exception e) {
-			System.err.println("Can't connect");
-			e.printStackTrace();
+			Log("Can't connect");
+			Log(e.getMessage());
 		}
 	}
 		
@@ -155,18 +164,20 @@ public class WifiManager {
 		return bf.toString();
 	}
 	
-	public static void notifyIPChange(){
+	public void notifyIPChange(){
 		String ip = null;
-		
+		Log("Getting IP");
 		try{
 			URL whatismyip = new URL("http://checkip.amazonaws.com");
 			BufferedReader in = new BufferedReader(new InputStreamReader(whatismyip.openStream()));
 			ip = in.readLine(); //you get the IP as a String
 		} catch(Exception e){
-			e.printStackTrace();
+			Log("Can't get IP on Amazon :(");
+			Log(e.getMessage());
 		}
 		
 		try{
+			Log("Notifying IP");
 			Authenticator.setDefault (new Authenticator() {
 			    protected PasswordAuthentication getPasswordAuthentication() {
 			        return new PasswordAuthentication (USER, PWD.toCharArray());
@@ -183,11 +194,13 @@ public class WifiManager {
 	        in.close();
 			Authenticator.setDefault(null);
 		} catch(Exception e){
-			e.printStackTrace();
+			Log("Can't notify IP");
+			Log(e.getMessage());
 		}
 	}
 	
 	public boolean isConnected(){
+		Log("Checking connection");
 		Socket s = new Socket();
 		try{
 			s.connect(new InetSocketAddress("www.univ-rennes1.fr", 80));
@@ -196,41 +209,47 @@ public class WifiManager {
 				notifyIPChange();
 				this.isIPNotified = true;
 			}
+			Log("Seems connected");
 			return true;
 		} catch(Exception e){
+			Log("Seems not connected");
+			Log(e.getMessage());
 			this.isIPNotified = false;
 			return false;
 		}
 	}
 	
 	public void getSignalList(){
+		Log("Getting signals list");
 		ProcessBuilder pb = new ProcessBuilder("sudo", "-A", "iwlist", "wlan0", "scan");
 		Map<String, String> env = pb.environment();
-		env.put("SUDO_ASKPASS", "set_pass.sh");
+		env.put("SUDO_ASKPASS", tomPath+"set_pass.sh");
 		try{
 			Process p = pb.start();
 			p.waitFor();
 			System.out.println(this.wifiList);
 			this.wifiList =  getProcessOutput(p);
 		}catch(Exception e){
-			e.printStackTrace();
+			Log("Can't get signals list");
+			Log(e.getMessage());
 		}
 	}
 
 	public int getSignalStrength(int network){
+		Log("Getting signal strength");
 		ProcessBuilder pb = null;
 		switch(network){
 		case PHANTOM:
-			pb = new ProcessBuilder("./list_wifi.sh", wifiList, "Phantom");
+			pb = new ProcessBuilder(tomPath+"list_wifi.sh", wifiList, "Phantom");
 			break;
 		case WIFSIC:
-			pb = new ProcessBuilder("./list_wifi.sh", wifiList, "wifsic");
+			pb = new ProcessBuilder(tomPath+"list_wifi.sh", wifiList, "wifsic");
 			break;
 		case WFREE:
-			pb = new ProcessBuilder("./list_wifi.sh", wifiList, "wifsic-free");
+			pb = new ProcessBuilder(tomPath+"list_wifi.sh", wifiList, "wifsic-free");
 			break;
 		case URENNES1:
-			pb = new ProcessBuilder("./list_wifi.sh", wifiList, "universite_rennes1");
+			pb = new ProcessBuilder(tomPath+"list_wifi.sh", wifiList, "Universite_Rennes1");
 			break;
 		default:
 			break;
@@ -240,7 +259,34 @@ public class WifiManager {
 			p.waitFor();
 			return Integer.valueOf(getProcessOutput(p).split("=")[1].split("/")[0]);
 		} catch(Exception e){
+			Log("Can't get signal strength");
+			Log(e.getMessage());
 			return 0;
 		}
-	}	
+	}
+	
+	private void loadProperties(){
+		Log("Loading credentials");
+		Properties prop = new Properties();
+		try{
+			prop.load(new FileInputStream(tomPath+"config.properties"));
+			USER = prop.getProperty("user");
+			PWD = prop.getProperty("password");
+		} catch(Exception e){
+			Log("Can't load credentials");
+			Log(e.getMessage());
+		}
+	}
+	
+	private void Log(String s){
+		s = s.concat("\n");
+		try{
+			FileOutputStream fos = new FileOutputStream(tomPath+"logs/"+"KerCar.log", true);
+			fos.write(s.getBytes());
+			fos.close();
+		}
+		catch(Exception e){
+			
+		}
+	}
 }
