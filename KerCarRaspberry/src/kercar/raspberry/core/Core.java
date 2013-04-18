@@ -5,6 +5,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 import kercar.comAPI.IMessage;
 import kercar.raspberry.arduino.SerialManager;
+import com.kercar.raspberry.wifi.*;
 
 public class Core extends Thread {
 
@@ -19,6 +20,7 @@ public class Core extends Thread {
 	
 	public void run()
 	{
+		new WifiIA();
 		messageQueue = new LinkedBlockingDeque<IMessage>();
 		serialManager = new SerialManager();
 		serialManager.initialize();
