@@ -3,6 +3,8 @@
 package com.kercar.osmandroid;
  
 import java.util.List;
+
+import android.graphics.drawable.Drawable;
  
 public interface OSMAndroidInterface {
  
@@ -119,5 +121,8 @@ public interface OSMAndroidInterface {
 	 * @return longitude format E6
 	 */
 	public int getPointLongitude(int id);
+	
+	
+	public void setDefaultMarker(Drawable marker);
 }
 

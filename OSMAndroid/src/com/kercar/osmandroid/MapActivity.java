@@ -16,6 +16,7 @@ public class MapActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		osmAndroid = new OSMAndroid(this);
+		osmAndroid.setDefaultMarker(this.getResources().getDrawable(R.drawable.marker));
 		int id1 = osmAndroid.addPoint(48120002, -1635540, "Le bon point", "Ma jolie description");
 			
 		setContentView(osmAndroid);

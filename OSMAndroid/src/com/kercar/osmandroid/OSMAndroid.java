@@ -77,7 +77,7 @@ public class OSMAndroid extends MapView implements OSMAndroidInterface {
         this.getController().setCenter(this.center);
         
         //A lot of initializations
-        this.defaultMarker = this.activity.getResources().getDrawable(R.drawable.marker);
+  //      this.defaultMarker = this.activity.getResources().getDrawable(R.drawable.marker);
         
         this.spArOverlayItem = new SparseArray<ExtendedOverlayItem>();
        
@@ -291,5 +291,10 @@ public class OSMAndroid extends MapView implements OSMAndroidInterface {
 	@Override
 	public int getPointLongitude(int id) {
 		return this.spArOverlayItem.get(id).getPoint().getLongitudeE6();
+	}
+
+	@Override
+	public void setDefaultMarker(Drawable marker) {
+		this.defaultMarker = marker;
 	}
 }
