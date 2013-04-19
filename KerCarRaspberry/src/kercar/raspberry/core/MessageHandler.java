@@ -44,12 +44,12 @@ public class MessageHandler {
 			IArduinoMessage arduinoMsg;
 			if (turn.isTurningRight())
 			{
+				Core.Log("RIGHT");
 				arduinoMsg = new TurnRight();
-				((TurnRight)arduinoMsg).setDegree(turn.getAngle());
 			}
 			else {
+				Core.Log("LEFT");
 				arduinoMsg = new TurnLeft();
-				((TurnLeft)arduinoMsg).setDegree(turn.getAngle());
 			}			
 			this.serialManager.write(arduinoMsg.toBytes());
 		}
