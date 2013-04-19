@@ -5,7 +5,7 @@ int SpeedStop(90);
 
 Servo servoAngle;  
 Servo servoSpeed;
-boolean forward = true; //definit le sens de la marche, 1=av,0,=ar
+boolean forward = true; //definit le sens de la marche, 1=av,0,=aR
 
 /*
 * applique la commande avancer/reculer
