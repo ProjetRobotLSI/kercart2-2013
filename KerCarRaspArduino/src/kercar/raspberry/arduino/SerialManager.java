@@ -5,6 +5,7 @@ import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
@@ -37,6 +38,7 @@ public class SerialManager implements SerialPortEventListener {
 	private SerialListener listener;
 
 	public void initialize() {
+		initUSB0();
 		CommPortIdentifier portId = null;
 		@SuppressWarnings("rawtypes")
 		Enumeration portEnum = CommPortIdentifier.getPortIdentifiers();
@@ -126,5 +128,15 @@ public class SerialManager implements SerialPortEventListener {
 	
 	public void setListener(SerialListener listener){
 		this.listener = listener;
+	}
+	
+	public void initUSB0(){
+		ProcessBuilder pb = new ProcessBuilder("sudo", "ln -s /dev/ttyACM0 /dev/ttyUSB0");
+		try {
+			Process p = pb.start();
+			p.waitFor();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
