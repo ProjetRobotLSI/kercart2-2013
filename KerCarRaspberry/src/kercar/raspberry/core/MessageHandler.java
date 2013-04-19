@@ -1,11 +1,11 @@
 package kercar.raspberry.core;
 
 import kercar.comAPI.CMDMoveMessage;
-import kercar.comAPI.CMDStopMessage;
 import kercar.comAPI.CMDTurnMessage;
 import kercar.comAPI.IMessage;
 import kercar.comAPI.Message;
 import kercar.raspberry.arduino.SerialManager;
+import kercar.raspberry.arduino.message.GoBackward;
 import kercar.raspberry.arduino.message.GoForward;
 import kercar.raspberry.arduino.message.IArduinoMessage;
 import kercar.raspberry.arduino.message.Stop;
@@ -22,13 +22,24 @@ public class MessageHandler {
 	{
 		if (message.getType() == Message.CMD_MOVE)
 		{
+			Core.Log("MessageHandler : CMD_MOVE");
 			CMDMoveMessage move = new CMDMoveMessage((Message)message);
-			GoForward arduinoMsg = new GoForward();
-			arduinoMsg.setVitesse(move.getSpeed());
-			this.serialManager.write(arduinoMsg.toBytes());
+			if(move.isBackward()){
+				Core.Log("MessageHandler : FORWARD");
+				GoBackward arduinoMsg = new GoBackward();
+				arduinoMsg.setVitesse(move.getSpeed());
+				this.serialManager.write(arduinoMsg.toBytes());
+			}
+			else{
+				Core.Log("MessageHandler : BACKWARD");
+				GoForward arduinoMsg = new GoForward();
+				arduinoMsg.setVitesse(move.getSpeed());
+				this.serialManager.write(arduinoMsg.toBytes());
+			}
 		}
 		else if (message.getType() == Message.CMD_TURN)
 		{
+			Core.Log("MessageHandler : CMD_TURN");
 			CMDTurnMessage turn = new CMDTurnMessage((Message)message);
 			IArduinoMessage arduinoMsg;
 			if (turn.isTurningRight())
@@ -43,7 +54,8 @@ public class MessageHandler {
 			this.serialManager.write(arduinoMsg.toBytes());
 		}
 		else if (message.getType() == Message.CMD_STOP)
-		{	
+		{				
+			Core.Log("MessageHandler : CMD_TURN");
 			IArduinoMessage arduinoMsg = new Stop();
 			this.serialManager.write(arduinoMsg.toBytes());
 		}
