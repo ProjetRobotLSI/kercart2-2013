@@ -5,7 +5,7 @@ int SpeedStop(90);
 
 Servo servoAngle;  
 Servo servoSpeed;
-boolean forward = true; //definit le sens de la marche, 1=av,0,=ar
+int forward = 1; //definit le sens de la marche, 1=av,0,=ar
 
 /*
 * applique la commande avancer/reculer
@@ -25,7 +25,7 @@ void moveBackward(int vitessePourcent){
 	if(vitessePourcent >= 0 && vitessePourcent <=100)
 	{
 		move(90+45*vitessePourcent/100);
-		forward = false;
+		forward = 0;
 	}
 }
 
@@ -37,7 +37,7 @@ void moveForward(int vitessePourcent){
 	if(vitessePourcent >= 0 && vitessePourcent <=100)
 	{
 		move(90-45*vitessePourcent/100);
-		forward = true;
+		forward = 1;
 	}
 }
 
@@ -47,7 +47,7 @@ void moveForward(int vitessePourcent){
 */
 void turn (int angleArd){
 	servoAngle.write(angleArd);
-	if (forward)
+	if (forward == 1)
 	{
 		moveForward(25);
 	}

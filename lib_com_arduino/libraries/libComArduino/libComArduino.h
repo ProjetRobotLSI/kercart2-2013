@@ -91,10 +91,12 @@ static inline char* call_order(message* msg)
 			moveBackward((int) (msg->param1.entier));
 			break;
 		case LEFT :
-			turnLeft((int) (msg->param1.entier));
+			turnLeft(90);
+			//turnLeft((int) (msg->param1.entier));
 			break;
 		case RIGHT :
-			turnRight((int) (msg->param1.entier));
+			turnRight(90);
+			//turnRight((int) (msg->param1.entier));
 			break;
 		case GOTOPOS :
 			//TODO
