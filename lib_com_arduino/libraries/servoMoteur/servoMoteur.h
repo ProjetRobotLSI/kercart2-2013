@@ -5,6 +5,7 @@ int SpeedStop(90);
 
 Servo servoAngle;  
 Servo servoSpeed;
+boolean forward = true; //definit le sens de la marche, 1=av,0,=ar
 
 /*
 * applique la commande avancer/reculer
@@ -21,8 +22,11 @@ void move (int vitesseDegres){
 * @param 0 < vitessePourcent <= 100
 */
 void moveBackward(int vitessePourcent){
-	if(vitessePourcent > 0 && vitessePourcent <=100)
+	if(vitessePourcent >= 0 && vitessePourcent <=100)
+	{
 		move(90+45*vitessePourcent/100);
+		forward = false;
+	}
 }
 
 /*
@@ -30,8 +34,11 @@ void moveBackward(int vitessePourcent){
 * @param 0 < vitessePourcent <= 100
 */
 void moveForward(int vitessePourcent){
-	if(vitessePourcent > 0 && vitessePourcent <=100)
+	if(vitessePourcent >= 0 && vitessePourcent <=100)
+	{
 		move(90-45*vitessePourcent/100);
+		forward = true;
+	}
 }
 
 /*
@@ -40,7 +47,14 @@ void moveForward(int vitessePourcent){
 */
 void turn (int angleArd){
 	servoAngle.write(angleArd);
-	moveForward(25);
+	if (forward)
+	{
+		moveForward(25);
+	}
+	else
+	{
+		moveBackward(25);
+	}
 }
 /* 
 * Fait tourner le robot à gauche de angleRasp degrés
