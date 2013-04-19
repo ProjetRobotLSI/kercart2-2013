@@ -10,8 +10,8 @@ import android.widget.Button;
 
 public class MenuStart extends Activity{
 	//Attributs
-	Button start;
-	Button about;
+	private Button start;
+	private Button about;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {

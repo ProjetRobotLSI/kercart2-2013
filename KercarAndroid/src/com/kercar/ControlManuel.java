@@ -20,15 +20,15 @@ import com.kercar.AsyncTask.AsyncStop;
 
 public class ControlManuel extends Activity{
 	//Attributs
-	Button Avance;
-	Button Recule;
-	Button Gauche;
-	Button Droite;
-	Button Photo;
-	SeekBar vitesse;
+	private Button avance;
+	private Button recule;
+	private Button gauche;
+	private Button droite;
+	private Button photo;
+	private SeekBar vitesse;
 	
-	String URL; 
-	IComAndroid com;
+	private String url;
+	private IComAndroid com;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,20 +38,20 @@ public class ControlManuel extends Activity{
         setContentView(R.layout.controle_manuel);
 		
 		//Initialisation des attributs
-		Avance = (Button)findViewById(R.id.buttonAvance);
-		Recule = (Button)findViewById(R.id.buttonRecule);
-		Gauche = (Button)findViewById(R.id.buttonGauche);
-		Droite = (Button)findViewById(R.id.buttonDroite);
-		Photo = (Button)findViewById(R.id.buttonPhoto);
+		avance = (Button)findViewById(R.id.buttonAvance);
+		recule = (Button)findViewById(R.id.buttonRecule);
+		gauche = (Button)findViewById(R.id.buttonGauche);
+		droite = (Button)findViewById(R.id.buttonDroite);
+		photo = (Button)findViewById(R.id.buttonPhoto);
 		vitesse = (SeekBar)findViewById(R.id.barVitesse);
 
-		URL = "http://kercar2013.no-ip.biz:8080/KerCarCommunication/";
+		url = "http://kercar2013.no-ip.biz:8080/KerCarCommunication/";
 		
 		com = ComAndroid.getManager();
-		com.setURL(URL);
+		com.setURL(url);
 		
 		//Listeners				LES ANGLES SONT A MODIFIER
-		Avance.setOnTouchListener(new OnTouchListener() {
+		avance.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				switch(event.getAction()) {
@@ -68,7 +68,7 @@ public class ControlManuel extends Activity{
 			}
 		});
 		
-		Recule.setOnTouchListener(new OnTouchListener() {
+		recule.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				switch(event.getAction()) {
@@ -85,7 +85,7 @@ public class ControlManuel extends Activity{
 			}
 		});
 		
-		Gauche.setOnTouchListener(new OnTouchListener() {
+		gauche.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				switch(event.getAction()) {
@@ -102,7 +102,7 @@ public class ControlManuel extends Activity{
 			}
 		});
 		
-		Droite.setOnTouchListener(new OnTouchListener() {
+		droite.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				switch(event.getAction()) {
@@ -119,7 +119,7 @@ public class ControlManuel extends Activity{
 			}
 		});
 		
-		Photo.setOnClickListener(new OnClickListener(){
+		photo.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
 				

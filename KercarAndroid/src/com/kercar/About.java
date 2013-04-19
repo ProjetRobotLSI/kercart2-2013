@@ -7,16 +7,6 @@ import android.widget.Button;
 import android.widget.SeekBar;
 
 public class About extends Activity{
-	//Attributs
-		Button Avance;
-		Button Recule;
-		Button Gauche;
-		Button Droite;
-		Button Photo;
-		SeekBar vitesse;
-		
-		String URL; 
-		//IComAndroid com;
 		
 	    @Override
 	    protected void onCreate(Bundle savedInstanceState) {

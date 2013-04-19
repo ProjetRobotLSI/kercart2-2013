@@ -10,10 +10,10 @@ import android.widget.Button;
 
 public class MenuSelection extends Activity{
 	//Attributs
-		Button comMan;
-		Button creerEditer;
-		Button lancer;
-		Button arreter;
+		private Button comMan;
+		private Button creerEditer;
+		private Button lancer;
+		private Button arreter;
 		
 	    @Override
 	    protected void onCreate(Bundle savedInstanceState) {
