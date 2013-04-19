@@ -1,4 +1,4 @@
-lpackage kercar.raspberry.arduino;
+package kercar.raspberry.arduino;
 
 import gnu.io.CommPortIdentifier;
 import gnu.io.SerialPort;
