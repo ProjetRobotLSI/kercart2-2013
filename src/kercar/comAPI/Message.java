@@ -25,6 +25,9 @@ public class Message implements IRawMessage, IMessage {
 	public static final int CMD_MOVE = 2;
 	public static final int CMD_TURN = 3;
 	public static final int CMD_PHOTO = 4;
+	public static final int CMD_MISSION = 5;
+	public static final int GET_STATE = 6;
+	public static final int STATE = 7;
 	
 	/** Type du message, valeur définie parmis les variables globales de type */
 	private final int type;
