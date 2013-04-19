@@ -17,6 +17,7 @@ import com.kercar.AsyncTask.AsyncDroite;
 import com.kercar.AsyncTask.AsyncGauche;
 import com.kercar.AsyncTask.AsyncReculer;
 import com.kercar.AsyncTask.AsyncStop;
+import com.kercar.osmandroid.OSMAndroid;
 
 public class ControlManuel extends Activity{
 	//Attributs
@@ -33,16 +34,20 @@ public class ControlManuel extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-   
+        
         //ContentView
         setContentView(R.layout.controle_manuel);
-		
+             
 		//Initialisation des attributs
-		avance = (Button)findViewById(R.id.buttonAvance);
-		recule = (Button)findViewById(R.id.buttonRecule);
-		gauche = (Button)findViewById(R.id.buttonGauche);
-		droite = (Button)findViewById(R.id.buttonDroite);
-		photo = (Button)findViewById(R.id.buttonPhoto);
+
+        OSMAndroid osmAndroid = (OSMAndroid) findViewById(R.id.OSM);
+        osmAndroid.setDefaultMarker(this.getResources().getDrawable(R.drawable.marker));
+        
+		Avance = (Button)findViewById(R.id.buttonAvance);
+		Recule = (Button)findViewById(R.id.buttonRecule);
+		Gauche = (Button)findViewById(R.id.buttonGauche);
+		Droite = (Button)findViewById(R.id.buttonDroite);
+		Photo = (Button)findViewById(R.id.buttonPhoto);
 		vitesse = (SeekBar)findViewById(R.id.barVitesse);
 
 		url = "http://kercar2013.no-ip.biz:8080/KerCarCommunication/";
