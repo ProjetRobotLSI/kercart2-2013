@@ -15,7 +15,7 @@ public class SerialManager implements SerialPortEventListener {
 	SerialPort serialPort;
     
 	/** The port we're normally going to use. */
-	private static final String PORT_NAMES[] = {"/dev/ttyACM0"};
+	private static final String PORT_NAMES[] = {"/dev/ttyUSB0"};
 	/**
 	* A BufferedReader which will be fed by a InputStreamReader 
 	* converting the bytes into characters 
