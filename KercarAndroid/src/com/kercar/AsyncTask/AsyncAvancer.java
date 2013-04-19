@@ -21,7 +21,7 @@ public class AsyncAvancer extends AsyncTask<Void, Void, Void> {
 	protected Void doInBackground(Void... params) {
 		try {
 			
-			Log.v("AsyncAvancer", "Execution de la commande");
+			Log.v("AsyncAvancer", "Avancer");
 			CMDMoveMessage cmdCommand = new CMDMoveMessage(this.vitesse, false);
 			this.comAndroid.envoyerMessage(cmdCommand);
 			this.comAndroid.lireReponse();
