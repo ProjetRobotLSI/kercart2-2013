@@ -20,18 +20,20 @@ public class MessageHandler {
 
 	public void handle(IMessage message)
 	{
+		System.out.println("Message received (Handler)");
 		if (message.getType() == Message.CMD_MOVE)
 		{
 			Core.Log("MessageHandler : CMD_MOVE");
 			CMDMoveMessage move = new CMDMoveMessage((Message)message);
 			if(move.isBackward()){
-				Core.Log("MessageHandler : FORWARD");
+				Core.Log("MessageHandler : BACKWARD");
 				GoBackward arduinoMsg = new GoBackward();
 				arduinoMsg.setVitesse(move.getSpeed());
 				this.serialManager.write(arduinoMsg.toBytes());
 			}
 			else{
-				Core.Log("MessageHandler : BACKWARD");
+				System.out.println("Going forward (Handler)");
+				Core.Log("MessageHandler : FORWARD");
 				GoForward arduinoMsg = new GoForward();
 				arduinoMsg.setVitesse(move.getSpeed());
 				this.serialManager.write(arduinoMsg.toBytes());

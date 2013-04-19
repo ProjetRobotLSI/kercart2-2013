@@ -16,7 +16,8 @@ public class Core extends Thread {
 	private static String initPath;
 	
 	public Core(String initPath){
-		initPath = initPath;
+		System.out.println("Starting core...");
+		Core.initPath = initPath;
 		new WifiIA(initPath);	
 	}
 	
@@ -26,6 +27,7 @@ public class Core extends Thread {
 	
 	
 	public void run(){
+		System.out.println("Running core...");
 		messageQueue = new LinkedBlockingDeque<IMessage>();
 		serialManager = new SerialManager();
 		serialManager.initialize();

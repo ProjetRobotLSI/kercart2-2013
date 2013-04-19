@@ -38,6 +38,7 @@ public class SerialManager implements SerialPortEventListener {
 	private SerialListener listener;
 
 	public void initialize() {
+		System.out.println("Initializing SerialManager");
 		initUSB0();
 		CommPortIdentifier portId = null;
 		@SuppressWarnings("rawtypes")
@@ -104,6 +105,7 @@ public class SerialManager implements SerialPortEventListener {
 				bytesRead += tmpRead;
 				
 				if(bytesRead == 9){
+					System.out.println("Message received from Arduino");
 					bytesRead = 0;
 					if(this.listener != null)
 						this.listener.onSerialMessage(buffer);
@@ -119,6 +121,7 @@ public class SerialManager implements SerialPortEventListener {
 	}
 	
 	public synchronized void write(byte[] b){
+		System.out.println("Writing command");
     	try{
     		this.output.write(b, 0, b.length);
     	} catch(Exception e){
@@ -136,6 +139,7 @@ public class SerialManager implements SerialPortEventListener {
 			Process p = pb.start();
 			p.waitFor();
 		} catch (Exception e) {
+			System.out.println("Error binding : not present or already done");
 			e.printStackTrace();
 		}
 	}
