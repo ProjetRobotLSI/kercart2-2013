@@ -90,7 +90,7 @@ public class ControlManuel extends Activity{
 			public boolean onTouch(View v, MotionEvent event) {
 				switch(event.getAction()) {
 	            case MotionEvent.ACTION_DOWN:
-	            	new AsyncGauche(60, com);
+	            	new AsyncGauche(com);
 	            	System.out.println("Gauche");
 	                break;
 	            case MotionEvent.ACTION_UP:
@@ -107,7 +107,7 @@ public class ControlManuel extends Activity{
 			public boolean onTouch(View v, MotionEvent event) {
 				switch(event.getAction()) {
 	            case MotionEvent.ACTION_DOWN:
-	            	new AsyncDroite(60, com);
+	            	new AsyncDroite(com);
 	            	System.out.println("Droite");
 	                break;
 	            case MotionEvent.ACTION_UP:
