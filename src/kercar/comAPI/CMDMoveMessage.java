@@ -1,10 +1,18 @@
 package kercar.comAPI;
 
+/**
+ * Commande pour faire avancer ou reculer le robot
+ * @author itooh
+ */
 public class CMDMoveMessage extends Message implements ICMDMoveMessage {
 
 	public static final int INDEX_SPEED = 0;
 	public static final int INDEX_BACKWARD = 1;
 	
+	/**
+	 * @param speed
+	 * @param backward : Vrai pour une commande de recul, faux sinon
+	 */
 	public CMDMoveMessage(int speed, boolean backward) {
 		super(Message.CMD_MOVE);
 		
@@ -12,6 +20,10 @@ public class CMDMoveMessage extends Message implements ICMDMoveMessage {
 		this.params.add(INDEX_BACKWARD, Boolean.toString(backward));
 	}
 	
+	 /**
+	  * (re)Construction de la commande à partir d'un message reçu
+	  * @param m
+	  */
 	public CMDMoveMessage(Message m){
 		super(Message.CMD_MOVE);
 		this.params = m.getParams();

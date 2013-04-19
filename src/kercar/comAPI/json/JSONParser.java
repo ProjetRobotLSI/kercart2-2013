@@ -9,6 +9,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Parser JSON
+ * Convertit un message en chaîne de caractères JSON
+ * Crée un message non typé à partir d'une chaîne de caractère JSON
+ * @author itooh
+ */
 public class JSONParser {
 
 	/**
@@ -32,9 +38,9 @@ public class JSONParser {
 	}
 	
 	/**
-	 * Decode un message JSON en message !!!!
+	 * Decode un message JSON en message non typé !!!!
 	 * @param s Le string JSON a decoder
-	 * @return Un objet de type AbstractMessage
+	 * @return Un objet de type Message
 	 */
 	public static IRawMessage decode(String s) throws JSONException {
 		JSONObject jso = new JSONObject(s);

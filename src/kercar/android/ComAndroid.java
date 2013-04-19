@@ -11,7 +11,10 @@ import java.net.URL;
 
 import kercar.comAPI.Message;
 
-
+/**
+ * Gestion de l'envoi de message depuis Android
+ * @author itooh
+ */
 public class ComAndroid implements IComAndroid {
 	
 	/**
@@ -38,6 +41,9 @@ public class ComAndroid implements IComAndroid {
 		
 	}
 	
+	/**
+	 * Récupération d'une instance (singleton)
+	 */
 	public static ComAndroid getManager(){
 		if(instance == null){
 			instance = new ComAndroid();
@@ -49,6 +55,7 @@ public class ComAndroid implements IComAndroid {
 	 * Définit l'adresse URL du Rapsberry
 	 * @param La nouvelle adresse du Raspberry
 	 */
+	@Override
 	public void setURL(String address) {
 		try {
 			this.adresseRaspberry = new URL(address);
@@ -62,6 +69,7 @@ public class ComAndroid implements IComAndroid {
 	 * Envoie un message au Raspberry
 	 * @param message Le message a envoyer
 	 */
+	@Override
 	public void envoyerMessage(Message message) throws Exception{
 		if(this.adresseRaspberry == null){
 			throw new Exception("Aucune URL de définie !");
@@ -86,6 +94,7 @@ public class ComAndroid implements IComAndroid {
 	/**
 	 * Lit la réponse à un message
 	 */
+	@Override
 	public String lireReponse() throws Exception {
 		if(con == null){
 			throw new Exception("Aucune connexion ouverte");

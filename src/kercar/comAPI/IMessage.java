@@ -1,5 +1,10 @@
 package kercar.comAPI;
 
+/**
+ * Interface des messages pour les utilisateurs externes
+ * (cad qui ne sont pas impliqués dans le transfert)
+ * @author itooh
+ */
 public interface IMessage {
 	
 	/**

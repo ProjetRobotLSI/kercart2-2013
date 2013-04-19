@@ -2,9 +2,13 @@ package kercar.comAPI;
 
 import java.util.List;
 
+/**
+ * Interface des messages pour les composants gérant le transfert des messages
+ * @author itooh
+ */
 public interface IRawMessage {
 
-	/**
+	/*
 	 * Le type de Message (bluetooth vs HTTP)
 	 * @return
 	 */

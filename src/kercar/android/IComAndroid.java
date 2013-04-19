@@ -2,6 +2,10 @@ package kercar.android;
 
 import kercar.comAPI.Message;
 
+/**
+ * Interface pour la gestion d'envoi de message depuis Android
+ * @author itooh
+ */
 public interface IComAndroid {
 	
 	/**
