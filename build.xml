@@ -153,7 +153,7 @@
   </target>
 
   <target name="export_raspComm" depends="compile_raspComm" description="Export du war raspberry">
-    <war destfile="${build}/${raspberryBranch}/${raspComm}/${export}/KerCar.war" webxml="${base}/${raspComm}/WebContent/WEB-INF/web.xml">
+    <war destfile="${build}/${raspberryBranch}/${raspComm}/${export}/KerCarCommunication.war" webxml="${base}/${raspComm}/WebContent/WEB-INF/web.xml">
       <classes dir="${build}/${raspberryBranch}/${raspComm}/${class}"/>
       <!--<lib>-->
         <lib dir="${build}/${comBranch}/${export}"/>
