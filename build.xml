@@ -47,15 +47,23 @@
     </git>
   </target>
 
-  <target name="compile_raspWifi" depends="init,update" description="Compilation de KerCarRaspWifi">
+  <target name="move_rasp" description="checkout sur la branch raspberry">
+    <git command="checkout">
+      <args>
+        <arg value="raspberry"/>
+      </args>
+    </git>
+  </target>
+
+  <target name="compile_raspWifi" depends="init,update,move_rasp" description="Compilation de KerCarRaspWifi">
     <javac srcdir="${base}/${raspWifi}/${src}" destdir="${build}/${raspberryBranch}/${raspWifi}/${class}"/>
   </target>
 
-  <target name="export_raspWifi" depends="init,update,compile_raspWifi" description="Export de la lib KerCarRaspWifi">
+  <target name="export_raspWifi" depends="compile_raspWifi" description="Export de la lib KerCarRaspWifi">
     <jar jarfile="${build}/${raspberryBranch}/${raspWifi}/${export}" basedir="${build}/${raspberryBranch}/KerCarRaspWifi/${class}"/>
   </target>
 
-  <target name="export_raspberry" depends="init,update,export_raspWifi" description="Compilation du raspberry">
+  <target name="export_raspberry" depends="export_raspWifi" description="Compilation du raspberry">
   </target>
 
   <target name="deploy" depends="export_raspberry" description="Pause café" >
