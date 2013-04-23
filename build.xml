@@ -179,7 +179,6 @@
       </args>
     </git>
     <echo message="N'oubliez pas de vous remettre dans la bonne branche avant !"/>
-    <delete file="${base}/build.xml"/>
   </target>
 
 </project>
