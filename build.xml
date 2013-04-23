@@ -56,10 +56,14 @@
   </target>
 
   <target name="compile_raspWifi" depends="init,update,move_rasp" description="Compilation de KerCarRaspWifi">
+    <mkdir dir="${build}/${raspberryBranch}"/>
+    <mkdir dir="${build}/${raspberryBranch}/${raspWifi}"/>
+    <mkdir dir="${build}/${raspWifi}/${class}"/>
     <javac srcdir="${base}/${raspWifi}/${src}" destdir="${build}/${raspberryBranch}/${raspWifi}/${class}"/>
   </target>
 
   <target name="export_raspWifi" depends="compile_raspWifi" description="Export de la lib KerCarRaspWifi">
+    <mkdir dir="${build}/${raspWifi}/${export}"/>
     <jar jarfile="${build}/${raspberryBranch}/${raspWifi}/${export}" basedir="${build}/${raspberryBranch}/KerCarRaspWifi/${class}"/>
   </target>
 
