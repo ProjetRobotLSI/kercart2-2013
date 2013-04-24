@@ -24,6 +24,7 @@ public class AsyncReculer extends AsyncTask<Void, Void, Void> {
 
 			CMDMoveMessage cmdCommand = new CMDMoveMessage(this.vitesse, true);
 			this.comAndroid.envoyerMessage(cmdCommand);
+			this.comAndroid.lireReponse();
 		} catch (Exception e) {e.printStackTrace();}
 		
 		return null;

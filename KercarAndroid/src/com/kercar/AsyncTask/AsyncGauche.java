@@ -21,6 +21,7 @@ public class AsyncGauche extends AsyncTask<Void, Void, Void> {
 			CMDTurnMessage cmdCommand = new CMDTurnMessage(false);
 			Log.v("AsyncGauche", "Gauche");
 			this.comAndroid.envoyerMessage(cmdCommand);
+			this.comAndroid.lireReponse();
 		} catch (Exception e) {e.printStackTrace();}
 		
 		return null;
