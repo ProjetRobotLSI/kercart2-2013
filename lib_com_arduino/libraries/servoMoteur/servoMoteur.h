@@ -24,7 +24,7 @@ void servoMoteur_move (int vitesseDegres){
 void servoMoteur_moveBackward(int vitessePourcent){
 	if(vitessePourcent >= 0 && vitessePourcent <=100)
 	{
-		move(90+45*vitessePourcent/100);
+		servoMoteur_move(90+45*vitessePourcent/100);
 		forward = 0;
 	}
 }
@@ -36,7 +36,7 @@ void servoMoteur_moveBackward(int vitessePourcent){
 void servoMoteur_moveForward(int vitessePourcent){
 	if(vitessePourcent >= 0 && vitessePourcent <=100)
 	{
-		move(90-45*vitessePourcent/100);
+		servoMoteur_move(90-45*vitessePourcent/100);
 		forward = 1;
 	}
 }
@@ -49,11 +49,11 @@ void servoMoteur_turn(int angleArd){
 	servoAngle.write(angleArd);
 	if (forward == 1)
 	{
-		moveForward(25);
+		servoMoteur_moveForward(25);
 	}
 	else
 	{
-		moveBackward(25);
+		servoMoteur_moveBackward(25);
 	}
 }
 /* 
@@ -62,7 +62,7 @@ void servoMoteur_turn(int angleArd){
 */
 void servoMoteur_turnLeft(int angleRasp){
 	if(angleRasp > 0 && angleRasp <= 90)
-		turn(90-45*angleRasp/90);
+		servoMoteur_turn(90-45*angleRasp/90);
 }
 /* 
 * Fait tourner le robot à droite de angleRasp degrés
@@ -70,7 +70,7 @@ void servoMoteur_turnLeft(int angleRasp){
 */
 void servoMoteur_turnRight(int angleRasp){
 	if(angleRasp > 0 && angleRasp <= 90)
-		turn(90+45*angleRasp/90);
+		servoMoteur_turn(90+45*angleRasp/90);
 }
 
 /*
@@ -98,7 +98,7 @@ int servoMoteur_getStateSpeed(){
 * @return : 1 si arrêté, 0 sinon 
 */
 int servoMoteur_isBlock(){
-	return (getStateSpeed() == 90 );
+	return (servoMoteur_getStateSpeed() == 90 );
 }
 
 /*

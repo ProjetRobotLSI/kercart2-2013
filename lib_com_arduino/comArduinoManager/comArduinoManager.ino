@@ -15,7 +15,7 @@ void setup() {
 }
 
 void loop(){
-    int i, distTelemeter;
+    int i, distTelemeterFront, distTelemeterBack;
     //on attend que le buffer est le bon nombre d'octets (taille d'un message)
     if(Serial.available() == NB_OCTETS)
     {
@@ -44,9 +44,10 @@ void loop(){
         }
     }
     //Test du télémetre
-    distTelemeter = readTelemeter(PIN_TELEMETER_BACK);
+    distTelemeterBack = readTelemeter(PIN_TELEMETER_BACK);
+    distTelemeterFront = readTelemeter(PIN_TELEMETER_FRONT);
     //si le robot est trop près d'un obstacle et que les moteurs ont pour ordre d'avancer
-    if(distTelemeter < SEUIL_ARRET && servoMoteur_isBlock() != 1)
+    if((distTelemeterFront < SEUIL_ARRET || distTelemeterBack < SEUIL_ARRET) && servoMoteur_isBlock() != 1)
     {
         servoMoteur_stop();
         send_order(BLOCK);//envoie au raspberry qu'on est bloqué
