@@ -13,7 +13,7 @@ int forward = 1; //definit le sens de la marche, 1=av,0,=ar
 * 			0 = Avant , 90 = arret, 180 = marche arriere
 *			
 */
-void move (int vitesseDegres){
+void servoMoteur_move (int vitesseDegres){
 	servoSpeed.write(vitesseDegres);
 }
 
@@ -21,7 +21,7 @@ void move (int vitesseDegres){
 * Fait reculer le robot à la vitesse vitessePourcent
 * @param 0 < vitessePourcent <= 100
 */
-void moveBackward(int vitessePourcent){
+void servoMoteur_moveBackward(int vitessePourcent){
 	if(vitessePourcent >= 0 && vitessePourcent <=100)
 	{
 		move(90+45*vitessePourcent/100);
@@ -33,7 +33,7 @@ void moveBackward(int vitessePourcent){
 * Fait avancer le robot à la vitesse vitessePourcent
 * @param 0 < vitessePourcent <= 100
 */
-void moveForward(int vitessePourcent){
+void servoMoteur_moveForward(int vitessePourcent){
 	if(vitessePourcent >= 0 && vitessePourcent <=100)
 	{
 		move(90-45*vitessePourcent/100);
@@ -45,7 +45,7 @@ void moveForward(int vitessePourcent){
 * fait tourner le robot
 * @param angleArd : 0=gauche,90=nul,180=droite
 */
-void turn (int angleArd){
+void servoMoteur_turn(int angleArd){
 	servoAngle.write(angleArd);
 	if (forward == 1)
 	{
@@ -60,7 +60,7 @@ void turn (int angleArd){
 * Fait tourner le robot à gauche de angleRasp degrés
 * @param angleRasp : 0 < angleRasp <= 90
 */
-void turnLeft(int angleRasp){
+void servoMoteur_turnLeft(int angleRasp){
 	if(angleRasp > 0 && angleRasp <= 90)
 		turn(90-45*angleRasp/90);
 }
@@ -68,7 +68,7 @@ void turnLeft(int angleRasp){
 * Fait tourner le robot à droite de angleRasp degrés
 * @param angleRasp : 0 < angleRasp <= 90
 */
-void turnRight(int angleRasp){
+void servoMoteur_turnRight(int angleRasp){
 	if(angleRasp > 0 && angleRasp <= 90)
 		turn(90+45*angleRasp/90);
 }
@@ -76,7 +76,7 @@ void turnRight(int angleRasp){
 /*
 * stop le robot et reinitialise les angles appliqués aux moteurs
 */
-void stop(){
+void servoMoteur_stop(){
 	servoAngle.write(90);
 	servoSpeed.write(90);
 }
@@ -89,7 +89,7 @@ void stop(){
 * retourne l'etat courant de la vitesse des roues
 * 0=MaxAvant,90=Stop,180=MaxArr
 */
-int getStateSpeed(){
+int servoMoteur_getStateSpeed(){
 	return (servoSpeed.read());
 }
 
@@ -97,7 +97,7 @@ int getStateSpeed(){
 * vérifie si le robot est arrêté
 * @return : 1 si arrêté, 0 sinon 
 */
-int block(){
+int servoMoteur_isBlock(){
 	return (getStateSpeed() == 90 );
 }
 
@@ -105,6 +105,6 @@ int block(){
 * retourne l'etat courant de la vitesse des roues
 * @return : 0=gauche,90=nul,180=droite
 */
-int getStateAngle(){
+int servoMoteur_getStateAngle(){
 	return (servoAngle.read());
 }

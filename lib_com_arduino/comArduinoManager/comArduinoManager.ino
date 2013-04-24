@@ -2,6 +2,11 @@
 #include <servoMoteur.h>
 #include <libComArduino.h>
 
+//Telemetre
+#define PIN_TELEMETER_BACK 2
+#define PIN_TELEMETER_FRONT 4
+#define SEUIL_ARRET 8
+
 // initialisation de la bete
 void setup() {
   Serial.begin(9600);
@@ -10,7 +15,7 @@ void setup() {
 }
 
 void loop(){
-    int i;
+    int i, distTelemeter;
     //on attend que le buffer est le bon nombre d'octets (taille d'un message)
     if(Serial.available() == NB_OCTETS)
     {
@@ -37,8 +42,27 @@ void loop(){
             }
             free(msgAenvoyer);
         }
-		
-		//TODO Récupérer télémetre et voir si le kercar est bloqué
     }
+    //Test du télémetre
+    distTelemeter = readTelemeter(PIN_TELEMETER_BACK);
+    //si le robot est trop près d'un obstacle et que les moteurs ont pour ordre d'avancer
+    if(distTelemeter < SEUIL_ARRET && servoMoteur_isBlock() != 1)
+    {
+        servoMoteur_stop();
+        send_order(BLOCK);//envoie au raspberry qu'on est bloqué
+    }
+    
     delay(25);
+}
+
+float readTelemeter(int pinTelemetre)
+{
+    int value = analogRead(pinTelemetre);
+    
+    if (value < 3)
+        return -1; // invalid value
+    
+    // Exemple trouvé sur des forums.
+    // Il est aussi conseillé d'utiliser une table de correspondace (20 = 15 cm, 40 = 25 cm, etc...)
+    return (6787.0 /((float)value - 3.0)) - 4.0;
 }

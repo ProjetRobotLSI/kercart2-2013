@@ -82,20 +82,20 @@ static inline char* call_order(message* msg)
 	switch(msg->id)
 	{
 		case STOP : 
-			stop();
+			servoMoteur_stop();
 			break;
 		case FORWARD :
-			moveForward((int) (msg->param1.entier));
+			servoMoteur_moveForward((int) (msg->param1.entier));
 			break;
 		case BACKWARD :
-			moveBackward((int) (msg->param1.entier));
+			servoMoteur_moveBackward((int) (msg->param1.entier));
 			break;
 		case LEFT :
-			turnLeft(90);
+			servoMoteur_turnLeft(90);
 			//turnLeft((int) (msg->param1.entier));
 			break;
 		case RIGHT :
-			turnRight(90);
+			servoMoteur_turnRight(90);
 			//turnRight((int) (msg->param1.entier));
 			break;
 		case GOTOPOS :
