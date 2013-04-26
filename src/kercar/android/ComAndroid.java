@@ -41,9 +41,7 @@ public class ComAndroid implements IComAndroid {
 	 * Le manager (singleton) de communication côté Android
 	 */
 	private static ComAndroid instance;
-	
-	private static final int wait = 300000;
-	
+		
 	private ComAndroid(){
 		
 	}
