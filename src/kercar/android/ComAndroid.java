@@ -9,7 +9,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import kercar.comAPI.GETStateMessage;
+import kercar.comAPI.IRawMessage;
+import kercar.comAPI.IStateMessage;
 import kercar.comAPI.Message;
+import kercar.comAPI.StateMessage;
+import kercar.comAPI.json.JSONParser;
 
 /**
  * Gestion de l'envoi de message depuis Android
@@ -36,6 +41,8 @@ public class ComAndroid implements IComAndroid {
 	 * Le manager (singleton) de communication côté Android
 	 */
 	private static ComAndroid instance;
+	
+	private static final int wait = 300000;
 	
 	private ComAndroid(){
 		
@@ -114,6 +121,20 @@ public class ComAndroid implements IComAndroid {
 		}
 		return null;
 	}
-
-
+	
+	/**
+	 * Demande de l'état du robot au Raspberry
+	 * @return Message contenant les différentes informations sur le robot
+	 */
+	public IStateMessage demanderEtat() throws Exception {
+		GETStateMessage demande = new GETStateMessage();
+		
+		this.envoyerMessage(demande);
+		String reponse = this.lireReponse();
+		
+		IRawMessage message = JSONParser.decode(reponse);
+		IStateMessage etat = new StateMessage((Message) message);
+		
+		return etat;
+	}
 }
