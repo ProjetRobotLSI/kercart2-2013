@@ -57,7 +57,7 @@ public class Core extends Thread {
 	}
 	
 	public void initUSB0(String tomPath){
-		ProcessBuilder pb = new ProcessBuilder("sudo", "-A", "ln -s /dev/ttyACM0 /dev/ttyUSB0");
+		ProcessBuilder pb = new ProcessBuilder("sudo", "-A", "ln"," -s"," /dev/ttyACM0"," /dev/ttyUSB0");
 		Map<String, String> env = pb.environment();
 		env.put("SUDO_ASKPASS", tomPath+"set_pass.sh");
 		try {
