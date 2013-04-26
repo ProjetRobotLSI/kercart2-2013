@@ -39,7 +39,6 @@ public class SerialManager implements SerialPortEventListener {
 
 	public void initialize() {
 		System.out.println("Initializing SerialManager");
-		initUSB0();
 		CommPortIdentifier portId = null;
 		@SuppressWarnings("rawtypes")
 		Enumeration portEnum = CommPortIdentifier.getPortIdentifiers();
@@ -131,16 +130,5 @@ public class SerialManager implements SerialPortEventListener {
 	
 	public void setListener(SerialListener listener){
 		this.listener = listener;
-	}
-	
-	public void initUSB0(){
-		ProcessBuilder pb = new ProcessBuilder("sudo", "ln -s /dev/ttyACM0 /dev/ttyUSB0");
-		try {
-			Process p = pb.start();
-			p.waitFor();
-		} catch (Exception e) {
-			System.out.println("Error binding : not present or already done");
-			e.printStackTrace();
-		}
 	}
 }
