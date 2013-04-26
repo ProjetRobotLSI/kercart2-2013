@@ -1,5 +1,7 @@
 package kercar.raspberry.core;
-
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.io.FileOutputStream;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
@@ -62,11 +64,30 @@ public class Core extends Thread {
 			System.out.println("Creation du lien symbolique...");
 			Process p = pb.start();
 			p.waitFor();
+			getProcessOutput(p);
 			System.out.println("Creation OK");
 		} catch (Exception e) {
 			System.out.println("Error binding : not present or already done");
 			e.printStackTrace();
 		}
 	}
+
+        private String getProcessOutput(Process p){
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                String tmp;
+                StringBuffer bf = new StringBuffer();
+
+                try{
+                        while( (tmp = br.readLine()) != null ){
+                                bf.append(tmp+System.getProperty("line.separator"));
+                        }
+                        br.close();
+                } catch(Exception e){
+                        e.printStackTrace();
+                }
+                System.out.println(bf.toString());
+                return bf.toString();
+        }
 	
 }
