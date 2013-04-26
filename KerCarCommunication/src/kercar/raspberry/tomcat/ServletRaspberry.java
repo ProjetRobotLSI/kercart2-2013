@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sun.corba.se.impl.protocol.giopmsgheaders.Message;
+
 import kercar.comAPI.IMessage;
 import kercar.comAPI.IRawMessage;
 import kercar.comAPI.json.JSONParser;
@@ -48,13 +50,18 @@ public class ServletRaspberry extends HttpServlet {
 		appli.log("Message reçu : " + JSONMessage);
 		IRawMessage message =jso.decode(JSONMessage);
 		
-		core.messageReceived((IMessage)message);
-		appli.log("Message décodé");
-		PrintWriter out = response.getWriter();
-		
 		try{
-			// Code 200 si tout est OK
-			response.setStatus(HttpServletResponse.SC_OK);
+			PrintWriter out = response.getWriter();
+			if (message.getType() := Message.GET_STATE) {
+				core.messageReceived((IMessage)message);
+				appli.log("Message décodé");
+				// Code 200 si tout est OK
+				response.setStatus(HttpServletResponse.SC_OK);
+			}
+			else {
+				Message etat = core.getEtat();
+				out.print(etat.toString());
+			}
 		} catch (Exception e){
 			System.err.println("Internal error");
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
