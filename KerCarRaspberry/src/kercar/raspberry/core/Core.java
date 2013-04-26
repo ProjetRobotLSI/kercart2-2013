@@ -3,6 +3,7 @@ package kercar.raspberry.core;
 import java.io.FileOutputStream;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
+import java.util.Map;
 
 import kercar.comAPI.IMessage;
 import kercar.raspberry.arduino.SerialManager;
