@@ -28,6 +28,7 @@ public class Message implements IRawMessage, IMessage {
 	public static final int CMD_MISSION = 5;
 	public static final int GET_STATE = 6;
 	public static final int STATE = 7;
+	public static final int PING = 8;
 	
 	/** Type du message, valeur définie parmis les variables globales de type */
 	private final int type;

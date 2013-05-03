@@ -1,6 +1,7 @@
 package kercar.comAPI.test;
 
 import static org.junit.Assert.*;
+import kercar.android.ComAndroid;
 import kercar.comAPI.IRawMessage;
 import kercar.comAPI.IStateMessage;
 import kercar.comAPI.Message;
@@ -16,6 +17,7 @@ import org.junit.runners.JUnit4;
 public class StateTest {
 	
 	private IStateMessage stateMessage;
+	private static String ADRESS = "http://kercar2013.no-ip.biz:8080/KerCarCommunication/";
 
 	@Before
 	public void setUp() throws Exception {
@@ -48,6 +50,18 @@ public class StateTest {
 			fail();
 		}
 		catch (IndexOutOfBoundsException e) {}
+	}
+	
+	@Test
+	public void testConnexion() {
+		try {
+			ComAndroid ca = ComAndroid.getManager();
+			ca.setURL(ADRESS);
+			ca.demanderEtat();
+		}
+		catch (Exception e) {
+			fail();
+		}
 	}
 
 }
