@@ -13,5 +13,7 @@
     <string name="button_arreter_mission">Arrêter la Mission</string>
     
     <string name="image_menu_start">imageMenuStart</string>
+    
+    <string name="demande_point_arrive">Veuiller choisir le point d\'arrivé du robot</string>
 
 </resources>
