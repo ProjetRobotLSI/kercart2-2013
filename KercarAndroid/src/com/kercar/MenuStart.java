@@ -38,7 +38,7 @@ public class MenuStart extends Activity{
 		about.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(MenuStart.this,CreationForm.class);
+				Intent intent = new Intent(MenuStart.this,About.class);
 				startActivity(intent);
 			}
 		});

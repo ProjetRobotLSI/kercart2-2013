@@ -13,7 +13,12 @@
     <string name="button_arreter_mission">Arrêter la Mission</string>
     <string name="empty">empty</string>
     <string name="button_OK">OK</string>
-    
+    <string name="editNom">Saisie du nom</string>
+    <string name="editEmail">Saisie de l e-mail </string>  
+    <string name="cbxRetour">Oui</string>  
+    <string name="editNomE">Saisie du nom</string>
+    <string name="editEmailE">Saisie de l e-mail </string>  
+    <string name="cbxRetourE">Oui</string>  
     <string name="image_menu_start">imageMenuStart</string>
     
     <string name="demande_point_arrive">Veuiller choisir le point d\'arrivé du robot</string>
