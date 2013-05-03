@@ -93,6 +93,6 @@ public class Core extends Thread {
         }
         
 	public StateMessage getRobotState(){
-		return null;
+		return new StateMessage(0,1,2);
 	}
 }
