@@ -11,7 +11,6 @@ public class ChoixPointArrive extends Activity{
 	
 	//Attributs
 	private OSMAndroid OSM;
-	//private 
 	
 	 @Override
 	    protected void onCreate(Bundle savedInstanceState) {

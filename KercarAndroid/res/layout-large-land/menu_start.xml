@@ -1,59 +1,3 @@
-<<<<<<< HEAD
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/fond_paysage"
-    android:orientation="vertical">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/app_name"
-        android:textColor="#ff3452"
-        android:textSize="130sp"/>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    	android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:orientation="horizontal"
-    	android:layout_gravity="center">
-    	
-        <ImageView
-        	android:id="@+id/imageMenuStart"
-        	android:layout_width="180dp"
-        	android:layout_height="180dp"
-        	android:layout_gravity="center_vertical"
-        	android:src="@drawable/icone_h2g2" 
-        	android:contentDescription="@string/image_menu_start"/>
-
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    		android:layout_width="wrap_content"
-    		android:layout_height="wrap_content"
-    		android:orientation="vertical"
-    		android:layout_gravity="center">
-    		
-    		<Button
-        		android:id="@+id/buttonStart"
-        		android:layout_width="wrap_content"
-        		android:layout_height="wrap_content"
-        		android:layout_gravity="center_horizontal"
-       			android:text="@string/button_start"
-        		android:textSize="80sp"/>
-
-    		<Button
-        		android:id="@+id/buttonAbout"
-        		android:layout_width="wrap_content"
-        		android:layout_height="wrap_content"
-        		android:layout_gravity="center_horizontal"
-        		android:text="@string/button_about"
-        		android:textSize="40sp"/>
-    		</LinearLayout>
-    </LinearLayout>
-
-</LinearLayout>
-=======
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -81,4 +25,3 @@
   		android:textSize="40sp"/>
 	
 </LinearLayout>
->>>>>>> e576521e9c8b2a85ed6c52c55db3ab221f787c98
