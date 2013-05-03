@@ -1,0 +1,34 @@
+package com.kercar;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.text.Html;
+import android.widget.ListView;
+import android.widget.TextView;
+
+public class CreationForm extends Activity{
+
+	private TextView lblNom= null;
+	/*private TextView lblEmail= null;
+	private TextView lblRetourDepart= null;
+	private TextView lblPhotoArrivee= null;*/
+	
+	
+	 @Override
+	  public void onCreate(Bundle savedInstanceState) {
+	    super.onCreate(savedInstanceState);
+	    
+	    /**ContentView*/
+	    setContentView(R.layout.creation_form);
+	    
+	    /**Initialisation des attributs*/
+	    lblNom = (TextView) findViewById(R.id.lblNom);
+	    /*lblEmail = (TextView) findViewById(R.id.lblEmail);
+	    lblRetourDepart = (TextView) findViewById(R.id.lblRetourDepart);
+	    lblPhotoArrivee = (TextView) findViewById(R.id.lblPhotoArrivee);
+	    */
+	    /**Traitement sur lblNom*/
+	    //lblNom.setText(Html.fromHtml("<p style=\"color:green\"> Nom de la mission</p>"));
+	    
+	  }
+}

@@ -1,0 +1,13 @@
+package moto;
+
+public class Moto
+{
+      public string Name;
+      public string Pays;
+
+       public Moto(string name, string pays)
+      {
+            Name = name;
+            Pays = pays;
+      }
+}

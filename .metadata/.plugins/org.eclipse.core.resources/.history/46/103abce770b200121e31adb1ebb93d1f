@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+[sourcecode language='xml']
+android:layout_width=”fill_parent”
+android:layout_height=”wrap_content”
+android:orientation=”horizontal”
+>
+android:id=”@+id/icon”
+android:layout_width=”22px”
+android:paddingLeft=”2px”
+android:paddingRight=”2px”
+android:paddingTop=”2px”
+android:layout_height=”wrap_content”
+android:src=”@drawable/ok”
+/>
+android:id=”@+id/label”
+android:layout_width=”wrap_content”
+android:layout_height=”wrap_content”
+android:textSize=”44sp”
+/> [/sourcecode]
+    
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:orientation="vertical" >
+ <!--  android:background="@drawable/fond_portrait" -->
+ 
+  <TextView
+    android:id="@+id/txtListeMissions"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="Liste des missions :" />
+ 
+    <!-- On choisit le mode de sélection avec android:choiceMode -->
+    
+   <Button
+      android:id="@+id/send"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:text="Creer une nouvelle mission" 
+      android:background="#7FAA00"/>
+   
+    <ListView
+      android:id="@+id/lstListeMissions"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:choiceMode="singleChoice" 
+      style="@style/CodeFont">
+      
+        
+        
+    </ListView>
+    
+<!--     <ListView android:paddingTop="15dip" android:paddingBottom="15dip"
+                android:layout_width="fill_parent" android:paddingLeft="15dip"
+                android:layout_height="wrap_content" android:id="@+id/chathlist"
+                android:layout_gravity="center_horizontal"
+                android:layout_centerInParent="true" android:paddingRight="15dip"
+                 android:textColor="#FF0000"  android:listSelector="@drawable/gradient_box" >
+    </ListView> -->
+    
+
+</LinearLayout>

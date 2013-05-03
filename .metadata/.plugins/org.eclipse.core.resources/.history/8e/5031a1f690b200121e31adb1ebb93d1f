@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+    
+    <!-- avance 
+    <Textview
+        android:id="@+id/lblNom"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="320dp"
+		android:layout_marginLeft="50dp"
+		android:textIsSelectable="true"
+		style="@style/CodeFont"/>-->
+   
+    <!-- droite 
+    <TextView
+        android:id="@+id/lblEmail"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/lblNom"
+        android:layout_toRightOf="@id/lblNom"
+        android:textIsSelectable="true"
+        style="@style/CodeFont"/>
+
+    
+    <TextView
+        android:id="@+id/lblRetourDepart"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_toLeftOf="@id/lblEmail"
+        android:layout_below="@id/lblEmail"
+        android:textIsSelectable="true"
+        style="@style/CodeFont"/>
+    
+    
+    <TextView
+        android:id="@+id/lblPhotoArrivee"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/lblNom"
+        android:layout_toLeftOf="@id/lblRetourDepart"
+        android:textIsSelectable="true"
+        style="@style/CodeFont"/>
+-->
+</RelativeLayout>
