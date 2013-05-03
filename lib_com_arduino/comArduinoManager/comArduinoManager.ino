@@ -1,11 +1,7 @@
 #include <Servo.h>
 #include <servoMoteur.h>
+#include <telemeter.h>
 #include <libComArduino.h>
-
-//Telemetre
-#define PIN_TELEMETER_BACK 2
-#define PIN_TELEMETER_FRONT 4
-#define SEUIL_ARRET 8
 
 // initialisation de la bete
 void setup() {
@@ -15,7 +11,7 @@ void setup() {
 }
 
 void loop(){
-    int i, distTelemeterFront, distTelemeterBack;
+    int i, distTelemeter;
     //on attend que le buffer est le bon nombre d'octets (taille d'un message)
     if(Serial.available() == NB_OCTETS)
     {
@@ -44,26 +40,28 @@ void loop(){
         }
     }
     //Test du télémetre
-    /*distTelemeterBack = readTelemeter(PIN_TELEMETER_BACK);
-    distTelemeterFront = readTelemeter(PIN_TELEMETER_FRONT);
-    //si le robot est trop près d'un obstacle et que les moteurs ont pour ordre d'avancer
-    if((distTelemeterFront < SEUIL_ARRET || distTelemeterBack < SEUIL_ARRET) && servoMoteur_isBlock() != 1)
+    //ToDo : savoir si on avance ou si on recule et ne lire qu'un seul des deux télémetre, sinon on est bloqué
+    switch(forward)
     {
-        servoMoteur_stop();
-        send_order(BLOCK);//envoie au raspberry qu'on est bloqué
-    }*/
-    
+        case 1:
+        distTelemeter = readTelemeter(PIN_TELEMETER_FRONT);
+        break;
+        default:
+        distTelemeter = readTelemeter(PIN_TELEMETER_BACK);
+        break;
+    }
+    if(distTelemeter < SEUIL_ARRET && servoMoteur_isBlock() == 0)
+    {
+         servoMoteur_stop();
+         //envoie au raspberry qu'on est bloqué
+        char* msgAenvoyer;
+        msgAenvoyer = send_order(BLOCK);
+        for(i = 0; i < NB_OCTETS; i++)
+        {
+            Serial.print(msgAenvoyer[i]);
+            delay(25);
+        }
+        free(msgAenvoyer);
+    }
     delay(25);
-}
-
-float readTelemeter(int pinTelemetre)
-{
-    int value = analogRead(pinTelemetre);
-    
-    if (value < 3)
-        return -1; // invalid value
-    
-    // Exemple trouvé sur des forums.
-    // Il est aussi conseillé d'utiliser une table de correspondace (20 = 15 cm, 40 = 25 cm, etc...)
-    return (6787.0 /((float)value - 3.0)) - 4.0;
 }
