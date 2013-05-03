@@ -57,7 +57,7 @@ public class ServletRaspberry extends HttpServlet {
 				core.messageReceived((IMessage)message);
 				appli.log("Message décodé");
 			}
-			esle if(message.getType() == Message.PING){
+			else if(message.getType() == Message.PING){
 				Message ping = core.getPing();
 				out.print(ping.toString());
 			}
