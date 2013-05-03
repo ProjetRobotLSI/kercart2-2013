@@ -11,10 +11,11 @@
     <string name="button_creation_edition_mission">Créer/Editer une Mission</string>
     <string name="button_lancer_mission">Lancer une Mission</string>
     <string name="button_arreter_mission">Arrêter la Mission</string>
+    <string name="empty">empty</string>
     <string name="button_OK">OK</string>
     
     <string name="image_menu_start">imageMenuStart</string>
     
     <string name="demande_point_arrive">Veuiller choisir le point d\'arrivé du robot</string>
-    
+  
 </resources>

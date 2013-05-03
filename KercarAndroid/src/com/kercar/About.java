@@ -3,23 +3,17 @@ package com.kercar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.widget.Button;
+import android.widget.SeekBar;
 
-import com.kercar.osmandroid.OSMAndroid;
-
-public class ChoixPointArrive extends Activity{
-	
-	//Attributs
-	private OSMAndroid OSM;
-	
-	 @Override
+public class About extends Activity{
+		
+	    @Override
 	    protected void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	   
 	        //ContentView
-	        setContentView(R.layout.choix_point_arrive);
-	        
-	        OSM = (OSMAndroid)findViewById(R.id.OSM_choix_point);
-	        
+	        setContentView(R.layout.about);
 	    }
 
 	    @Override
