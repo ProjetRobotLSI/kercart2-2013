@@ -17,5 +17,8 @@
     <string name="image_menu_start">imageMenuStart</string>
     
     <string name="demande_point_arrive">Veuiller choisir le point d\'arrivé du robot</string>
+    
+    <!-- menuCreation -->
+    <string name="createMission">Creer une nouvelle mission</string>
   
 </resources>

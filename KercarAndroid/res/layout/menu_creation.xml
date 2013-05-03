@@ -6,26 +6,28 @@
   android:orientation="vertical" 
   android:background="@drawable/fond_portrait" >
  
+ <!-- 
   <TextView
     android:id="@+id/txtListeMissions"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:text="Liste des missions :" />
- 
+    android:text="Liste des missions :" 
+    android:textColor="#FFFFFF"/>
+  -->
     
    <Button
       android:id="@+id/send"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
-      android:text="Creer une nouvelle mission" 
-      android:background="#7FAA00"/>
+      android:text="@string/createMission" 
+      android:background="@color/background"/>
    
     <ListView
       android:id="@+id/lstListeMissions"
       android:layout_width="fill_parent"
       android:layout_height="fill_parent"
+      android:background="#FFFFFF"
       android:choiceMode="singleChoice">    
     </ListView>
-    
 </LinearLayout>
