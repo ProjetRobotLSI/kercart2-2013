@@ -92,7 +92,7 @@ public class Core extends Thread {
                 return bf.toString();
         }
         
-	public StateMessage getState(){
+	public StateMessage getRobotState(){
 		return null;
 	}
 }

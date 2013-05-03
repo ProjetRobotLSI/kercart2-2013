@@ -58,7 +58,7 @@ public class ServletRaspberry extends HttpServlet {
 				appli.log("Message décodé");
 			}
 			else {
-				Message etat = core.getState();
+				Message etat = core.getRobotState();
 				out.print(etat.toString());
 			}
 		} catch (Exception e){
