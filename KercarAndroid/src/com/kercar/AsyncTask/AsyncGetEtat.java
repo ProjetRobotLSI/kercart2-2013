@@ -6,41 +6,57 @@ import kercar.android.IComAndroid;
 import kercar.comAPI.IStateMessage;
 import android.os.AsyncTask;
 
-public class AsyncGetEtat extends AsyncTask<Void, Void, LinkedList<Integer>> {
+public class AsyncGetEtat extends AsyncTask<Void, Integer, Void> {
 	//Attributs
 	private int latitude;
 	private int longitude;
 	private int orientation;
 	private IComAndroid comAndroid;
 	
-	private LinkedList<Integer> result;
 	private IStateMessage stateMessage;
+	private boolean stop;
+	private LinkedList<Integer> list;
 	
 	//Constructeurs
-	public AsyncGetEtat(IComAndroid comAndroid) {
+	public AsyncGetEtat(LinkedList<Integer> list, IComAndroid comAndroid) {
 		this.latitude = 0;
 		this.longitude = 0;
 		this.orientation = 0;
 		this.comAndroid = comAndroid;
 		
-		result = new  LinkedList<Integer>();
+		stop = false;
+		this.list = list;
 	}
 	
 	@Override
-	protected LinkedList<Integer> doInBackground(Void... params) {
-		try {
-//			stateMessage = this.comAndroid.demanderEtat();
-//			latitude = stateMessage.getLatitude();
-//			longitude = stateMessage.getLongitude();
-//			orientation = stateMessage.getOrientation();
-//			
-//			result.add(latitude);
-//			result.add(longitude);
-//			result.add(orientation);
-			result.add(48120002);
-			result.add(-1635540);
-			result.add(1);
-		} catch (Exception e) {e.printStackTrace();}
-		return result;
+	protected void onProgressUpdate(Integer... values) {
+		super.onProgressUpdate(values);
+		
+		list.set(0, values[0]);
+		list.set(1, values[1]);
+		list.set(2, values[2]);
 	}
+
+	@Override
+	protected Void doInBackground(Void... arg0) {
+		try {
+			while(!stop){
+//				stateMessage = this.comAndroid.demanderEtat();
+//				latitude = stateMessage.getLatitude();
+//				longitude = stateMessage.getLongitude();
+//				orientation = stateMessage.getOrientation();
+
+//				publishProgress(new Integer[]{latitude,longitude,orientation});
+				publishProgress(new Integer[]{48120002,-1635540,1});
+				
+				Thread.sleep(3000);
+			}
+		} catch (Exception e) {e.printStackTrace();}
+		return null;
+	}
+	
+	protected void StopActualisation(){
+		stop = true;
+	}
+	
 }

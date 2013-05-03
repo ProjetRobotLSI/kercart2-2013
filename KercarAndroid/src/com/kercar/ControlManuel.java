@@ -63,15 +63,13 @@ public class ControlManuel extends Activity{
 		com = ComAndroid.getManager();
 		com.setURL(url);
 		
-		get = new AsyncGetEtat(com);
+		list = new LinkedList<Integer>();
+		list.add(0);
+		list.add(1);
+		list.add(2);
+		
+		get = new AsyncGetEtat(list, com);
 		get.execute();
-		try {
-			list = get.get();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		}
 		
 		OSM.addPoint(list.get(0), list.get(1), "Emplacement du robot", "L'emplacement du Robot");
 		
