@@ -8,6 +8,8 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.Map;
 
 import kercar.comAPI.IMessage;
+import kercar.comAPI.IStateMessage;
+import kercar.comAPI.StateMessage;
 import kercar.raspberry.arduino.SerialManager;
 
 import com.kercar.raspberry.wifi.WifiIA;
