@@ -1,5 +1,8 @@
 package com.kercar;
 
+import java.util.LinkedList;
+import java.util.concurrent.ExecutionException;
+
 import kercar.android.ComAndroid;
 import kercar.android.IComAndroid;
 import android.app.Activity;
@@ -15,6 +18,7 @@ import android.widget.SeekBar;
 import com.kercar.AsyncTask.AsyncAvancer;
 import com.kercar.AsyncTask.AsyncDroite;
 import com.kercar.AsyncTask.AsyncGauche;
+import com.kercar.AsyncTask.AsyncGetEtat;
 import com.kercar.AsyncTask.AsyncReculer;
 import com.kercar.AsyncTask.AsyncStop;
 import com.kercar.osmandroid.OSMAndroid;
@@ -27,9 +31,13 @@ public class ControlManuel extends Activity{
 	private Button droite;
 	private Button photo;
 	private SeekBar vitesse;
+	private OSMAndroid OSM;
 	
 	private String url;
 	private IComAndroid com;
+	
+	private LinkedList<Integer> list;
+	AsyncGetEtat get;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +49,6 @@ public class ControlManuel extends Activity{
 		//Initialisation des attributs
 
         OSMAndroid osmAndroid = (OSMAndroid) findViewById(R.id.OSM);
-        //osmAndroid.setDefaultMarker(this.getResources().getDrawable(R.drawable.marker));
         
 		avance = (Button)findViewById(R.id.buttonAvance);
 		recule = (Button)findViewById(R.id.buttonRecule);
@@ -49,11 +56,24 @@ public class ControlManuel extends Activity{
 		droite = (Button)findViewById(R.id.buttonDroite);
 		photo = (Button)findViewById(R.id.buttonPhoto);
 		vitesse = (SeekBar)findViewById(R.id.barVitesse);
+		OSM = (OSMAndroid)findViewById(R.id.OSM);
 
 		url = "http://kercar2013.no-ip.biz:8080/KerCarCommunication/";
 		
 		com = ComAndroid.getManager();
 		com.setURL(url);
+		
+		get = new AsyncGetEtat(com);
+		get.execute();
+		try {
+			list = get.get();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+		
+		OSM.addPoint(list.get(0), list.get(1), "Emplacement du robot", "L'emplacement du Robot");
 		
 		//Listeners				LES ANGLES SONT A MODIFIER
 		avance.setOnTouchListener(new OnTouchListener() {
