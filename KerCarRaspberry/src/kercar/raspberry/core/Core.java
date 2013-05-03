@@ -95,4 +95,8 @@ public class Core extends Thread {
 	public StateMessage getRobotState(){
 		return new StateMessage(0,1,2);
 	}
+	
+	public PingMessage getPing(){
+		return new PingMessage();
+	}
 }
