@@ -11,6 +11,7 @@ public class TestSuite {
 	@SuiteClasses(value={
 		MessageTest.class,
 		JSONTest.class,
+		StateTest.class
 	})
 	public class AllTests{
 	}
