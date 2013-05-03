@@ -1,5 +1,6 @@
 <resources>
 
+ 
     <!--
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
@@ -15,6 +16,12 @@
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+    
+    <!-- Style utilise pour les textes se trouvant dans la listeview de creation/edition . -->
+    <style name="CodeFont" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">#7FAA00</item>
+        <item name="android:typeface">monospace</item>
     </style>
 
 </resources>

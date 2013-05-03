@@ -41,7 +41,7 @@ public class ControlManuel extends Activity{
 		//Initialisation des attributs
 
         OSMAndroid osmAndroid = (OSMAndroid) findViewById(R.id.OSM);
-        osmAndroid.setDefaultMarker(this.getResources().getDrawable(R.drawable.marker));
+        //osmAndroid.setDefaultMarker(this.getResources().getDrawable(R.drawable.marker));
         
 		avance = (Button)findViewById(R.id.buttonAvance);
 		recule = (Button)findViewById(R.id.buttonRecule);

@@ -9,7 +9,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class MenuSelection extends Activity{
-	//Attributs
+	
+		//Attributs
 		private Button comMan;
 		private Button creerEditer;
 		private Button lancer;
@@ -40,7 +41,8 @@ public class MenuSelection extends Activity{
 			creerEditer.setOnClickListener(new OnClickListener(){
 				@Override
 				public void onClick(View v) {
-					
+					Intent intent = new Intent(MenuSelection.this, MenuCreation.class);
+					startActivity(intent);
 				}
 			});
 			
