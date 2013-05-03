@@ -89,5 +89,8 @@ public class Core extends Thread {
                 System.out.println(bf.toString());
                 return bf.toString();
         }
-	
+        
+	public StateMessage getState(){
+		return null;
+	}
 }

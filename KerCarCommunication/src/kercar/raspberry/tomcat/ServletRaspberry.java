@@ -52,14 +52,13 @@ public class ServletRaspberry extends HttpServlet {
 		
 		try{
 			PrintWriter out = response.getWriter();
-			if (message.getType() := Message.GET_STATE) {
+			response.setStatus(HttpServletResponse.SC_OK);
+			if (message.getType() != Message.GET_STATE) {
 				core.messageReceived((IMessage)message);
 				appli.log("Message décodé");
-				// Code 200 si tout est OK
-				response.setStatus(HttpServletResponse.SC_OK);
 			}
 			else {
-				Message etat = core.getEtat();
+				Message etat = core.getState();
 				out.print(etat.toString());
 			}
 		} catch (Exception e){
