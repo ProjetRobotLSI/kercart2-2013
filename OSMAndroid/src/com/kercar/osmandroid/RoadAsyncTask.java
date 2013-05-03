@@ -19,7 +19,7 @@ public class RoadAsyncTask extends AsyncTask<GeoPoint, Void, Road> {
 	protected Road doInBackground(GeoPoint... params) {
 		
 		RoadManager roadManager = new MapQuestRoadManager();
-        roadManager.addRequestOption("routeType=shortest");
+        roadManager.addRequestOption("routeType=bicycle");
 		
 		//Two points added
 		ArrayList<GeoPoint> waypoints = new ArrayList<GeoPoint>();
