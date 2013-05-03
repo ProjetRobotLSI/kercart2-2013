@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sun.corba.se.impl.protocol.giopmsgheaders.Message;
+import kercar.comAPI.Message;
 
 import kercar.comAPI.IMessage;
 import kercar.comAPI.IRawMessage;
