@@ -37,5 +37,17 @@ public class StateTest {
 		assertTrue(decodedMessage.getLongitude() == stateMessage.getLongitude());
 		assertTrue(msg.getParams().containsAll(((IRawMessage) stateMessage).getParams()));
 	}
+	
+	@Test
+	public void testWrongParameters() {
+		Message m = new Message(Message.STATE);
+		IStateMessage sm = new StateMessage(m);
+		
+		try {
+			sm.getLatitude();
+			fail();
+		}
+		catch (IndexOutOfBoundsException e) {}
+	}
 
 }

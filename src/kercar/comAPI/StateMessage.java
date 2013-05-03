@@ -13,12 +13,12 @@ public class StateMessage extends Message implements IStateMessage {
 	//public static final int INDEX_TELEMETRE = 2;
 	//public static final int INDEX_BATTERY = 3;
 	
-	public StateMessage(long longitude, long latitude, long orientation) {
+	public StateMessage(int longitude, int latitude, int orientation) {
 		super(Message.STATE);
 		
-		this.params.add(INDEX_LONGITUDE, Long.toString(longitude));
-		this.params.add(INDEX_LATITUDE, Long.toString(latitude));
-		this.params.add(INDEX_ORIENTATION, Long.toString(orientation));
+		this.params.add(INDEX_LONGITUDE, Integer.toString(longitude));
+		this.params.add(INDEX_LATITUDE, Integer.toString(latitude));
+		this.params.add(INDEX_ORIENTATION, Integer.toString(orientation));
 		//this.params.add(INDEX_TELEMETRE, Integer.toString(telemetre));
 		//this.params.add(INDEX_BATTERY, Integer.toString(battery));
 	}
@@ -29,33 +29,33 @@ public class StateMessage extends Message implements IStateMessage {
 	}
 
 	@Override
-	public long getLongitude() {
-		return Long.parseLong(this.params.get(INDEX_LONGITUDE));
+	public int getLongitude() {
+		return Integer.parseInt(this.params.get(INDEX_LONGITUDE));
 	}
 
 	@Override
-	public void setLongitude(long longitude) {
-		this.params.set(INDEX_LONGITUDE, Long.toString(longitude));
+	public void setLongitude(int longitude) {
+		this.params.set(INDEX_LONGITUDE, Integer.toString(longitude));
 	}
 	
 	@Override
-	public long getLatitude() {
-		return Long.parseLong(this.params.get(INDEX_LATITUDE));
+	public int getLatitude() {
+		return Integer.parseInt(this.params.get(INDEX_LATITUDE));
 	}
 	
 	@Override
-	public void setLatitude(long latitude) {
-		this.params.set(INDEX_LATITUDE, Long.toString(latitude));
+	public void setLatitude(int latitude) {
+		this.params.set(INDEX_LATITUDE, Integer.toString(latitude));
 	}
 
 	@Override
-	public long getOrientation() {
-		return Long.parseLong(this.params.get(INDEX_ORIENTATION));
+	public int getOrientation() {
+		return Integer.parseInt(this.params.get(INDEX_ORIENTATION));
 	}
 
 	@Override
-	public void setOrientation(long orientation) {
-		this.params.set(INDEX_ORIENTATION, Long.toString(orientation));
+	public void setOrientation(int orientation) {
+		this.params.set(INDEX_ORIENTATION, Integer.toString(orientation));
 	}
 
 	/*

@@ -7,17 +7,17 @@ package kercar.comAPI;
 public interface IStateMessage {
 	
 	/** @return Longitude GPS du robot */
-	public long getLongitude();
+	public int getLongitude();
 	/** @return Latitude GPS du robot */
-	public long getLatitude();
-	public void setLongitude(long longitude);
-	public void setLatitude(long latitude);
+	public int getLatitude();
+	public void setLongitude(int longitude);
+	public void setLatitude(int latitude);
 	
 	/**
 	 * @return Orientation de la boussole
 	 */
-	public long getOrientation();
-	public void setOrientation(long orientation);
+	public int getOrientation();
+	public void setOrientation(int orientation);
 	
 	/*
 	 * @return informations du Télémètre
