@@ -53,11 +53,15 @@ public class ServletRaspberry extends HttpServlet {
 		try{
 			PrintWriter out = response.getWriter();
 			response.setStatus(HttpServletResponse.SC_OK);
-			if (message.getType() != Message.GET_STATE) {
+			if (message.getType() != Message.GET_STATE && message.getType() != Message.PING ) {
 				core.messageReceived((IMessage)message);
 				appli.log("Message décodé");
 			}
-			else {
+			esle if(message.getType() == Message.PING){
+				Message ping = core.getPing();
+				out.print(ping.toString());
+			}
+			else if(message.getType() == Message.GET_STATE) {
 				Message etat = core.getRobotState();
 				out.print(etat.toString());
 			}
