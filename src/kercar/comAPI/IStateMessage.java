@@ -1,7 +1,5 @@
 package kercar.comAPI;
 
-import java.util.List;
-
 /**
  * Interface du message d'état du robot
  * @author itooh

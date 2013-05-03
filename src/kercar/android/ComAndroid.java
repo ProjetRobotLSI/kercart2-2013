@@ -112,6 +112,7 @@ public class ComAndroid implements IComAndroid {
 				content.append(temp);
 			}
 			br.close();
+			System.out.println(content.toString());
 			return content.toString();
 		} catch(Exception e){
 			System.err.println("Impossible de lire la réponse");
