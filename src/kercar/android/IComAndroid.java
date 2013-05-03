@@ -1,5 +1,6 @@
 package kercar.android;
 
+import kercar.comAPI.IStateMessage;
 import kercar.comAPI.Message;
 
 /**
@@ -27,5 +28,11 @@ public interface IComAndroid {
 	 * @throws Exception En cas d'erreur de lecture
 	 */
 	public String lireReponse() throws Exception;
+	
+	/**
+	 * Récupère l'état du robot KerCar
+	 * @return Message d'état renvoyé par le Raspberry
+	 */
+	public IStateMessage demanderEtat() throws Exception;
 
 }
