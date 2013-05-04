@@ -28,11 +28,13 @@ public class MessageHandler {
 			CMDMoveMessage move = new CMDMoveMessage((Message)message);
 			if(move.isBackward()){
 				Core.Log("MessageHandler : BACKWARD");
+				this.ia.stopMission();
 				this.ia.backward(move.getSpeed());
 			}
 			else{
 				System.out.println("Going forward (Handler)");
 				Core.Log("MessageHandler : FORWARD");
+				this.ia.stopMission();
 				this.ia.forward(move.getSpeed());
 			}
 		}
@@ -40,6 +42,7 @@ public class MessageHandler {
 		{
 			Core.Log("MessageHandler : CMD_TURN");
 			CMDTurnMessage turn = new CMDTurnMessage((Message)message);
+			this.ia.stopMission();
 			if (turn.isTurningRight())
 			{
 				Core.Log("RIGHT");
@@ -53,8 +56,9 @@ public class MessageHandler {
 			}			
 		}
 		else if (message.getType() == Message.CMD_STOP)
-		{				
+		{		
 			Core.Log("MessageHandler : CMD_TURN");
+			this.ia.stopMission();
 			this.ia.stopKercar();
 		}
 		

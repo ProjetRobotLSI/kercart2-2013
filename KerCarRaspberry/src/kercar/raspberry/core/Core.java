@@ -61,6 +61,7 @@ public class Core extends Thread implements IIA {
 		serialManager.initialize();
 		MessageHandler handler = new MessageHandler(this);
 		
+		long startTime = 0;
 		while(true)
 		{
 			if (!controlQueue.isEmpty())
@@ -71,14 +72,24 @@ public class Core extends Thread implements IIA {
 			
 			if(inMission) {
 				//TODO GET GPS COORDONNATES	
+				//TODO GET COMPASS
 				if(this.pathfinder.isArrived(0, 0)) {
+					System.out.println("Core : ISARRIVED");
+					Core.Log("Core : ISARRIVED");
+					
+					this.stopKercar();
 					if(this.pathfinder.isLastPoint() ) {
-						this.stopKercar();
-						this.inMission = false;
-					} else {
-						this.pathfinder.goToNextPoint(0,0, 50);
+						this.stopMission();
+					} else {									
+						this.pathfinder.goToNextPoint(0,0, 50, 0);
 					}
-				}
+				} else if((System.currentTimeMillis() - startTime) >= 2000){
+					this.pathfinder.updateAngle(0, 0, 0);
+					startTime = 0;
+				}	
+				
+				if(startTime == 0)
+					startTime = System.currentTimeMillis();
 			}		
 		}
 	}
@@ -151,7 +162,6 @@ public class Core extends Thread implements IIA {
 
 	@Override
 	public void turnLeft(int angle) {
-		this.inMission = false;
 		TurnLeft arduinoMsg = new TurnLeft();
 		arduinoMsg.setDegree(angle);
 		this.serialManager.write(arduinoMsg.toBytes());	
@@ -159,7 +169,6 @@ public class Core extends Thread implements IIA {
 
 	@Override
 	public void turnRight(int angle) {
-		this.inMission = false;
 		TurnRight arduinoMsg = new TurnRight();
 		arduinoMsg.setDegree(angle);
 		this.serialManager.write(arduinoMsg.toBytes());
@@ -167,7 +176,6 @@ public class Core extends Thread implements IIA {
 
 	@Override
 	public void forward(int speed) {
-		this.inMission = false;
 		GoForward arduinoMsg = new GoForward();
 		arduinoMsg.setVitesse(speed);
 		this.serialManager.write(arduinoMsg.toBytes());
@@ -175,7 +183,6 @@ public class Core extends Thread implements IIA {
 
 	@Override
 	public void backward(int speed) {
-		this.inMission = false;
 		GoBackward arduinoMsg = new GoBackward();
 		arduinoMsg.setVitesse(speed);
 		this.serialManager.write(arduinoMsg.toBytes());
@@ -183,7 +190,8 @@ public class Core extends Thread implements IIA {
 
 	@Override
 	public void stopKercar() {
-		this.inMission = false;
+		System.out.println("Core : stopCar");
+		Core.Log("Core : stopCar");
 		Stop arduinoMsg = new Stop();
 		this.serialManager.write(arduinoMsg.toBytes());
 	}
@@ -221,7 +229,11 @@ public class Core extends Thread implements IIA {
 		
 		this.getGPSCoordonnate();
 		
-		//TODO Recup coordonnates
-		this.pathfinder.goToNextPoint(0, 0, 50);
+		//TODO GET COORDONNATES AND COMPASS
+		this.pathfinder.goToNextPoint(0, 0, 50, 0);
+	}
+	
+	public void stopMission() {
+		this.inMission = false;
 	}
 }

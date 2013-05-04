@@ -17,4 +17,6 @@ public interface IIA {
 	public void takePicture();
 	public void sendPicture();
 	public void launchMission(List<Integer> points, String mail);
+	
+	public void stopMission();
 }
