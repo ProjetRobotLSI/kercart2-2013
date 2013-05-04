@@ -5,20 +5,37 @@ import java.io.InputStreamReader;
 import java.io.FileOutputStream;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
+import java.util.List;
 import java.util.Map;
 
 import kercar.comAPI.IMessage;
 import kercar.comAPI.IStateMessage;
+import kercar.comAPI.PingMessage;
 import kercar.comAPI.StateMessage;
 import kercar.raspberry.arduino.SerialManager;
+import kercar.raspberry.arduino.message.GetAngle;
+import kercar.raspberry.arduino.message.GetGPSInfo;
+import kercar.raspberry.arduino.message.GoBackward;
+import kercar.raspberry.arduino.message.GoForward;
+import kercar.raspberry.arduino.message.IArduinoMessage;
+import kercar.raspberry.arduino.message.Stop;
+import kercar.raspberry.arduino.message.TurnLeft;
+import kercar.raspberry.arduino.message.TurnRight;
+import kercar.raspberry.core.pathfinding.IPathfinder;
+import kercar.raspberry.core.pathfinding.Pathfinder;
 
 import com.kercar.raspberry.wifi.WifiIA;
 
-public class Core extends Thread {
+public class Core extends Thread implements IIA {
 
-	BlockingQueue<IMessage> messageQueue;
-	SerialManager serialManager;
+	private BlockingQueue<IMessage> controlQueue;
+	private BlockingQueue<IArduinoMessage> arduinoQueue;
+	
+	private IPathfinder pathfinder;
+	private SerialManager serialManager;
 	private static String initPath;
+	private boolean inMission;
+	private String mail;
 	
 	public Core(String initPath){
 		System.out.println("Starting core...");
@@ -28,21 +45,41 @@ public class Core extends Thread {
 	}
 	
 	public synchronized void messageReceived(IMessage message){
-		messageQueue.add(message);
+		controlQueue.add(message);
 	}
 	
+	public synchronized void messageArduinoReceived(IArduinoMessage message){
+		arduinoQueue.add(message);
+	}
 	
 	public void run(){
 		System.out.println("Running core...");
-		messageQueue = new LinkedBlockingDeque<IMessage>();
+		this.inMission = false;
+		this.pathfinder = new Pathfinder(this);
+		controlQueue = new LinkedBlockingDeque<IMessage>();
 		serialManager = new SerialManager();
 		serialManager.initialize();
-		MessageHandler handler = new MessageHandler(serialManager);
+		MessageHandler handler = new MessageHandler(this);
 		
 		while(true)
 		{
-			if (!messageQueue.isEmpty())
-				handler.handle(messageQueue.poll());
+			if (!controlQueue.isEmpty())
+				handler.handle(controlQueue.poll());
+			
+			if (!arduinoQueue.isEmpty())
+				handler.handle(arduinoQueue.poll());
+			
+			if(inMission) {
+				//TODO GET GPS COORDONNATES	
+				if(this.pathfinder.isArrived(0, 0)) {
+					if(this.pathfinder.isLastPoint() ) {
+						this.stopKercar();
+						this.inMission = false;
+					} else {
+						this.pathfinder.goToNextPoint(0,0, 50);
+					}
+				}
+			}		
 		}
 	}
 	
@@ -98,5 +135,93 @@ public class Core extends Thread {
 	
 	public PingMessage getPing(){
 		return new PingMessage();
+	}
+
+	@Override
+	public void getGPSCoordonnate() {
+		GetGPSInfo arduinoMsg = new GetGPSInfo();
+		this.serialManager.write(arduinoMsg.toBytes());	
+	}
+
+	@Override
+	public void getCompass() {
+		GetAngle arduinoMsg = new GetAngle();
+		this.serialManager.write(arduinoMsg.toBytes());	
+	}
+
+	@Override
+	public void turnLeft(int angle) {
+		this.inMission = false;
+		TurnLeft arduinoMsg = new TurnLeft();
+		arduinoMsg.setDegree(angle);
+		this.serialManager.write(arduinoMsg.toBytes());	
+	}
+
+	@Override
+	public void turnRight(int angle) {
+		this.inMission = false;
+		TurnRight arduinoMsg = new TurnRight();
+		arduinoMsg.setDegree(angle);
+		this.serialManager.write(arduinoMsg.toBytes());
+	}
+
+	@Override
+	public void forward(int speed) {
+		this.inMission = false;
+		GoForward arduinoMsg = new GoForward();
+		arduinoMsg.setVitesse(speed);
+		this.serialManager.write(arduinoMsg.toBytes());
+	}
+
+	@Override
+	public void backward(int speed) {
+		this.inMission = false;
+		GoBackward arduinoMsg = new GoBackward();
+		arduinoMsg.setVitesse(speed);
+		this.serialManager.write(arduinoMsg.toBytes());
+	}
+
+	@Override
+	public void stopKercar() {
+		this.inMission = false;
+		Stop arduinoMsg = new Stop();
+		this.serialManager.write(arduinoMsg.toBytes());
+	}
+
+	@Override
+	public void nextSerialMessage() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void nextControlMessage() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void takePicture() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void sendPicture() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void launchMission(List<Integer> points, String mail) {
+		System.out.print("Launching mission...");
+		this.mail = mail;
+		this.inMission = true;
+		this.pathfinder.setPath(points);
+		
+		this.getGPSCoordonnate();
+		
+		//TODO Recup coordonnates
+		this.pathfinder.goToNextPoint(0, 0, 50);
 	}
 }

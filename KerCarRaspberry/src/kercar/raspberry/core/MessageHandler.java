@@ -13,9 +13,10 @@ import kercar.raspberry.arduino.message.TurnLeft;
 import kercar.raspberry.arduino.message.TurnRight;
 
 public class MessageHandler {
-	SerialManager serialManager;
-	public MessageHandler(SerialManager serialManager) {
-		this.serialManager = serialManager;
+	private IIA ia;
+	
+	public MessageHandler(IIA ia) {
+		this.ia = ia;
 	}
 
 	public void handle(IMessage message)
@@ -27,40 +28,40 @@ public class MessageHandler {
 			CMDMoveMessage move = new CMDMoveMessage((Message)message);
 			if(move.isBackward()){
 				Core.Log("MessageHandler : BACKWARD");
-				GoBackward arduinoMsg = new GoBackward();
-				arduinoMsg.setVitesse(move.getSpeed());
-				this.serialManager.write(arduinoMsg.toBytes());
+				this.ia.backward(move.getSpeed());
 			}
 			else{
 				System.out.println("Going forward (Handler)");
 				Core.Log("MessageHandler : FORWARD");
-				GoForward arduinoMsg = new GoForward();
-				arduinoMsg.setVitesse(move.getSpeed());
-				this.serialManager.write(arduinoMsg.toBytes());
+				this.ia.forward(move.getSpeed());
 			}
 		}
 		else if (message.getType() == Message.CMD_TURN)
 		{
 			Core.Log("MessageHandler : CMD_TURN");
 			CMDTurnMessage turn = new CMDTurnMessage((Message)message);
-			IArduinoMessage arduinoMsg;
 			if (turn.isTurningRight())
 			{
 				Core.Log("RIGHT");
-				arduinoMsg = new TurnRight();
+				//TODO RECUP ANGLE
+				this.ia.turnRight(50);
 			}
 			else {
 				Core.Log("LEFT");
-				arduinoMsg = new TurnLeft();
+				//TODO RECUP ANGLE
+				this.ia.turnLeft(50);
 			}			
-			this.serialManager.write(arduinoMsg.toBytes());
 		}
 		else if (message.getType() == Message.CMD_STOP)
 		{				
 			Core.Log("MessageHandler : CMD_TURN");
-			IArduinoMessage arduinoMsg = new Stop();
-			this.serialManager.write(arduinoMsg.toBytes());
+			this.ia.stopKercar();
 		}
+		
+	}
+	
+	public void handle(IArduinoMessage message)
+	{
 		
 	}
 }

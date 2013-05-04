@@ -3,16 +3,17 @@ package kercar.raspberry.core.pathfinding;
 import java.util.Iterator;
 import java.util.List;
 
-import kercar.raspberry.core.IIAPathfinder;
+import kercar.raspberry.core.IIA;
+
 
 public class Pathfinder implements IPathfinder {
 
-	private IIAPathfinder iA;
+	private IIA iA;
 	private Iterator<Integer> it;
 	
 	private int pointLatitude, pointLongitude;
 	
-	public Pathfinder(IIAPathfinder iA) {
+	public Pathfinder(IIA iA) {
 		this.iA = iA;
 	}
 	
@@ -22,15 +23,16 @@ public class Pathfinder implements IPathfinder {
 	}
 
 	@Override
-	public void goToNextPoint(int latitude, int longitude) {
+	public void goToNextPoint(int latitude, int longitude, int speed) {
 		this.pointLatitude = it.next();
 		this.pointLongitude = it.next();
 		
 		//TODO calcul angle 
 		int angle = 0;
 		
-		this.iA.setAngle(angle);
-		this.iA.forward();
+	/*	this.iA.turnLeft(angle);
+		this.iA.turnRight(angle);*/
+		this.iA.forward(speed);
 	}
 
 	@Override
@@ -43,6 +45,11 @@ public class Pathfinder implements IPathfinder {
 	public boolean isArrived(int latitude, int longitude) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	@Override
+	public boolean isLastPoint() {
+		return !it.hasNext(); 
 	}
 
 }
