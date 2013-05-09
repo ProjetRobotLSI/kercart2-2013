@@ -11,8 +11,10 @@ import kercar.comAPI.IMessage;
 import kercar.comAPI.PingMessage;
 import kercar.comAPI.StateMessage;
 import kercar.raspberry.arduino.SerialManager;
+import kercar.raspberry.arduino.message.AskAngle;
+import kercar.raspberry.arduino.message.AskPos;
 import kercar.raspberry.arduino.message.GetAngle;
-import kercar.raspberry.arduino.message.GetGPSInfo;
+import kercar.raspberry.arduino.message.GetPos;
 import kercar.raspberry.arduino.message.GoBackward;
 import kercar.raspberry.arduino.message.GoForward;
 import kercar.raspberry.arduino.message.IArduinoMessage;
@@ -72,22 +74,23 @@ public class Core extends Thread implements IIA {
 				handler.handle(arduinoQueue.poll());
 			
 			if(inMission) {
-				this.getCompass();
-				this.getGPSCoordonnate();
-				//TODO GET GPS COORDONNATES	
-				//TODO GET COMPASS
-				if(this.pathfinder.isArrived(1, 1)) {
+				GetPos pos = this.getGPSCoordonnates();
+				GetAngle angle = this.getAngle();
+			//	if(this.pathfinder.isArrived(1, 1)) {
+				if(this.pathfinder.isArrived(pos.getLatitude(), pos.getLongitude())) {
 					System.out.println("Core : ISARRIVED");
 					Core.Log("Core : ISARRIVED");
 					
 					this.stopKercar();
 					if(this.pathfinder.isLastPoint() ) {
 						this.stopMission();
-					} else {									
-						this.pathfinder.goToNextPoint(1,1, 10);
+					} else {					
+			//			this.pathfinder.goToNextPoint(1,1, 10);
+						this.pathfinder.goToNextPoint(pos.getLatitude(), pos.getLongitude(), angle.getDegree());
 					}
 				} else if((System.currentTimeMillis() - startTime) >= 2000){
-					this.pathfinder.updateAngle(1, 1, 10);
+		//			this.pathfinder.updateAngle(1, 1, 10);
+					this.pathfinder.updateAngle(pos.getLatitude(), pos.getLongitude(), angle.getDegree());
 					startTime = 0;
 				}	
 				
@@ -152,17 +155,23 @@ public class Core extends Thread implements IIA {
 	}
 
 	@Override
-	public void getGPSCoordonnate() {
-		System.out.println("Core : Ask GSP coordonnate");
-		GetGPSInfo arduinoMsg = new GetGPSInfo();
+	public GetAngle getAngle() {
+		AskPos arduinoMsg = new AskPos();
 		this.serialManager.write(arduinoMsg.toBytes());	
+		
+		//TODO Attendre la réponse, faire un message angle
+		GetAngle angle = new GetAngle();
+		return angle;
 	}
 
 	@Override
-	public void getCompass() {
-		System.out.println("Core : Ask compass");
-		GetAngle arduinoMsg = new GetAngle();
+	public GetPos getGPSCoordonnates() {
+		AskAngle arduinoMsg = new AskAngle();
 		this.serialManager.write(arduinoMsg.toBytes());	
+		
+		//TODO Attendre la réponse, faire un message pos
+		GetPos pos = new GetPos();
+		return pos;
 	}
 
 	@Override
@@ -224,11 +233,11 @@ public class Core extends Thread implements IIA {
 		this.inMission = true;
 		this.pathfinder.setPath(points);
 		this.pathfinder.setSpeed(speed);
-		this.getGPSCoordonnate();
-		this.getCompass();
+		GetPos pos = this.getGPSCoordonnates();
+		GetAngle angle = this.getAngle();
 		
-		//TODO GET COORDONNATES AND COMPASS
-		this.pathfinder.goToNextPoint(1, 1, 10);
+	//	this.pathfinder.goToNextPoint(1, 1, 10);
+		this.pathfinder.goToNextPoint(pos.getLatitude(), pos.getLongitude(), angle.getDegree());
 	}
 	
 	public void stopMission() {

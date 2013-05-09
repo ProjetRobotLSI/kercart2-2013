@@ -20,6 +20,11 @@ public class TestIA {
 		System.out.println(testCalculAngle(4, 5, 2, 1, 295));
 		System.out.println(testCalculAngle(5, 0, 2, 1, 315));
 		
+		/*
+		 * Commenter les lignes concernant le serial manager pour les tests dans Core
+		 * Décommenter updateAnglet, goToNextPoint et isArrived dans Core pour ne pas utiliser les valeurs de l'arduino
+		 */
+		
 		Core core = new Core(".");
 		core.start();
 		
