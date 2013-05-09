@@ -72,6 +72,8 @@ public class Core extends Thread implements IIA {
 				handler.handle(arduinoQueue.poll());
 			
 			if(inMission) {
+				this.getCompass();
+				this.getGPSCoordonnate();
 				//TODO GET GPS COORDONNATES	
 				//TODO GET COMPASS
 				if(this.pathfinder.isArrived(1, 1)) {
@@ -223,6 +225,7 @@ public class Core extends Thread implements IIA {
 		this.pathfinder.setPath(points);
 		this.pathfinder.setSpeed(speed);
 		this.getGPSCoordonnate();
+		this.getCompass();
 		
 		//TODO GET COORDONNATES AND COMPASS
 		this.pathfinder.goToNextPoint(1, 1, 10);
