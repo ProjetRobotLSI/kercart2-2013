@@ -12,11 +12,9 @@ public interface IIA {
 	public void backward(int speed);
 	public void stopKercar();
 	
-	public void nextSerialMessage();
-	public void nextControlMessage();
 	public void takePicture();
 	public void sendPicture();
-	public void launchMission(List<Integer> points, String mail);
+	public void launchMission(List<Integer> points, String mail, int speed);
 	
 	public void stopMission();
 }

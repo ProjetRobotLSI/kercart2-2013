@@ -1,6 +1,5 @@
 package kercar.raspberry.core;
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.FileOutputStream;
 import java.util.concurrent.BlockingQueue;
@@ -9,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import kercar.comAPI.IMessage;
-import kercar.comAPI.IStateMessage;
 import kercar.comAPI.PingMessage;
 import kercar.comAPI.StateMessage;
 import kercar.raspberry.arduino.SerialManager;
@@ -41,7 +39,11 @@ public class Core extends Thread implements IIA {
 		System.out.println("Starting core...");
 		initUSB0(initPath);
 		Core.initPath = initPath;
-		new WifiIA(initPath);	
+		new WifiIA(initPath);
+		
+		controlQueue = new LinkedBlockingDeque<IMessage>();
+		arduinoQueue = new LinkedBlockingDeque<IArduinoMessage>();
+		
 	}
 	
 	public synchronized void messageReceived(IMessage message){
@@ -56,7 +58,6 @@ public class Core extends Thread implements IIA {
 		System.out.println("Running core...");
 		this.inMission = false;
 		this.pathfinder = new Pathfinder(this);
-		controlQueue = new LinkedBlockingDeque<IMessage>();
 		serialManager = new SerialManager();
 		serialManager.initialize();
 		MessageHandler handler = new MessageHandler(this);
@@ -73,7 +74,7 @@ public class Core extends Thread implements IIA {
 			if(inMission) {
 				//TODO GET GPS COORDONNATES	
 				//TODO GET COMPASS
-				if(this.pathfinder.isArrived(0, 0)) {
+				if(this.pathfinder.isArrived(1, 1)) {
 					System.out.println("Core : ISARRIVED");
 					Core.Log("Core : ISARRIVED");
 					
@@ -81,10 +82,10 @@ public class Core extends Thread implements IIA {
 					if(this.pathfinder.isLastPoint() ) {
 						this.stopMission();
 					} else {									
-						this.pathfinder.goToNextPoint(0,0, 50, 0);
+						this.pathfinder.goToNextPoint(1,1, 10);
 					}
 				} else if((System.currentTimeMillis() - startTime) >= 2000){
-					this.pathfinder.updateAngle(0, 0, 0);
+					this.pathfinder.updateAngle(1, 1, 10);
 					startTime = 0;
 				}	
 				
@@ -150,18 +151,21 @@ public class Core extends Thread implements IIA {
 
 	@Override
 	public void getGPSCoordonnate() {
+		System.out.println("Core : Ask GSP coordonnate");
 		GetGPSInfo arduinoMsg = new GetGPSInfo();
 		this.serialManager.write(arduinoMsg.toBytes());	
 	}
 
 	@Override
 	public void getCompass() {
+		System.out.println("Core : Ask compass");
 		GetAngle arduinoMsg = new GetAngle();
 		this.serialManager.write(arduinoMsg.toBytes());	
 	}
 
 	@Override
 	public void turnLeft(int angle) {
+		System.out.println("Core : Turn left");
 		TurnLeft arduinoMsg = new TurnLeft();
 		arduinoMsg.setDegree(angle);
 		this.serialManager.write(arduinoMsg.toBytes());	
@@ -169,6 +173,7 @@ public class Core extends Thread implements IIA {
 
 	@Override
 	public void turnRight(int angle) {
+		System.out.println("Core : Turn Right");
 		TurnRight arduinoMsg = new TurnRight();
 		arduinoMsg.setDegree(angle);
 		this.serialManager.write(arduinoMsg.toBytes());
@@ -176,6 +181,7 @@ public class Core extends Thread implements IIA {
 
 	@Override
 	public void forward(int speed) {
+		System.out.println("Core : forward");
 		GoForward arduinoMsg = new GoForward();
 		arduinoMsg.setVitesse(speed);
 		this.serialManager.write(arduinoMsg.toBytes());
@@ -183,6 +189,7 @@ public class Core extends Thread implements IIA {
 
 	@Override
 	public void backward(int speed) {
+		System.out.println("Core : backward");
 		GoBackward arduinoMsg = new GoBackward();
 		arduinoMsg.setVitesse(speed);
 		this.serialManager.write(arduinoMsg.toBytes());
@@ -194,18 +201,6 @@ public class Core extends Thread implements IIA {
 		Core.Log("Core : stopCar");
 		Stop arduinoMsg = new Stop();
 		this.serialManager.write(arduinoMsg.toBytes());
-	}
-
-	@Override
-	public void nextSerialMessage() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void nextControlMessage() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -221,16 +216,16 @@ public class Core extends Thread implements IIA {
 	}
 
 	@Override
-	public void launchMission(List<Integer> points, String mail) {
-		System.out.print("Launching mission...");
+	public void launchMission(List<Integer> points, String mail, int speed) {
+		System.out.println("Launching mission...");
 		this.mail = mail;
 		this.inMission = true;
 		this.pathfinder.setPath(points);
-		
+		this.pathfinder.setSpeed(speed);
 		this.getGPSCoordonnate();
 		
 		//TODO GET COORDONNATES AND COMPASS
-		this.pathfinder.goToNextPoint(0, 0, 50, 0);
+		this.pathfinder.goToNextPoint(1, 1, 10);
 	}
 	
 	public void stopMission() {

@@ -1,5 +1,14 @@
 package kercar.raspberry.test;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import kercar.comAPI.CMDMissionMessage;
+import kercar.comAPI.CMDMoveMessage;
+import kercar.comAPI.CMDStopMessage;
+import kercar.comAPI.CMDTurnMessage;
+import kercar.raspberry.core.Core;
+
 public class TestIA {
 	
 	public static void main(String args[]) {
@@ -10,6 +19,35 @@ public class TestIA {
 		System.out.println(testCalculAngle(1, 4, 4, 1, 295));
 		System.out.println(testCalculAngle(4, 5, 2, 1, 295));
 		System.out.println(testCalculAngle(5, 0, 2, 1, 315));
+		
+		Core core = new Core(".");
+		core.start();
+		
+		core.messageReceived(new CMDStopMessage());
+		CMDMoveMessage moveBackward = new CMDMoveMessage(50, true);
+		core.messageReceived(moveBackward);
+		CMDMoveMessage moveForward = new CMDMoveMessage(50, false);
+		core.messageReceived(moveForward);
+		CMDTurnMessage turnLeft = new CMDTurnMessage(false);
+		core.messageReceived(turnLeft);
+		CMDTurnMessage turnRight = new CMDTurnMessage(true);
+		core.messageReceived(turnRight);
+		
+		List<Integer> list = new LinkedList<Integer>();
+		list.add(0);
+		list.add(0);
+		CMDMissionMessage mission = new CMDMissionMessage(list, false, false, "miaou");
+		core.messageReceived(mission);
+		core.messageReceived(new CMDStopMessage());
+		
+		list.clear();
+		list.add(1);
+		list.add(1);
+		list.add(0);
+		list.add(0);
+		mission = new CMDMissionMessage(list, false, false, "miaou");
+		core.messageReceived(mission);
+		
 	}
 	
 	public static int testCalculAngle(int pointLongitude, int pointLatitude, int gpsLongitude, int gpsLatitude, int compass) {

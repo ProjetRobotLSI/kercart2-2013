@@ -1,5 +1,6 @@
 package kercar.raspberry.core;
 
+import kercar.comAPI.CMDMissionMessage;
 import kercar.comAPI.CMDMoveMessage;
 import kercar.comAPI.CMDTurnMessage;
 import kercar.comAPI.IMessage;
@@ -60,6 +61,14 @@ public class MessageHandler {
 			Core.Log("MessageHandler : CMD_TURN");
 			this.ia.stopMission();
 			this.ia.stopKercar();
+		}
+		else if (message.getType() == Message.CMD_MISSION) {
+			Core.Log("MessageHandler : CMD_MISSION");
+			this.ia.stopMission();
+			this.ia.stopKercar();
+			CMDMissionMessage mission = new CMDMissionMessage((Message)message);
+			//TODO GET SPEED
+			this.ia.launchMission(mission.getCoordinates(), mission.getMailAddress(), 50);
 		}
 		
 	}

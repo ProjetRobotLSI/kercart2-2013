@@ -25,13 +25,12 @@ public class Pathfinder implements IPathfinder {
 	}
 
 	@Override
-	public void goToNextPoint(int gpsLatitude, int gpsLongitude, int speed, int compass) {
+	public void goToNextPoint(int gpsLatitude, int gpsLongitude, int compass) {
 		System.out.println("PathFinder : NEXT POINT");
 		Core.Log("PathFinder : NEXT POINT");
 		
 		this.pointLatitude = it.next();
 		this.pointLongitude = it.next();
-		this.currentSpeed = speed;
 		int angle = this.calculateAngle(gpsLatitude, gpsLongitude, compass);
 		
 		if(angle < 180) 
@@ -39,7 +38,7 @@ public class Pathfinder implements IPathfinder {
 		else
 			this.iA.turnLeft(360 - angle);
 		
-		this.iA.forward(speed);
+		this.iA.forward(currentSpeed);
 	}
 	
 	public void updateAngle(int gpsLatitude, int gpsLongitude, int compass) {
@@ -49,18 +48,15 @@ public class Pathfinder implements IPathfinder {
 		int angle = this.calculateAngle(gpsLatitude, gpsLongitude, compass);
 		
 		boolean turn = false;
-		if((angle >= compass && ((100 * compass) / angle) >= 10) || (compass > angle && ((100 * angle) / compass) >= 10)){
-				turn = true;
-		} 
-		
-		if(turn) {
-			if(angle < 180) 
-				this.iA.turnRight(angle);
-			else
-				this.iA.turnLeft(360 - angle);
-			//TODO Attendre que kercar tourne
-		}	
-				
+		if((angle >= compass && (pourcent(compass, angle) <= 90)) || (pourcent(angle, compass) <= 90)) {
+			if(turn) {
+				if(angle < 180) 
+					this.iA.turnRight(angle);
+				else
+					this.iA.turnLeft(360 - angle);
+				//TODO Attendre que kercar tourne
+			}	
+		} 		
 		this.iA.forward(this.currentSpeed);
 	}
 	
@@ -104,20 +100,32 @@ public class Pathfinder implements IPathfinder {
 	}
 
 	@Override
-	public void stop() {
-		// TODO Auto-generated method stub
-		
+	public void setSpeed(int speed) {
+		this.currentSpeed = speed;
 	}
 
 	@Override
-	public boolean isArrived(int gpslatitude, int gpsLongitude) {
-		// TODO Auto-generated method stub
+	public boolean isArrived(int gpsLatitude, int gpsLongitude) {
+		if((gpsLatitude >= pointLatitude && (pourcent(pointLatitude, gpsLatitude) >= 90)) || (pourcent(gpsLatitude, pointLatitude) >= 90)) {
+			if((gpsLongitude >= pointLongitude && (pourcent(pointLongitude, gpsLongitude) >= 90)) || (pourcent(pointLatitude, gpsLongitude) >= 90))
+				return true;
+		}
+			
 		return false;
 	}
 	
 	@Override
 	public boolean isLastPoint() {
 		return !it.hasNext(); 
+	}
+	
+	private double pourcent(int first, int second) {
+		//TODO Gestion des zeros
+		if(first == 0 && second == 0)
+			return 100;
+		else if(second == 0)
+			return 0;
+		return (100 * first) / second;
 	}
 
 }
