@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.InputType;
+import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
@@ -204,8 +205,5 @@ public class CreationForm extends Activity{
 	    /**Traitement de btnAnnuler*/
 	    btnAnnuler.setText(Html.fromHtml("Annuler"));
 	    btnAnnuler.setTextSize(30);
-	    
-	    
-	    
 	  }
 }
