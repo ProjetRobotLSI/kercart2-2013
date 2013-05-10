@@ -1,9 +1,15 @@
 package com.kercar;
 
+import BaseDeDonnees.Mission;
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.InputType;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -14,6 +20,7 @@ import android.widget.TextView;
 
 public class CreationForm extends Activity{
 
+	private TextView lblTitre= null;
 	private TextView lblNom= null;
 	private TextView lblEmail= null;
 	private TextView lblRetourDepart= null;
@@ -33,6 +40,7 @@ public class CreationForm extends Activity{
 	    setContentView(R.layout.creation_frm);
 
 	    /**Initialisation des attributs*/
+	    lblTitre = (TextView) findViewById(R.id.lblTitre);
 	    lblNom = (TextView) findViewById(R.id.lblNom);
 	    lblEmail = (TextView) findViewById(R.id.lblEmail);
 	    lblRetourDepart = (TextView) findViewById(R.id.lblRetourDepart);
@@ -44,6 +52,16 @@ public class CreationForm extends Activity{
 	    btnSuivant = (Button) findViewById(R.id.btnSuivant);
 	    btnAnnuler = (Button) findViewById(R.id.btnAnnuler);
 	    
+	    /**Reception de bundles*/
+	    //Creation du bundle et reception des objets transferes
+        Bundle receptionBundle  = this.getIntent().getExtras().getBundle("AjoutBundleDansIntent");        
+    	final Mission newMission= (Mission) receptionBundle.getSerializable("AjoutMissionDansBundle");
+    	String typeFonctionnalite= receptionBundle.getString("Titre");
+
+    	/**Traitement sur lblTitre*/
+	    lblTitre.setText(Html.fromHtml(typeFonctionnalite+" une mission"));
+	    lblTitre.setTextSize(50);
+    	
 	    /**Traitement sur lblNom*/
 	    lblNom.setText(Html.fromHtml("<p style='color:green'> Nom de la mission: </p>"));
 	    lblNom.setTextSize(30);
@@ -57,38 +75,137 @@ public class CreationForm extends Activity{
 	    lblRetourDepart.setTextSize(30);
 	    
 	    /**Traitement sur lblPhotoArrivee*/
-	    lblPhotoArrivee.setText(Html.fromHtml("Photo Arrivee:"));
+	    lblPhotoArrivee.setText(Html.fromHtml("Photo point d'arrivee :"));
 	    lblPhotoArrivee.setTextSize(30);
 	    
-	    /**Traitement sur txtNom*/
-		txtNom.setHint(R.string.editNom);
-		txtNom.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-		txtNom.setLines(5);
+/**Traitement sur txtNom////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+	    if(typeFonctionnalite.equals("Creer")){
+
+			txtNom.setHint(R.string.editNom);
+			txtNom.setHintTextColor(Color.parseColor("#000000"));
+			txtNom.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+			txtNom.setLines(5);
+			txtNom.setOnFocusChangeListener(new OnFocusChangeListener() {
+				
+				@Override
+				public void onFocusChange(View arg0, boolean arg1) {
+					
+					txtNom.setHintTextColor(Color.parseColor("#000000"));
+					txtNom.setHint(R.string.editNom);
+				}
+			});
+	    }
+	    else if(typeFonctionnalite.equals("Editer"))
+	    	txtNom.setText(newMission.getNom());
+	    else
+	    	System.err.println("Erreur transfert de donnees !");
+
 		
-	    /**Traitement sur txtNom*/
-		txtEmail.setHint(R.string.editEmail);
-		txtEmail.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-		txtEmail.setLines(5);
+/**Traitement sur txtEmail//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+		if(typeFonctionnalite.equals("Creer")){
 		
-		/**Traitement sur cbxRetourDepart*/
-		cbxRetourDepart.setText(R.string.cbxRetour);
-		cbxRetourDepart.setChecked(true);
-		if(cbxRetourDepart.isChecked())
-			System.out.println("Checked !");
+			txtEmail.setHint(R.string.editEmail);
+			txtEmail.setHintTextColor(Color.parseColor("#000000"));
+			txtEmail.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+			txtEmail.setLines(5);
+			txtEmail.setOnFocusChangeListener(new OnFocusChangeListener() {
+				
+				@Override
+				public void onFocusChange(View arg0, boolean arg1) {
+					
+					txtEmail.setHintTextColor(Color.parseColor("#000000"));
+					txtEmail.setHint(R.string.editEmail);
+				}
+			});
+		}
+		else if(typeFonctionnalite.equals("Editer")){
+			txtEmail.setText(newMission.getEmail());
+		}
+	    else
+	    	System.err.println("Erreur transfert de donnees !");	    
 		
-		/**Traitement sur cbxPhotoArrivee*/
-		cbxPhotoArrivee.setText(R.string.cbxRetour);
-		cbxPhotoArrivee.setChecked(true);
-		if(cbxPhotoArrivee.isChecked())
-			System.out.println("Checked !");
 		
-	    /**Traitement de btnSuivant*/
+/**Traitement sur cbxRetourDepart////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+		if(typeFonctionnalite.equals("Creer")){
+
+			cbxRetourDepart.setText(R.string.cbxRetour);
+			cbxRetourDepart.setChecked(true);
+		}
+		else if(typeFonctionnalite.equals("Editer")){
+			
+			if(newMission.getRetourDepart() && !cbxRetourDepart.isChecked())
+				cbxRetourDepart.setChecked(true);
+			else if(!newMission.getRetourDepart() && cbxRetourDepart.isChecked())
+				cbxRetourDepart.setChecked(false);
+		}
+	    else
+	    	System.err.println("Erreur transfert de donnees !");	
+
+		
+/**Traitement sur cbxPhotoArrivee////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+		if(typeFonctionnalite.equals("Creer")){
+			
+			cbxPhotoArrivee.setText(R.string.cbxRetour);
+			cbxPhotoArrivee.setChecked(true);			
+		}
+		else if(typeFonctionnalite.equals("Editer")){
+			
+			if(newMission.getPrendrePhotosArrivee() && !cbxPhotoArrivee.isChecked())
+				cbxPhotoArrivee.setChecked(true);
+			else if(!newMission.getPrendrePhotosArrivee() && cbxPhotoArrivee.isChecked())
+				cbxPhotoArrivee.setChecked(false);
+		}
+		else
+			System.err.println("Erreur transfert de donnees !");	
+		
+		
+/**Traitement de btnSuivant//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 	    btnSuivant.setText(Html.fromHtml("Suivant >"));
 	    btnSuivant.setTextSize(30);
 	    
-	    /**Traitement de btnSuivant*/
+	    btnSuivant.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				
+				String emptyNom= txtNom.getText().toString();
+				String emptyEmail= txtEmail.getText().toString();
+				boolean emptyVerif= false;
+				
+				if(!(emptyNom.equals("")) && !(emptyEmail.equals(""))){
+					
+					newMission.setNom(txtNom.getText().toString());
+					newMission.setEmail(txtEmail.getText().toString());
+					if(cbxRetourDepart.isChecked())	newMission.setRetourDepart(true);
+					else newMission.setRetourDepart(false);
+					if(cbxPhotoArrivee.isChecked())	newMission.setPrendrePhotosArrivee(true);
+					else newMission.setPrendrePhotosArrivee(false);
+					
+					Bundle missionBundle = new Bundle();
+					missionBundle.putSerializable("AjoutMissionDansBundle2", newMission);
+					
+					Intent intent = new Intent(CreationForm.this, ChoixPointArrive.class);
+					intent.putExtra("AjoutBundleDansIntent2", missionBundle);
+					startActivity(intent);
+				}
+				if((emptyNom.equals(""))){
+					
+					txtNom.setHint("Champs obligatoire !");
+					txtNom.setHintTextColor(Color.parseColor("#ff0000"));
+				}
+				if((emptyEmail.equals(""))){
+					
+					txtEmail.setHint("Champs obligatoire !");
+					txtEmail.setHintTextColor(Color.parseColor("#ff0000"));
+				}	
+
+			}
+		});
+	    
+	    /**Traitement de btnAnnuler*/
 	    btnAnnuler.setText(Html.fromHtml("Annuler"));
 	    btnAnnuler.setTextSize(30);
+	    
+	    
 	    
 	  }
 }

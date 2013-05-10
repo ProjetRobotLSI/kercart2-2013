@@ -2,7 +2,11 @@ package com.kercar;
 
 import java.util.List;
 
+import BaseDeDonnees.Mission;
+import Client.ClientMissions;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,11 +22,20 @@ public class ChoixPointArrive extends Activity{
 	private Button enregistrerMission;
 	private OSMAndroid OSM;
 	private List<Integer> route;
+	private ClientMissions clientMissions;
 	
 	 @Override
 	    protected void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	   
+	        /**Initialisation du gestionnaire des missions*/
+	        clientMissions = new ClientMissions(getApplicationContext());
+	        
+		    /**Reception de bundles*/
+		    //Creation du bundle et reception des objets transferes
+	        Bundle receptionBundle  = this.getIntent().getExtras().getBundle("AjoutBundleDansIntent2");        
+	    	final Mission newMission= (Mission) receptionBundle.getSerializable("AjoutMissionDansBundle2");
+	    	
 	        //ContentView
 	        setContentView(R.layout.choix_point_arrive);
 	        
@@ -33,13 +46,55 @@ public class ChoixPointArrive extends Activity{
 			enregistrerMission.setOnClickListener(new OnClickListener(){
 				@Override
 				public void onClick(View v) {
-					route = OSM.getRoadStep(OSM.getLastRoad());
-					//ENREGISTRER ROUTE DANS BASE DE DONNEE
-					Intent intent = new Intent(ChoixPointArrive.this, MenuSelection.class);
-					startActivity(intent);
+					
+					try {
+						//TODO Revoir avec Guillaume
+						route = OSM.getRoadStep(OSM.getLastRoad());
+						//ENREGISTRER ROUTE DANS BASE DE DONNEE
+						clientMissions.creerMission(newMission.getNom(), newMission.getEmail(), newMission.getRetourDepart(), newMission.getPrendrePhotosArrivee());
+						msbox("Information","Mission ajoutee avec succes !");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}
+			});
+			
+			OSM.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View arg0) {
+
+					//On ajoute les points choisis dans la map a la mission
+					try {
+						
+
+						
+					} catch (Exception e) {
+						
+						e.printStackTrace();
+					}
 				}
 			});
 	    }
+	 
+	 public void msbox(String titre,String message)
+	 {
+	     AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);                      
+	     dlgAlert.setTitle(titre); 
+	     dlgAlert.setMessage(message); 
+	     dlgAlert.setPositiveButton("OK",new DialogInterface.OnClickListener() {
+	         public void onClick(DialogInterface dialog, int whichButton) {
+	              
+					Intent intent = new Intent(ChoixPointArrive.this, MenuSelection.class);
+					startActivity(intent);
+	         }
+	     });
+	     
+	     dlgAlert.setCancelable(true);
+	     dlgAlert.create().show();
+	 }
 
 	    @Override
 	    public boolean onCreateOptionsMenu(Menu menu) {
