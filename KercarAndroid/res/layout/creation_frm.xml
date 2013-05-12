@@ -28,7 +28,6 @@
    android:hint="@string/editNom"
    android:inputType="textMultiLine"
    android:lines="5" />
-   
     
     <TextView
     android:id="@+id/lblEmail"

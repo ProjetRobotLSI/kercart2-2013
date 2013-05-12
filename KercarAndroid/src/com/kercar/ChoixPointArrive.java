@@ -35,6 +35,7 @@ public class ChoixPointArrive extends Activity{
 		    //Creation du bundle et reception des objets transferes
 	        Bundle receptionBundle  = this.getIntent().getExtras().getBundle("AjoutBundleDansIntent2");        
 	    	final Mission newMission= (Mission) receptionBundle.getSerializable("AjoutMissionDansBundle2");
+	    	final String typeFonctionnalite= receptionBundle.getString("Titre");
 	    	
 	        //ContentView
 	        setContentView(R.layout.choix_point_arrive);
@@ -47,17 +48,39 @@ public class ChoixPointArrive extends Activity{
 				@Override
 				public void onClick(View v) {
 					
-					try {
-						//TODO Revoir avec Guillaume
-						route = OSM.getRoadStep(OSM.getLastRoad());
-						//ENREGISTRER ROUTE DANS BASE DE DONNEE
-						clientMissions.creerMission(newMission.getNom(), newMission.getEmail(), newMission.getRetourDepart(), newMission.getPrendrePhotosArrivee());
-						msbox("Information","Mission ajoutee avec succes !");
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					if(typeFonctionnalite.equals("Creer")){
+						
+						try {
+							//TODO A Revoir avec Guillaume
+							route = OSM.getRoadStep(OSM.getLastRoad());
+							//ENREGISTRER ROUTE DANS BASE DE DONNEE
+							clientMissions.creerMission(newMission.getNom(), newMission.getEmail(), newMission.getRetourDepart(), newMission.getPrendrePhotosArrivee());
+							msbox("Information","Mission ajoutee avec succes !");
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
-					
+					else if(typeFonctionnalite.equals("Editer")){
+						
+						try {
+							//TODO A Revoir avec Guillaume
+							route = OSM.getRoadStep(OSM.getLastRoad());
+							//ENREGISTRER ROUTE DANS BASE DE DONNEE
+							clientMissions.changerMissionEnCours(newMission);
+							clientMissions.setEMailMissionEnCours(newMission.getEmail());
+							clientMissions.setRetourDepartMissionEnCours(newMission.getRetourDepart());
+							clientMissions.setPrendrePhotosArriveeMissionEnCours(newMission.getPrendrePhotosArrivee());
+							clientMissions.saveMissions(getApplicationContext());
+							msbox("Information", "Mission modifiee avec succes !");
+						} catch (Exception e) {
+							
+							e.printStackTrace();
+						}
+
+					}
+					else
+						throw new IllegalStateException("Exception ! Type de fonctionnalite inexistant !");
 				}
 			});
 			
