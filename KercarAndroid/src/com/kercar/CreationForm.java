@@ -59,51 +59,51 @@ public class CreationForm extends Activity{
     	final Mission newMission= (Mission) receptionBundle.getSerializable("AjoutMissionDansBundle");
     	final String typeFonctionnalite= receptionBundle.getString("Titre");
 
-    	/**Traitement sur lblTitre*/
-	    lblTitre.setText(Html.fromHtml(typeFonctionnalite+" une mission"));
-	    lblTitre.setTextSize(50);
-	    lblTitre.setTextColor(Color.parseColor("#00ff00"));
-    	
-	    /**Traitement sur lblNom*/
-	    lblNom.setText(Html.fromHtml("<p style='color:green'> Nom de la mission: </p>"));
-	    lblNom.setTextSize(30);
-	    lblNom.setTextColor(Color.parseColor("#00ff00"));
-	    
-	    
-	    /**Traitement sur lblEmail*/
-	    lblEmail.setText(Html.fromHtml("Adresse e-mail:"));
-	    lblEmail.setTextSize(30);
-	    lblEmail.setTextColor(Color.parseColor("#00ff00"));
-	    
-	    /**Traitement sur lblRetourDepart*/
-	    lblRetourDepart.setText(Html.fromHtml("Retour du robot:"));
-	    lblRetourDepart.setTextSize(30);
-	    lblRetourDepart.setTextColor(Color.parseColor("#00ff00"));
-	    
-	    /**Traitement sur lblPhotoArrivee*/
-	    lblPhotoArrivee.setText(Html.fromHtml("Photo point d'arrivee :"));
-	    lblPhotoArrivee.setTextSize(30);
-	    lblPhotoArrivee.setTextColor(Color.parseColor("#00ff00"));
+//    	/**Traitement sur lblTitre*/
+//	    lblTitre.setText(Html.fromHtml(typeFonctionnalite+" une mission"));
+//	    lblTitre.setTextSize(50);
+//	    lblTitre.setTextColor(Color.parseColor("#00ff00"));
+//    	
+//	    /**Traitement sur lblNom*/
+//	    lblNom.setText(Html.fromHtml("<p style='color:green'> Nom de la mission: </p>"));
+//	    lblNom.setTextSize(30);
+//	    lblNom.setTextColor(Color.parseColor("#00ff00"));
+//	    
+//	    
+//	    /**Traitement sur lblEmail*/
+//	    lblEmail.setText(Html.fromHtml("Adresse e-mail:"));
+//	    lblEmail.setTextSize(30);
+//	    lblEmail.setTextColor(Color.parseColor("#00ff00"));
+//	    
+//	    /**Traitement sur lblRetourDepart*/
+//	    lblRetourDepart.setText(Html.fromHtml("Retour du robot:"));
+//	    lblRetourDepart.setTextSize(30);
+//	    lblRetourDepart.setTextColor(Color.parseColor("#00ff00"));
+//	    
+//	    /**Traitement sur lblPhotoArrivee*/
+//	    lblPhotoArrivee.setText(Html.fromHtml("Photo point d'arrivee :"));
+//	    lblPhotoArrivee.setTextSize(30);
+//	    lblPhotoArrivee.setTextColor(Color.parseColor("#00ff00"));
 	    
 /**Traitement sur txtNom////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 	    if(typeFonctionnalite.equals("Creer")){
 
-			txtNom.setHint(R.string.editNom);
-			txtNom.setHintTextColor(Color.parseColor("#000000"));
-			txtNom.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-			txtNom.setLines(5);
-			txtNom.setOnFocusChangeListener(new OnFocusChangeListener() {
-				
-				@Override
-				public void onFocusChange(View arg0, boolean arg1) {
-					
-					txtNom.setHintTextColor(Color.parseColor("#000000"));
-					txtNom.setHint(R.string.editNom);
-				}
-			});
+//			txtNom.setHint(R.string.edit_nom);
+//			txtNom.setHintTextColor(Color.parseColor("#000000"));
+//			txtNom.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+//			txtNom.setLines(5);
+//			txtNom.setOnFocusChangeListener(new OnFocusChangeListener() {
+//				
+//				@Override
+//				public void onFocusChange(View arg0, boolean arg1) {
+//					
+//					txtNom.setHintTextColor(Color.parseColor("#000000"));
+//					txtNom.setHint(R.string.edit_nom);
+//				}
+//			});
 	    }
 	    else if(typeFonctionnalite.equals("Editer")){
-	    	txtNom.setEnabled(false);
+//	    	txtNom.setEnabled(false);
 	    	txtNom.setText(newMission.getNom());
 	    }else
 	    	System.err.println("Erreur transfert de donnees !");
@@ -112,19 +112,19 @@ public class CreationForm extends Activity{
 /**Traitement sur txtEmail//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 		if(typeFonctionnalite.equals("Creer")){
 		
-			txtEmail.setHint(R.string.editEmail);
-			txtEmail.setHintTextColor(Color.parseColor("#000000"));
-			txtEmail.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-			txtEmail.setLines(5);
-			txtEmail.setOnFocusChangeListener(new OnFocusChangeListener() {
-				
-				@Override
-				public void onFocusChange(View arg0, boolean arg1) {
-					
-					txtEmail.setHintTextColor(Color.parseColor("#000000"));
-					txtEmail.setHint(R.string.editEmail);
-				}
-			});
+//			txtEmail.setHint(R.string.edit_email);
+//			txtEmail.setHintTextColor(Color.parseColor("#000000"));
+//			txtEmail.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+//			txtEmail.setLines(5);
+//			txtEmail.setOnFocusChangeListener(new OnFocusChangeListener() {
+//				
+//				@Override
+//				public void onFocusChange(View arg0, boolean arg1) {
+//					
+//					txtEmail.setHintTextColor(Color.parseColor("#000000"));
+//					txtEmail.setHint(R.string.edit_email);
+//				}
+//			});
 		}
 		else if(typeFonctionnalite.equals("Editer")){
 			txtEmail.setText(newMission.getEmail());
@@ -134,12 +134,12 @@ public class CreationForm extends Activity{
 		
 		
 /**Traitement sur cbxRetourDepart////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-	    cbxRetourDepart.setTextColor(Color.parseColor("#00ff00"));
+//	    cbxRetourDepart.setTextColor(Color.parseColor("#00ff00"));
 		
 		if(typeFonctionnalite.equals("Creer")){
 
-			cbxRetourDepart.setText(R.string.cbxRetour);
-			cbxRetourDepart.setChecked(true);
+//			cbxRetourDepart.setText(R.string.cbx_retour);
+//			cbxRetourDepart.setChecked(true);
 		}
 		else if(typeFonctionnalite.equals("Editer")){
 			
@@ -152,11 +152,11 @@ public class CreationForm extends Activity{
 	    	System.err.println("Erreur transfert de donnees !");	
 
 /**Traitement sur cbxPhotoArrivee////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-		cbxPhotoArrivee.setTextColor(Color.parseColor("#00ff00"));
+//		cbxPhotoArrivee.setTextColor(Color.parseColor("#00ff00"));
 		if(typeFonctionnalite.equals("Creer")){
 			
-			cbxPhotoArrivee.setText(R.string.cbxRetour);
-			cbxPhotoArrivee.setChecked(true);			
+//			cbxPhotoArrivee.setText(R.string.cbx_retour);
+//			cbxPhotoArrivee.setChecked(true);			
 		}
 		else if(typeFonctionnalite.equals("Editer")){
 			
@@ -170,8 +170,8 @@ public class CreationForm extends Activity{
 		
 		
 /**Traitement de btnSuivant//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-	    btnSuivant.setText(Html.fromHtml("Suivant >"));
-	    btnSuivant.setTextSize(30);
+//	    btnSuivant.setText(Html.fromHtml("Suivant >"));
+//	    btnSuivant.setTextSize(30);
 		    
 	    btnSuivant.setOnClickListener(new OnClickListener(){
 			@Override
@@ -213,7 +213,7 @@ public class CreationForm extends Activity{
 		});
 	    
 	    /**Traitement de btnAnnuler*/
-	    btnAnnuler.setText(Html.fromHtml("Annuler"));
-	    btnAnnuler.setTextSize(30);
+//	    btnAnnuler.setText(Html.fromHtml("Annuler"));
+//	    btnAnnuler.setTextSize(30);
 	  }
 }

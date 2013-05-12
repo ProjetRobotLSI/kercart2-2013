@@ -1,29 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+    <!-- Programme Kercar -->
     <string name="app_name">KerCar</string>
     <string name="app_version">v1.0</string>
     <string name="menu_settings">Settings</string>
     
+    <!-- Ressources Partagees -->
+    <string name="empty">empty</string>
+    <string name="button_OK">OK</string>
+    <string name="button_suivant">Suivant</string>
+    <string name="button_annuler">Annuler</string>
+    
+    <!-- Menu Start -->
     <string name="button_start">Start</string>
     <string name="button_about">About</string>
+    <string name="image_menu_start">imageMenuStart</string>
+    
+    <!-- Menu Selection -->
     <string name="button_commandes_manuelles">Commander Manuellement</string>
     <string name="button_creation_edition_mission">Créer/Editer une Mission</string>
     <string name="button_lancer_mission">Lancer une Mission</string>
     <string name="button_arreter_mission">Arrêter la Mission</string>
-    <string name="empty">empty</string>
-    <string name="button_OK">OK</string>
-    <string name="editNom">Saisie du nom</string>
-    <string name="editEmail">Saisie de l e-mail </string>  
-    <string name="cbxRetour">Oui</string>  
-    <string name="editNomE">Saisie du nom</string>
-    <string name="editEmailE">Saisie de l e-mail </string>  
-    <string name="cbxRetourE">Oui</string>  
-    <string name="image_menu_start">imageMenuStart</string>
     
+    <!-- Menu Creation Mission -->   
+    <string name="edit_nom_edit">Saisie du nom</string>
+    <string name="edit_nom">Saisie du nom :</string>
+    <string name="edit_email_edit">Saisie de l e-mail </string>
+    <string name="edit_email">Saisie de l e-mail :</string>
+    <string name="edit_photo">Photo Arrivee :</string>
+    <string name="edit_retour_robot">Retour du robot :</string>
+    
+    
+    <string name="cbx_retour">Oui</string>  
+    <string name="cbx_retourE">Oui</string>  
+    
+    <!-- Menu Creation -->
+    <string name="createMission">Creer une nouvelle mission</string>
+    
+    <!-- Menu Choix Point Arrive -->
     <string name="demande_point_arrive">Veuillez choisir le point d\'arrivée du robot</string>
     
-    <!-- menuCreation -->
-    <string name="createMission">Creer une nouvelle mission</string>
-  
 </resources>
