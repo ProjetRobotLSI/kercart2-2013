@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -59,7 +60,7 @@ public class MenuCreation extends Activity{
 		});
 		
 		/**
-		 * Listener d'ï¿½dition des missions dï¿½jï¿½ crï¿½ï¿½es
+		 * Listener d'edition des missions deja créées
 		 */
 		listeMissions.setOnItemClickListener(new OnItemClickListener(){
 			@Override

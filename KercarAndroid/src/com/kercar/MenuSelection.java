@@ -51,7 +51,8 @@ public class MenuSelection extends Activity{
 			lancer.setOnClickListener(new OnClickListener(){
 				@Override
 				public void onClick(View v) {
-					
+					Intent intent = new Intent(MenuSelection.this, MenuLancement.class);
+					startActivity(intent);
 				}
 			});
 			

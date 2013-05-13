@@ -30,7 +30,7 @@ public class MenuStart extends Activity{
 		start.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(MenuStart.this, MenuSelection.class);
+				Intent intent = new Intent(MenuStart.this, MenuSelectionSansArret.class);
 				startActivity(intent);
 			}
 		});
