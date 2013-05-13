@@ -73,9 +73,10 @@
         android:layout_alignLeft="@+id/txtEmail"
         android:layout_alignParentRight="true"
 		android:checked="true"
-        android:text="@string/cbx_retour"
+        android:text="@string/oui"
         android:textSize="25sp"
-        android:textColor="#ffffff"/>
+        android:textColor="#ffffff"
+        android:button="@drawable/checkbox"/>
     	
     <CheckBox
 		android:id="@+id/cbxPhotoArrivee"
@@ -85,9 +86,10 @@
         android:layout_alignBottom="@+id/lblPhotoArrivee"
         android:layout_alignLeft="@+id/cbxRetourDepart"
         android:checked="true"
-        android:text="@string/cbx_retour"
+        android:text="@string/oui"
         android:textSize="25sp"
-        android:textColor="#ffffff"/>
+        android:textColor="#ffffff"
+        android:button="@drawable/checkbox"/>
     
     <Button
 	    android:id="@+id/btnSuivant"

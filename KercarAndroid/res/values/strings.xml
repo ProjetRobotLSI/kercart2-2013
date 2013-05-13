@@ -10,6 +10,7 @@
     <string name="button_OK">OK</string>
     <string name="button_suivant">Suivant</string>
     <string name="button_annuler">Annuler</string>
+    <string name="oui">Oui</string>
     
     <!-- Menu Start -->
     <string name="button_start">Start</string>
@@ -29,15 +30,13 @@
     <string name="edit_email">Saisie de l e-mail :</string>
     <string name="edit_photo">Photo Arrivee :</string>
     <string name="edit_retour_robot">Retour du robot :</string>
-    
-    
-    <string name="cbx_retour">Oui</string>  
-    <string name="cbx_retourE">Oui</string>  
-    
-    <!-- Menu Creation -->
     <string name="createMission">Creer une nouvelle mission</string>
     
     <!-- Menu Choix Point Arrive -->
     <string name="demande_point_arrive">Veuillez choisir le point d\'arrivée du robot</string>
+    
+    <!-- Menu Recapitulatif Mission -->
+    <string name="nom_mission">Mission :</string>
+    <string name="email_mission">Email :</string>
     
 </resources>

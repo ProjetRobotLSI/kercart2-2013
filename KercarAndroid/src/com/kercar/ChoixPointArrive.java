@@ -110,7 +110,7 @@ public class ChoixPointArrive extends Activity{
 	     dlgAlert.setPositiveButton("OK",new DialogInterface.OnClickListener() {
 	         public void onClick(DialogInterface dialog, int whichButton) {
 	              
-					Intent intent = new Intent(ChoixPointArrive.this, MenuSelectionSansArret.class);
+					Intent intent = new Intent(ChoixPointArrive.this, MenuSelection.class);
 					startActivity(intent);
 	         }
 	     });

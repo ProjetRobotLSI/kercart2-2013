@@ -48,7 +48,7 @@ public class MenuLancement extends Activity{
 				missionBundle.putString("Titre", "Editer");
 				
 				//On cree un intent, celui-ci va transmettre le bundle et aussi de passer a CreationForm activity
-				Intent intent = new Intent(MenuLancement.this, CreationForm.class);
+				Intent intent = new Intent(MenuLancement.this, MenuRecapitulatif.class);
 				intent.putExtra("AjoutBundleDansIntent", missionBundle);
 				startActivity(intent);
 			}
