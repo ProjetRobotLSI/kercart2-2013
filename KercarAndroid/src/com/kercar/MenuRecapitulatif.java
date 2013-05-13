@@ -3,7 +3,9 @@ package com.kercar;
 import BaseDeDonnees.Mission;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -12,11 +14,11 @@ import android.widget.TextView;
 
 public class MenuRecapitulatif extends Activity{
 
-	private Button btnOK= null;
-	private TextView txtNom = null;
-	private TextView txtEmail = null;
-	private CheckBox cbxRetourDepart = null;
-	private CheckBox cbxPhotoArrivee = null;
+	private Button btnOK;
+	private TextView txtNom;
+	private TextView txtEmail;
+	private CheckBox cbxRetourDepart;
+	private CheckBox cbxPhotoArrivee;
 	
 	 @Override
 	  public void onCreate(Bundle savedInstanceState) {
@@ -50,9 +52,15 @@ public class MenuRecapitulatif extends Activity{
 		cbxPhotoArrivee.setChecked(newMission.getPrendrePhotosArrivee());
 		
 		/**Traitement de btnOK*/
+		SharedPreferences missionLancee = PreferenceManager.getDefaultSharedPreferences(this);
+		final SharedPreferences.Editor editor = missionLancee.edit();
+		
 	    btnOK.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
+				editor.putBoolean("missionLancee", true);
+				editor.commit();
+				
 				Intent intent = new Intent(MenuRecapitulatif.this, MenuSelection.class);
 				startActivity(intent);
 			}

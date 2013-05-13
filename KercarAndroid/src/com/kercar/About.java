@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.SeekBar;
 
 public class About extends Activity{
 		

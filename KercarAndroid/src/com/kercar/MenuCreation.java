@@ -1,7 +1,5 @@
 package com.kercar;
 
-import java.io.Serializable;
-
 import BaseDeDonnees.Mission;
 import Client.ClientMissions;
 import android.app.Activity;
@@ -11,7 +9,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;

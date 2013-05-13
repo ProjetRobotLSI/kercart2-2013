@@ -1,7 +1,6 @@
 package com.kercar;
 
 import java.util.LinkedList;
-import java.util.concurrent.ExecutionException;
 
 import kercar.android.ComAndroid;
 import kercar.android.IComAndroid;
