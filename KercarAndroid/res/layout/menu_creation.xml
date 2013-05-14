@@ -5,15 +5,6 @@
   android:layout_height="fill_parent"
   android:orientation="vertical" 
   android:background="@drawable/fond_portrait" >
- 
- <!-- 
-  <TextView
-    android:id="@+id/txtListeMissions"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="Liste des missions :" 
-    android:textColor="#FFFFFF"/>
-  -->
     
    <Button
       android:id="@+id/send"
@@ -27,7 +18,7 @@
       android:id="@+id/lstListeMissions"
       android:layout_width="fill_parent"
       android:layout_height="fill_parent"
-      android:background="#FFFFFF"
       android:choiceMode="singleChoice">    
     </ListView>
+    
 </LinearLayout>
