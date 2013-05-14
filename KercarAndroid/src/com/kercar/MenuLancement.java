@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -13,19 +14,19 @@ import android.widget.ListView;
 
 public class MenuLancement extends Activity{
 	
-	private ListView listeMissions;
-	
+	//Attributs
+	private ListView listeMissions;	
 	private ClientMissions clientMissions;
 
-	public void onCreate(Bundle savedInstanceState) {
-	
+	public void onCreate(Bundle savedInstanceState) {	
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.menu_lancement);
 
-		//Initialisation des attributs d'affichage
+		//Initialisation des attributs
 		listeMissions = (ListView) findViewById(R.id.lstListeMissions);
 		
-		// recuperation des missions dans la base de donnees
+		//Recuperation des missions dans la base de donnees
 		clientMissions = new ClientMissions(getApplicationContext());
 		
 		// Affichage des missions crees		
@@ -40,12 +41,12 @@ public class MenuLancement extends Activity{
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				
 				//On charge la mission a partir de l'indice choisi dans le tableau
-				Mission editMission = clientMissions.getListeMissions().getListe().get(position);
+				Mission lancementMission = clientMissions.getListeMissions().getListe().get(position);
 				
 				//On creee le bundle qui contiendra la mission puis on la met dans celui-ci
 				Bundle missionBundle = new Bundle();
-				missionBundle.putSerializable("AjoutMissionDansBundle", editMission);
-				missionBundle.putString("Titre", "Editer");
+				missionBundle.putSerializable("AjoutMissionDansBundle", lancementMission);
+				missionBundle.putString("Titre", "Lancement");
 				
 				//On cree un intent, celui-ci va transmettre le bundle et aussi de passer a CreationForm activity
 				Intent intent = new Intent(MenuLancement.this, MenuRecapitulatif.class);

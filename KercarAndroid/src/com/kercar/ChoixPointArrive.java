@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
@@ -27,6 +28,7 @@ public class ChoixPointArrive extends Activity{
 	 @Override
 	    protected void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
+	        requestWindowFeature(Window.FEATURE_NO_TITLE);
 	   
 	        /**Initialisation du gestionnaire des missions*/
 	        clientMissions = new ClientMissions(getApplicationContext());
@@ -109,9 +111,8 @@ public class ChoixPointArrive extends Activity{
 	     dlgAlert.setMessage(message); 
 	     dlgAlert.setPositiveButton("OK",new DialogInterface.OnClickListener() {
 	         public void onClick(DialogInterface dialog, int whichButton) {
-	              
-					Intent intent = new Intent(ChoixPointArrive.this, MenuSelection.class);
-					startActivity(intent);
+				 Intent intent = new Intent(ChoixPointArrive.this, MenuSelection.class);
+				 startActivity(intent);
 	         }
 	     });
 	     

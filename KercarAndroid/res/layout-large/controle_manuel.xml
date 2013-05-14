@@ -8,7 +8,7 @@
         android:id="@+id/buttonAvance"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginTop="520dp"
+        android:layout_marginTop="450dp"
 		android:layout_marginLeft="80dp"/>
    
     <Button
@@ -35,7 +35,7 @@
      <com.kercar.osmandroid.OSMAndroid
         android:id="@+id/OSM"
         android:layout_width="fill_parent"
-        android:layout_height="500dp"
+        android:layout_height="430dp"
         android:layout_centerHorizontal="true"/>
 
      <Button
@@ -46,5 +46,12 @@
          android:layout_alignBaseline="@+id/buttonDroite"
          android:layout_alignParentRight="true"
          android:layout_marginRight="30dp" />
+     
+     <SeekBar
+         android:id="@+id/barVitesse"
+         android:layout_width="300dp"
+         android:layout_height="wrap_content"
+         android:layout_centerHorizontal="true"
+         android:layout_marginTop="650dp"/>
 
 </RelativeLayout>
