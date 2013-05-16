@@ -19,7 +19,7 @@ public class JapaneseTourist {
 		try {
 			Process p = pb.start();
 			p.waitFor();
-			System.out.println(p);
+			getProcessOutput(p);
 		} catch (Exception e) {
 			System.out.println("Yameteeeeeeee!");
 			e.printStackTrace();
@@ -32,7 +32,7 @@ public class JapaneseTourist {
 		try {
 			Process p = pb.start();
 			p.waitFor();
-			System.out.println(p);
+			getProcessOutput(p);
 		} catch (Exception e) {
 			System.out.println("Yameteeeeeeee!");
 			e.printStackTrace();
@@ -45,7 +45,7 @@ public class JapaneseTourist {
 		try {
 			Process p = pb.start();
 			p.waitFor();
-			System.out.println(p);
+			getProcessOutput(p);
 		} catch (Exception e) {
 			System.out.println("Yameteeeeeeee!");
 			e.printStackTrace();
@@ -58,14 +58,14 @@ public class JapaneseTourist {
 		try {
 			Process p = pb.start();
 			p.waitFor();
-			System.out.println(p);
+			getProcessOutput(p);
 		} catch (Exception e) {
 			System.out.println("Yameteeeeeeee!");
 			e.printStackTrace();
 		}
 	}
 	
-    private String getProcessOutput(Process p){
+    private static String getProcessOutput(Process p){
         BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
         String tmp;
         StringBuffer bf = new StringBuffer();
