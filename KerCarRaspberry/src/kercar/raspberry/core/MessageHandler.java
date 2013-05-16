@@ -5,13 +5,10 @@ import kercar.comAPI.CMDMoveMessage;
 import kercar.comAPI.CMDTurnMessage;
 import kercar.comAPI.IMessage;
 import kercar.comAPI.Message;
-import kercar.raspberry.arduino.SerialManager;
-import kercar.raspberry.arduino.message.GoBackward;
-import kercar.raspberry.arduino.message.GoForward;
+import kercar.comAPI.StateMessage;
+import kercar.raspberry.arduino.message.GetAngle;
+import kercar.raspberry.arduino.message.GetPos;
 import kercar.raspberry.arduino.message.IArduinoMessage;
-import kercar.raspberry.arduino.message.Stop;
-import kercar.raspberry.arduino.message.TurnLeft;
-import kercar.raspberry.arduino.message.TurnRight;
 
 public class MessageHandler {
 	private IIA ia;
@@ -28,6 +25,7 @@ public class MessageHandler {
 			Core.Log("MessageHandler : CMD_MOVE");
 			CMDMoveMessage move = new CMDMoveMessage((Message)message);
 			if(move.isBackward()){
+				System.out.println("MessageHandler : BACKWARD");
 				Core.Log("MessageHandler : BACKWARD");
 				this.ia.stopMission();
 				this.ia.backward(move.getSpeed());
@@ -42,6 +40,7 @@ public class MessageHandler {
 		else if (message.getType() == Message.CMD_TURN)
 		{
 			Core.Log("MessageHandler : CMD_TURN");
+			System.out.println("MessageHandler : CMD_TURN");
 			CMDTurnMessage turn = new CMDTurnMessage((Message)message);
 			this.ia.stopMission();
 			if (turn.isTurningRight())
@@ -58,23 +57,41 @@ public class MessageHandler {
 		}
 		else if (message.getType() == Message.CMD_STOP)
 		{		
-			Core.Log("MessageHandler : CMD_TURN");
+			Core.Log("MessageHandler : CMD_STOP");
+			System.out.println("MessageHandler : CMD_STOP");
 			this.ia.stopMission();
 			this.ia.stopKercar();
 		}
 		else if (message.getType() == Message.CMD_MISSION) {
 			Core.Log("MessageHandler : CMD_MISSION");
+			System.out.println("MessageHandler : CMD_MISSION");
 			this.ia.stopMission();
 			this.ia.stopKercar();
 			CMDMissionMessage mission = new CMDMissionMessage((Message)message);
 			//TODO GET SPEED
-			this.ia.launchMission(mission.getCoordinates(), mission.getMailAddress(), 50);
+			this.ia.launchMission(mission.getCoordinates(), mission.getMailAddress(), 75, mission.getPhoto());
+		}
+		else if(message.getType() == Message.GET_STATE) {
+			Core.Log("MessageHandler : GET_STATE");
+			System.out.println("MessageHandler : GET_STATE");
+			GetPos pos = this.ia.getGPSCoordonnates();
+			GetAngle angle = this.ia.getAngle();
+			
+			this.ia.getServletQueue().add(new StateMessage(pos.getLongitude(), pos.getLatitude(), angle.getDegree()));
 		}
 		
 	}
 	
 	public void handle(IArduinoMessage message)
 	{
-		
+		Core.Log("MessageHandler : Message from Arduino");
+		System.out.println("MessageHandler : Message from Arduino");
+		if(message.getID() == IArduinoMessage.RECEIVE_BLOCK) {
+			Core.Log("MessageHandler : RECEIVE_BLOCK");
+			System.out.println("MessageHandler : RECEIVE_BLOCK");
+			this.ia.stopMission();
+			
+			//this.ia.getServletQueue().add(new Stop());
+		}
 	}
 }
