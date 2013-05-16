@@ -15,7 +15,7 @@ public class JapaneseTourist {
 
 	public static void takePhoto(){
 		System.out.println("Kawaii desu ne ?");
-		ProcessBuilder pb = new ProcessBuilder("fswebcam", "-r 640x480", "/home/pi/photo_"+String.valueOf(id++));
+		ProcessBuilder pb = new ProcessBuilder("fswebcam", "-r 640x480", "/home/pi/photo_"+String.valueOf(id++)+".jpg");
 		try {
 			Process p = pb.start();
 			p.waitFor();
@@ -29,7 +29,7 @@ public class JapaneseTourist {
 	
 	public static void clearPhotos(){
 		System.out.println("Suppression des photos");
-		ProcessBuilder pb = new ProcessBuilder("rm", "/home/photo_*.jpg");
+		ProcessBuilder pb = new ProcessBuilder("rm", "/home/pi/photo_*");
 		try {
 			Process p = pb.start();
 			p.waitFor();
