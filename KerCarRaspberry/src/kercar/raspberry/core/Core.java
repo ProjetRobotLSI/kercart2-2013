@@ -266,7 +266,7 @@ public class Core extends Thread implements IIA, SerialListener {
 	public void onSerialMessage(byte[] data) {
 		arduinoQueue.add(IArduinoMessage.fromBytes(data));
 	}
-	public BlockingQueue<IMessage> getServletQueue() {
+	public synchronized BlockingQueue<IMessage> getServletQueue() {
 		return this.servletQueue;
 	}
 }
