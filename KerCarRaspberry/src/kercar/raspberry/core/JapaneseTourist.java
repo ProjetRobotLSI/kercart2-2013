@@ -15,7 +15,7 @@ public class JapaneseTourist {
 
 	public static void takePhoto(){
 		System.out.println("Kawaii desu ne ?");
-		ProcessBuilder pb = new ProcessBuilder("fswebcam", "-r", "640x480", "--jpeg", "90", "~/photo_"+String.valueOf(id++));
+		ProcessBuilder pb = new ProcessBuilder("fswebcam", "-r 640x480", "/home/pi/photo_"+String.valueOf(id++));
 		try {
 			Process p = pb.start();
 			p.waitFor();
@@ -84,6 +84,6 @@ public class JapaneseTourist {
         }
         System.out.println(bf.toString());
         return bf.toString();
-}
+    }
 
 }
