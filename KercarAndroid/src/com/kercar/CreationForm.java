@@ -64,11 +64,10 @@ public class CreationForm extends Activity{
     	final Mission newMission= (Mission) receptionBundle.getSerializable("AjoutMissionDansBundle");
     	final String typeFonctionnalite= receptionBundle.getString("Titre");
 
-//    	/**Traitement sur lblTitre*/
-//	    lblTitre.setText(Html.fromHtml(typeFonctionnalite+" une mission"));
-//	    lblTitre.setTextSize(50);
-//	    lblTitre.setTextColor(Color.parseColor("#00ff00"));
-//    	
+    	/**Traitement sur lblTitre*/
+	    lblTitre.setText(Html.fromHtml(typeFonctionnalite+" une mission"));
+	
+    	
 //	    /**Traitement sur lblNom*/
 //	    lblNom.setText(Html.fromHtml("<p style='color:green'> Nom de la mission: </p>"));
 //	    lblNom.setTextSize(30);
@@ -91,7 +90,7 @@ public class CreationForm extends Activity{
 //	    lblPhotoArrivee.setTextColor(Color.parseColor("#00ff00"));
 	    
 /**Traitement sur txtNom////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-	    if(typeFonctionnalite.equals("Creer")){
+	    if(typeFonctionnalite.equals("Créer")){
 
 //			txtNom.setHint(R.string.edit_nom);
 //			txtNom.setHintTextColor(Color.parseColor("#000000"));
@@ -115,7 +114,7 @@ public class CreationForm extends Activity{
 
 		
 /**Traitement sur txtEmail//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-		if(typeFonctionnalite.equals("Creer")){
+		if(typeFonctionnalite.equals("Créer")){
 		
 //			txtEmail.setHint(R.string.edit_email);
 //			txtEmail.setHintTextColor(Color.parseColor("#000000"));
@@ -141,7 +140,7 @@ public class CreationForm extends Activity{
 /**Traitement sur cbxRetourDepart////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 //	    cbxRetourDepart.setTextColor(Color.parseColor("#00ff00"));
 		
-		if(typeFonctionnalite.equals("Creer")){
+		if(typeFonctionnalite.equals("Créer")){
 
 //			cbxRetourDepart.setText(R.string.cbx_retour);
 //			cbxRetourDepart.setChecked(true);
@@ -158,7 +157,7 @@ public class CreationForm extends Activity{
 
 /**Traitement sur cbxPhotoArrivee////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 //		cbxPhotoArrivee.setTextColor(Color.parseColor("#00ff00"));
-		if(typeFonctionnalite.equals("Creer")){
+		if(typeFonctionnalite.equals("Créer")){
 			
 //			cbxPhotoArrivee.setText(R.string.cbx_retour);
 //			cbxPhotoArrivee.setChecked(true);			
@@ -205,18 +204,18 @@ public class CreationForm extends Activity{
 				}
 				if((emptyNom.equals(""))){
 					
-					txtNom.setHint("Champs obligatoire !");
+					txtNom.setHint("Champs obligatoire");
 					txtNom.setHintTextColor(Color.parseColor("#ff0000"));
-				}
+				}/*
 				if((emptyEmail.equals(""))){
 					
-					txtEmail.setHint("Champs obligatoire !");
+					txtEmail.setHint("Champs obligatoire");
 					txtEmail.setHintTextColor(Color.parseColor("#ff0000"));
-				}
+				}*/
 				if(!isEmailValid(txtEmail.getText().toString())){
 					
 					txtEmail.setText("");
-					txtEmail.setHint("Syntaxe de mail invalide !");
+					txtEmail.setHint("Syntaxe de mail invalide");
 					txtEmail.setHintTextColor(Color.parseColor("#ff0000"));
 					System.out.println("Debug");
 				}

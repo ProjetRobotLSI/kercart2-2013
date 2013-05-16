@@ -63,7 +63,7 @@ public class MenuCreation extends Activity{
 				//On creee le bundle qui contiendra la mission puis on la met dans celui-ci
 				Bundle missionBundle = new Bundle();
 				missionBundle.putSerializable("AjoutMissionDansBundle", newMission);
-				missionBundle.putString("Titre", "Creer");
+				missionBundle.putString("Titre", "CrÃ©er");
 
 				//On cree un intent, celui-ci va transmettre le bundle et aussi de passer a CreationForm activity
 				Intent intent = new Intent(MenuCreation.this, CreationForm.class);
@@ -73,7 +73,7 @@ public class MenuCreation extends Activity{
 		});
 
 		/**
-		 * Listener d'edition des missions deja créées
+		 * Listener d'edition des missions deja crï¿½ï¿½es
 		 */
 		listeMissions.setOnItemClickListener(new OnItemClickListener(){
 			@Override

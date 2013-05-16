@@ -50,14 +50,14 @@ public class ChoixPointArrive extends Activity{
 				@Override
 				public void onClick(View v) {
 					
-					if(typeFonctionnalite.equals("Creer")){
+					if(typeFonctionnalite.equals("Créer")){
 						
 						try {
 							//TODO A Revoir avec Guillaume
 							route = OSM.getRoadStep(OSM.getLastRoad());
 							//ENREGISTRER ROUTE DANS BASE DE DONNEE
 							clientMissions.creerMission(newMission.getNom(), newMission.getEmail(), newMission.getRetourDepart(), newMission.getPrendrePhotosArrivee());
-							msbox("Information","Mission ajoutee avec succes !");
+							msbox("Information","Mission ajoutée avec succès !");
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -74,7 +74,7 @@ public class ChoixPointArrive extends Activity{
 							clientMissions.setRetourDepartMissionEnCours(newMission.getRetourDepart());
 							clientMissions.setPrendrePhotosArriveeMissionEnCours(newMission.getPrendrePhotosArrivee());
 							clientMissions.saveMissions(getApplicationContext());
-							msbox("Information", "Mission modifiee avec succes !");
+							msbox("Information", "Mission modifiée avec succès !");
 						} catch (Exception e) {
 							
 							e.printStackTrace();
