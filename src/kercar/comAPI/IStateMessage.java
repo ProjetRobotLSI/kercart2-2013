@@ -2,7 +2,6 @@ package kercar.comAPI;
 
 /**
  * Interface du message d'état du robot
- * @author itooh
  */
 public interface IStateMessage {
 	
@@ -18,6 +17,12 @@ public interface IStateMessage {
 	 */
 	public int getOrientation();
 	public void setOrientation(int orientation);
+	
+	/**
+	 * @return true si présence d'un obstacle
+	 */
+	public boolean isStuck();
+	public void stick(boolean obstacle);
 	
 	/*
 	 * @return informations du Télémètre

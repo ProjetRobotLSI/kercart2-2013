@@ -3,22 +3,23 @@ package kercar.comAPI;
 /**
  * Message donnant les informations sur le robot
  * Du Raspberry vers l'Android
- * @author itooh
  */
 public class StateMessage extends Message implements IStateMessage {
 
 	public static final int INDEX_LONGITUDE = 0;
 	public static final int INDEX_LATITUDE = 1;
 	public static final int INDEX_ORIENTATION = 2;
+	public static final int INDEX_STUCK = 3;
 	//public static final int INDEX_TELEMETRE = 2;
 	//public static final int INDEX_BATTERY = 3;
 	
-	public StateMessage(int longitude, int latitude, int orientation) {
+	public StateMessage(int longitude, int latitude, int orientation, boolean stuck) {
 		super(Message.STATE);
 		
 		this.params.add(INDEX_LONGITUDE, Integer.toString(longitude));
 		this.params.add(INDEX_LATITUDE, Integer.toString(latitude));
 		this.params.add(INDEX_ORIENTATION, Integer.toString(orientation));
+		this.params.add(INDEX_STUCK, Boolean.toString(stuck));
 		//this.params.add(INDEX_TELEMETRE, Integer.toString(telemetre));
 		//this.params.add(INDEX_BATTERY, Integer.toString(battery));
 	}
@@ -56,6 +57,16 @@ public class StateMessage extends Message implements IStateMessage {
 	@Override
 	public void setOrientation(int orientation) {
 		this.params.set(INDEX_ORIENTATION, Integer.toString(orientation));
+	}
+	
+	@Override
+	public boolean isStuck() {
+		return Boolean.parseBoolean(this.params.get(INDEX_STUCK));
+	}
+	
+	@Override
+	public void stick(boolean obstacle) {
+		this.params.set(INDEX_STUCK, Boolean.toString(obstacle));
 	}
 
 	/*

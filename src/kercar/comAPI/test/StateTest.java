@@ -21,7 +21,7 @@ public class StateTest {
 
 	@Before
 	public void setUp() throws Exception {
-		this.stateMessage = new StateMessage(3,4,5);
+		this.stateMessage = new StateMessage(3,4,5,false);
 	}
 
 	@Test
