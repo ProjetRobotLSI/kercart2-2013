@@ -41,7 +41,7 @@ public class JapaneseTourist {
 	
 	public static void sendPhotos(){
 		System.out.println("Envoi des photos");
-		ProcessBuilder pb = new ProcessBuilder("/bin/bash", "echo \"Yup, en PJ les photos\" |mutt -s \"Photos Kercar\" -a /home/pi/pics/*.jpg -- quentin.de.gr@gmail.com");
+		ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c echo \"Yup, en PJ les photos\" |mutt -s \"Photos Kercar\" -a /home/pi/pics/*.jpg -- quentin.de.gr@gmail.com");
 		try {
 			Process p = pb.start();
 			p.waitFor();
@@ -54,7 +54,7 @@ public class JapaneseTourist {
 	
 	public static void sendLogs(){
 		System.out.println("Envoi des logs");
-		ProcessBuilder pb = new ProcessBuilder("/bin/bash", "echo \"Hep, en PJ les logs\" |mutt -s \"Logs Kercar\" -a /opt/apache-tomcat-7.0.35/logs/*.log -- quentin.de.gr@gmail.com");
+		ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c echo \"Hep, en PJ les logs\" |mutt -s \"Logs Kercar\" -a /opt/apache-tomcat-7.0.35/logs/*.log -- quentin.de.gr@gmail.com");
 		try {
 			Process p = pb.start();
 			p.waitFor();
