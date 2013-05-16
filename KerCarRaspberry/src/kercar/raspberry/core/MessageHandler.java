@@ -5,9 +5,6 @@ import kercar.comAPI.CMDMoveMessage;
 import kercar.comAPI.CMDTurnMessage;
 import kercar.comAPI.IMessage;
 import kercar.comAPI.Message;
-import kercar.comAPI.StateMessage;
-import kercar.raspberry.arduino.message.GetAngle;
-import kercar.raspberry.arduino.message.GetPos;
 import kercar.raspberry.arduino.message.IArduinoMessage;
 
 public class MessageHandler {
@@ -20,6 +17,7 @@ public class MessageHandler {
 	public void handle(IMessage message)
 	{
 		System.out.println("Message received (Handler)");
+		this.ia.setBlocked(false);
 		if (message.getType() == Message.CMD_MOVE)
 		{
 			Core.Log("MessageHandler : CMD_MOVE");
@@ -71,15 +69,6 @@ public class MessageHandler {
 			//TODO GET SPEED
 			this.ia.launchMission(mission.getCoordinates(), mission.getMailAddress(), 75, mission.getPhoto());
 		}
-		else if(message.getType() == Message.GET_STATE) {
-			Core.Log("MessageHandler : GET_STATE");
-			System.out.println("MessageHandler : GET_STATE");
-			GetPos pos = this.ia.getGPSCoordonnates();
-			GetAngle angle = this.ia.getAngle();
-			
-			this.ia.getServletQueue().add(new StateMessage(pos.getLongitude(), pos.getLatitude(), angle.getDegree()));
-		}
-		
 	}
 	
 	public void handle(IArduinoMessage message)
@@ -90,7 +79,7 @@ public class MessageHandler {
 			Core.Log("MessageHandler : RECEIVE_BLOCK");
 			System.out.println("MessageHandler : RECEIVE_BLOCK");
 			this.ia.stopMission();
-			
+			this.ia.setBlocked(true);
 			//this.ia.getServletQueue().add(new Stop());
 		}
 	}

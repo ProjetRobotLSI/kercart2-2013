@@ -1,9 +1,6 @@
 package kercar.raspberry.core;
 
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
-
-import kercar.comAPI.IMessage;
 import kercar.raspberry.arduino.message.GetAngle;
 import kercar.raspberry.arduino.message.GetPos;
 
@@ -11,7 +8,6 @@ public interface IIA {
 
 	public GetPos getGPSCoordonnates();
 	public GetAngle getAngle();
-	public BlockingQueue<IMessage> getServletQueue();
 	public void turnLeft(int angle);
 	public void turnRight(int angle);
 	public void forward(int speed);
@@ -21,4 +17,6 @@ public interface IIA {
 	public void launchMission(List<Integer> points, String mail, int speed, boolean takePhoto);
 	
 	public void stopMission();
+	public void setBlocked(boolean blocked);
+	public MessageHandler getMessageHandler();
 }

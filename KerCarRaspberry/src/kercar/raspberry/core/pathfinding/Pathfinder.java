@@ -37,8 +37,8 @@ public class Pathfinder implements IPathfinder {
 			this.iA.turnRight(angle);
 		else
 			this.iA.turnLeft(360 - angle);
+		this.waitTurnMothaFucka();
 		
-		//TODO attendre que kercar tourne
 		this.iA.forward(currentSpeed);
 	}
 	
@@ -55,10 +55,14 @@ public class Pathfinder implements IPathfinder {
 					this.iA.turnRight(angle);
 				else
 					this.iA.turnLeft(360 - angle);
-				//TODO Attendre que kercar tourne
+				this.waitTurnMothaFucka();
 			}	
 		} 		
 		this.iA.forward(this.currentSpeed);
+	}
+	
+	public void waitTurnMothaFucka() {
+		boolean hasTurned = false;
 	}
 	
 	private int calculateAngle(int gpsLatitude, int gpsLongitude, int compass) {	

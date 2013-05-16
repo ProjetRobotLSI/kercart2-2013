@@ -31,7 +31,6 @@ public class Core extends Thread implements IIA, SerialListener {
 
 	private BlockingQueue<IMessage> controlQueue;
 	private BlockingQueue<IArduinoMessage> arduinoQueue;
-	private BlockingQueue<IMessage> servletQueue;
 	
 	private MessageHandler handler;
 	
@@ -41,6 +40,7 @@ public class Core extends Thread implements IIA, SerialListener {
 	private boolean inMission;
 	private String mail;
 	private boolean takePhoto = false;
+	private boolean blocked = false;
 	
 	public Core(String initPath){
 		System.out.println("Starting core...");
@@ -49,9 +49,7 @@ public class Core extends Thread implements IIA, SerialListener {
 		new WifiIA(initPath);
 		
 		controlQueue = new LinkedBlockingDeque<IMessage>();
-		arduinoQueue = new LinkedBlockingDeque<IArduinoMessage>();
-		servletQueue = new LinkedBlockingDeque<IMessage>();
-		
+		arduinoQueue = new LinkedBlockingDeque<IArduinoMessage>();		
 	}
 	
 	public synchronized void messageReceived(IMessage message){
@@ -158,7 +156,11 @@ public class Core extends Thread implements IIA, SerialListener {
         }
         
 	public StateMessage getRobotState(){
-		return new StateMessage(0,1,2);
+		Core.Log("MessageHandler : GET_STATE");
+		System.out.println("MessageHandler : GET_STATE");
+		GetPos pos = this.getGPSCoordonnates();
+		GetAngle angle = this.getAngle();
+		return new StateMessage(pos.getLongitude(), pos.getLatitude(), angle.getDegree(), blocked);
 	}
 	
 	public PingMessage getPing(){
@@ -261,12 +263,18 @@ public class Core extends Thread implements IIA, SerialListener {
 	public void stopMission() {
 		this.inMission = false;
 	}
+	
+	@Override
+	public void setBlocked(boolean blocked) {
+		this.blocked = blocked;
+	}
 
 	@Override
 	public void onSerialMessage(byte[] data) {
 		arduinoQueue.add(IArduinoMessage.fromBytes(data));
 	}
-	public synchronized BlockingQueue<IMessage> getServletQueue() {
-		return this.servletQueue;
+	
+	public MessageHandler getMessageHandler() {
+		return this.handler;
 	}
 }
