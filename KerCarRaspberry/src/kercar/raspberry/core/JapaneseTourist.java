@@ -15,11 +15,12 @@ public class JapaneseTourist {
 
 	public static void takePhoto(){
 		System.out.println("Kawaii desu ne ?");
-		ProcessBuilder pb = new ProcessBuilder("fswebcam", "-r 640x480 --jpeg 90 /home/pi/pics/photo_"+String.valueOf(id++));
+		ProcessBuilder pb = new ProcessBuilder("fswebcam", "-r", "640x480", "--jpeg", "90", "~/photo_"+String.valueOf(id++));
 		try {
 			Process p = pb.start();
 			p.waitFor();
 			getProcessOutput(p);
+			System.out.println("OK");
 		} catch (Exception e) {
 			System.out.println("Yameteeeeeeee!");
 			e.printStackTrace();
@@ -28,11 +29,12 @@ public class JapaneseTourist {
 	
 	public static void clearPhotos(){
 		System.out.println("Suppression des photos");
-		ProcessBuilder pb = new ProcessBuilder("rm", "/home/pi/pics/*.jpg");
+		ProcessBuilder pb = new ProcessBuilder("rm", "/home/photo_*.jpg");
 		try {
 			Process p = pb.start();
 			p.waitFor();
 			getProcessOutput(p);
+			System.out.println("OK");
 		} catch (Exception e) {
 			System.out.println("Yameteeeeeeee!");
 			e.printStackTrace();
@@ -46,6 +48,7 @@ public class JapaneseTourist {
 			Process p = pb.start();
 			p.waitFor();
 			getProcessOutput(p);
+			System.out.println("OK");
 		} catch (Exception e) {
 			System.out.println("Yameteeeeeeee!");
 			e.printStackTrace();
@@ -59,6 +62,7 @@ public class JapaneseTourist {
 			Process p = pb.start();
 			p.waitFor();
 			getProcessOutput(p);
+			System.out.println("OK");
 		} catch (Exception e) {
 			System.out.println("Yameteeeeeeee!");
 			e.printStackTrace();
