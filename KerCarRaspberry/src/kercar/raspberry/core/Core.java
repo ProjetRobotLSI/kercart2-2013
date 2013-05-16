@@ -10,6 +10,7 @@ import java.util.Map;
 import kercar.comAPI.IMessage;
 import kercar.comAPI.PingMessage;
 import kercar.comAPI.StateMessage;
+import kercar.raspberry.arduino.SerialListener;
 import kercar.raspberry.arduino.SerialManager;
 import kercar.raspberry.arduino.message.AskAngle;
 import kercar.raspberry.arduino.message.AskPos;
@@ -26,16 +27,20 @@ import kercar.raspberry.core.pathfinding.Pathfinder;
 
 import com.kercar.raspberry.wifi.WifiIA;
 
-public class Core extends Thread implements IIA {
+public class Core extends Thread implements IIA, SerialListener {
 
 	private BlockingQueue<IMessage> controlQueue;
 	private BlockingQueue<IArduinoMessage> arduinoQueue;
+	private BlockingQueue<IMessage> servletQueue;
+	
+	private MessageHandler handler;
 	
 	private IPathfinder pathfinder;
 	private SerialManager serialManager;
 	private static String initPath;
 	private boolean inMission;
 	private String mail;
+	private boolean takePhoto = false;
 	
 	public Core(String initPath){
 		System.out.println("Starting core...");
@@ -45,6 +50,7 @@ public class Core extends Thread implements IIA {
 		
 		controlQueue = new LinkedBlockingDeque<IMessage>();
 		arduinoQueue = new LinkedBlockingDeque<IArduinoMessage>();
+		servletQueue = new LinkedBlockingDeque<IMessage>();
 		
 	}
 	
@@ -62,7 +68,8 @@ public class Core extends Thread implements IIA {
 		this.pathfinder = new Pathfinder(this);
 		serialManager = new SerialManager();
 		serialManager.initialize();
-		MessageHandler handler = new MessageHandler(this);
+		serialManager.setListener(this);
+		handler = new MessageHandler(this);
 		
 		long startTime = 0;
 		while(true)
@@ -84,6 +91,10 @@ public class Core extends Thread implements IIA {
 					this.stopKercar();
 					if(this.pathfinder.isLastPoint() ) {
 						this.stopMission();
+						if(takePhoto) {
+							JapaneseTourist.takePhoto();
+							JapaneseTourist.sendPhotos();
+						}
 					} else {					
 			//			this.pathfinder.goToNextPoint(1,1, 10);
 						this.pathfinder.goToNextPoint(pos.getLatitude(), pos.getLongitude(), angle.getDegree());
@@ -159,8 +170,17 @@ public class Core extends Thread implements IIA {
 		AskPos arduinoMsg = new AskPos();
 		this.serialManager.write(arduinoMsg.toBytes());	
 		
-		//TODO Attendre la réponse, faire un message angle
-		GetAngle angle = new GetAngle();
+		GetAngle angle = null;
+		while(angle == null) {	
+			if(!this.arduinoQueue.isEmpty()) {
+				IArduinoMessage message = this.arduinoQueue.poll();
+				if(message.getID() != IArduinoMessage.RECEIVE_ANGLE) {
+					this.handler.handle(message);
+				} else {
+					angle = (GetAngle) message;
+				}
+			}
+		}
 		return angle;
 	}
 
@@ -169,8 +189,17 @@ public class Core extends Thread implements IIA {
 		AskAngle arduinoMsg = new AskAngle();
 		this.serialManager.write(arduinoMsg.toBytes());	
 		
-		//TODO Attendre la réponse, faire un message pos
-		GetPos pos = new GetPos();
+		GetPos pos = null;
+		while(pos == null) {
+			if(!this.arduinoQueue.isEmpty()) {
+				IArduinoMessage message = this.arduinoQueue.poll();
+				if(message.getID() != IArduinoMessage.RECEIVE_POS) {
+					this.handler.handle(message);
+				} else {
+					pos = (GetPos) message;
+				}
+			}
+		}
 		return pos;
 	}
 
@@ -215,21 +244,10 @@ public class Core extends Thread implements IIA {
 	}
 
 	@Override
-	public void takePicture() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void sendPicture() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void launchMission(List<Integer> points, String mail, int speed) {
+	public void launchMission(List<Integer> points, String mail, int speed, boolean takePhoto) {
 		System.out.println("Launching mission...");
 		this.mail = mail;
+		this.takePhoto = 
 		this.inMission = true;
 		this.pathfinder.setPath(points);
 		this.pathfinder.setSpeed(speed);
@@ -242,5 +260,13 @@ public class Core extends Thread implements IIA {
 	
 	public void stopMission() {
 		this.inMission = false;
+	}
+
+	@Override
+	public void onSerialMessage(byte[] data) {
+		arduinoQueue.add(IArduinoMessage.fromBytes(data));
+	}
+	public BlockingQueue<IMessage> getServletQueue() {
+		return this.servletQueue;
 	}
 }

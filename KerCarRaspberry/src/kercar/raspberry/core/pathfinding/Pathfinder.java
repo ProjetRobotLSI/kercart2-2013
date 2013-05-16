@@ -38,6 +38,7 @@ public class Pathfinder implements IPathfinder {
 		else
 			this.iA.turnLeft(360 - angle);
 		
+		//TODO attendre que kercar tourne
 		this.iA.forward(currentSpeed);
 	}
 	
