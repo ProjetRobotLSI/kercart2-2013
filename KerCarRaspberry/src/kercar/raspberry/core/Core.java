@@ -159,7 +159,7 @@ public class Core extends Thread implements IIA {
 		AskPos arduinoMsg = new AskPos();
 		this.serialManager.write(arduinoMsg.toBytes());	
 		
-		//TODO Attendre la réponse, faire un message angle
+		//TODO Attendre la rÃ©ponse, faire un message angle
 		GetAngle angle = new GetAngle();
 		return angle;
 	}
@@ -169,7 +169,7 @@ public class Core extends Thread implements IIA {
 		AskAngle arduinoMsg = new AskAngle();
 		this.serialManager.write(arduinoMsg.toBytes());	
 		
-		//TODO Attendre la réponse, faire un message pos
+		//TODO Attendre la rÃ©ponse, faire un message pos
 		GetPos pos = new GetPos();
 		return pos;
 	}
