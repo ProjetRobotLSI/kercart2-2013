@@ -24,7 +24,7 @@ public class JapaneseTourist {
 	
 	public static void clearPhotos(){
 		System.out.println("Suppression des photos");
-		ProcessBuilder pb = new ProcessBuilder("rm", "/home/pi/pics/*.jpg");
+		ProcessBuilder pb = new ProcessBuilder("rm", "/home/pi/pics/*.jpg -- quentin.de.gr@gmail.com");
 		try {
 			Process p = pb.start();
 			p.waitFor();
@@ -36,7 +36,7 @@ public class JapaneseTourist {
 	
 	public static void sendPhotos(){
 		System.out.println("Envoi des photos");
-		ProcessBuilder pb = new ProcessBuilder("echo", "\"Yup, en PJ les photos\" | mutt -s \"Photos Kercar\" -a /home/pi/pics/*.jpg");
+		ProcessBuilder pb = new ProcessBuilder("echo", "\"Yup, en PJ les photos\" | mutt -s \"Photos Kercar\" -a /home/pi/pics/*.jpg -- quentin.de.gr@gmail.com");
 		try {
 			Process p = pb.start();
 			p.waitFor();
