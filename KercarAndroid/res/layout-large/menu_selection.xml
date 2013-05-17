@@ -34,15 +34,5 @@
         android:text="@string/button_lancer_mission"
         android:textSize="30sp"
         android:textColor="#ffffff"/>
-    
-    <Button
-        android:id="@+id/button_arreter"
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:text="@string/button_arreter_mission"
-        android:textSize="30sp"
-        android:textColor="#ffffff"/>
 
 </LinearLayout>

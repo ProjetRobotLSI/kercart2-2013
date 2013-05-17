@@ -19,6 +19,7 @@ import com.kercar.AsyncTask.AsyncAvancer;
 import com.kercar.AsyncTask.AsyncDroite;
 import com.kercar.AsyncTask.AsyncGauche;
 import com.kercar.AsyncTask.AsyncGetEtat;
+import com.kercar.AsyncTask.AsyncPrendrePhoto;
 import com.kercar.AsyncTask.AsyncReculer;
 import com.kercar.AsyncTask.AsyncStop;
 import com.kercar.osmandroid.OSMAndroid;
@@ -69,10 +70,10 @@ public class ControlManuel extends Activity{
 		list.add(1);
 		list.add(2);
 		
-		get = new AsyncGetEtat(list, com);
+		get = new AsyncGetEtat(list, com, OSM);
 		get.execute();
 		
-		OSM.addPoint(list.get(0), list.get(1), "Emplacement du robot", "L'emplacement du Robot");
+//		OSM.addPoint(list.get(0), list.get(1), "Emplacement du robot", "L'emplacement du Robot");
 		
 		//Listeners				LES ANGLES SONT A MODIFIER
 		avance.setOnTouchListener(new OnTouchListener() {
@@ -146,7 +147,7 @@ public class ControlManuel extends Activity{
 		photo.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				
+				new AsyncPrendrePhoto("novalis@live.fr", com);
 			}
 		});
     }

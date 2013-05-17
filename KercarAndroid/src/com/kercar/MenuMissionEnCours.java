@@ -1,5 +1,10 @@
 package com.kercar;
 
+import kercar.android.ComAndroid;
+import kercar.android.IComAndroid;
+
+import com.kercar.AsyncTask.AsyncStop;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,10 +16,10 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 
-public class MenuStart extends Activity{
+public class MenuMissionEnCours extends Activity{
 	//Attributs
-	private Button start;
-	private Button about;
+	private Button arreter;
+	private IComAndroid com;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,25 +27,18 @@ public class MenuStart extends Activity{
         requestWindowFeature(Window.FEATURE_NO_TITLE);
    
         //ContentView
-        setContentView(R.layout.menu_start);
+        setContentView(R.layout.menu_mission_en_cours);
 		
 		//Initialisation des attributs
-		start = (Button)findViewById(R.id.buttonStart);
-		about = (Button)findViewById(R.id.buttonAbout);
+		arreter = (Button)findViewById(R.id.button_arreter);
+		com = ComAndroid.getManager();
 		
 		//Listeners
-		start.setOnClickListener(new OnClickListener(){
+		arreter.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(MenuStart.this, MenuSelection.class);
-				startActivity(intent);
-			}
-		});
-		
-		about.setOnClickListener(new OnClickListener(){
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(MenuStart.this,About.class);
+				new AsyncStop(com).execute();
+				Intent intent = new Intent(MenuMissionEnCours.this, MenuSelection.class);
 				startActivity(intent);
 			}
 		});

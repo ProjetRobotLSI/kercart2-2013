@@ -59,6 +59,7 @@ public class CreationForm extends Activity{
 	    //Creation du bundle et reception des objets transferes
         Bundle receptionBundle  = this.getIntent().getExtras().getBundle("AjoutBundleDansIntent");        
     	final Mission newMission= (Mission) receptionBundle.getSerializable("AjoutMissionDansBundle");
+//        final
     	final String typeFonctionnalite= receptionBundle.getString("Titre");
 
 //    	/**Traitement sur lblTitre*/

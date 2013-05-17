@@ -48,10 +48,10 @@ public class MapActivity extends Activity {
 		Log.e("ERROR", Integer.toString(osmAndroid.getPointLatitude(id1)));
 		Log.e("ERROR", Integer.toString(osmAndroid.getPointLongitude(id1)));
 		
-		Iterator<Integer> it = osmAndroid.getRoadStep(idRoad).iterator();
-		
+	//	Iterator<Integer> it = osmAndroid.getRoadStep(idRoad).iterator();
+		/*
 		while(it.hasNext()) {
 			osmAndroid.addPoint(it.next(), it.next(), "test", "test");
-		}
+		}*/
 	}
 }

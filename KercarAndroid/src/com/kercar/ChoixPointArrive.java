@@ -1,5 +1,6 @@
 package com.kercar;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import BaseDeDonnees.Mission;
@@ -22,7 +23,7 @@ public class ChoixPointArrive extends Activity{
 	//Attributs
 	private Button enregistrerMission;
 	private OSMAndroid OSM;
-	private List<Integer> route;
+	private int[] arrive;
 	private ClientMissions clientMissions;
 	
 	 @Override
@@ -32,18 +33,31 @@ public class ChoixPointArrive extends Activity{
 	   
 	        /**Initialisation du gestionnaire des missions*/
 	        clientMissions = new ClientMissions(getApplicationContext());
+	        arrive = new int[2];
 	        
 		    /**Reception de bundles*/
 		    //Creation du bundle et reception des objets transferes
-	        Bundle receptionBundle  = this.getIntent().getExtras().getBundle("AjoutBundleDansIntent2");        
-	    	final Mission newMission= (Mission) receptionBundle.getSerializable("AjoutMissionDansBundle2");
-	    	final String typeFonctionnalite= receptionBundle.getString("Titre");
+	        Bundle receptionBundle = this.getIntent().getExtras().getBundle("AjoutBundleDansIntent2");        
+	    	final Mission newMission = (Mission) receptionBundle.getSerializable("AjoutMissionDansBundle2");
+	    	final String typeFonctionnalite = receptionBundle.getString("Titre");
 	    	
 	        //ContentView
 	        setContentView(R.layout.choix_point_arrive);
 	        
 	        enregistrerMission = (Button)findViewById(R.id.buttonEnregistrerMission);
 	        OSM = (OSMAndroid)findViewById(R.id.OSM_choix_point);
+	        
+	        if(typeFonctionnalite.equals("Editer")){
+	        	try {
+					clientMissions.changerMissionEnCours(newMission);
+		        	int[] a = clientMissions.getPointArriveeMissionEnCours();
+		        	System.out.println("a : "+ a[0]);
+		        	System.out.println("a : "+ a[1]);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+	        }
 	        
 			//Listeners
 			enregistrerMission.setOnClickListener(new OnClickListener(){
@@ -53,27 +67,43 @@ public class ChoixPointArrive extends Activity{
 					if(typeFonctionnalite.equals("Creer")){
 						
 						try {
-							//TODO A Revoir avec Guillaume
-							route = OSM.getRoadStep(OSM.getLastRoad());
-							//ENREGISTRER ROUTE DANS BASE DE DONNEE
+					        //Enregistrement du point d'arrivé du Robot
+					        int id = OSM.getLastStartPoint();
+					        int latitude = OSM.getPointLatitude(id);
+					        int longitude = OSM.getPointLongitude(id);
+					        arrive[0] = latitude;
+					        arrive[1] = longitude;
+//					        System.out.println(latitude);
+//					        System.out.println(longitude);
+							
 							clientMissions.creerMission(newMission.getNom(), newMission.getEmail(), newMission.getRetourDepart(), newMission.getPrendrePhotosArrivee());
+							clientMissions.changerMissionEnCours(newMission);
+							clientMissions.setPointArriveeMissionsEnCours(arrive);
+							
+							int[] a = clientMissions.getPointArriveeMissionEnCours();
+				        	System.out.println("a : "+ a[0]);
+				        	System.out.println("a : "+ a[1]);
+					        
 							msbox("Information","Mission ajoutee avec succes !");
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
 					else if(typeFonctionnalite.equals("Editer")){
 						
 						try {
-							//TODO A Revoir avec Guillaume
-							route = OSM.getRoadStep(OSM.getLastRoad());
 							//ENREGISTRER ROUTE DANS BASE DE DONNEE
-							clientMissions.changerMissionEnCours(newMission);
+//							clientMissions.changerMissionEnCours(newMission);
 							clientMissions.setEMailMissionEnCours(newMission.getEmail());
 							clientMissions.setRetourDepartMissionEnCours(newMission.getRetourDepart());
 							clientMissions.setPrendrePhotosArriveeMissionEnCours(newMission.getPrendrePhotosArrivee());
-							clientMissions.saveMissions(getApplicationContext());
+//							clientMissions.saveMissions(getApplicationContext());
+							
+//							arrive = clientMissions.getPointArriveeMissionEnCours();
+//				        	System.out.println("a : "+ arrive[0]);
+//				        	System.out.println("a : "+ arrive[1]);
+//							OSM.addPoint(arrive[0], arrive[1], "Point Arrivee", "");
+							
 							msbox("Information", "Mission modifiee avec succes !");
 						} catch (Exception e) {
 							
@@ -83,23 +113,6 @@ public class ChoixPointArrive extends Activity{
 					}
 					else
 						throw new IllegalStateException("Exception ! Type de fonctionnalite inexistant !");
-				}
-			});
-			
-			OSM.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View arg0) {
-
-					//On ajoute les points choisis dans la map a la mission
-					try {
-						
-
-						
-					} catch (Exception e) {
-						
-						e.printStackTrace();
-					}
 				}
 			});
 	    }
