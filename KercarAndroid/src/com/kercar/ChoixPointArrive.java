@@ -33,6 +33,7 @@ public class ChoixPointArrive extends Activity{
 	        /**Initialisation du gestionnaire des missions*/
 	        clientMissions = new ClientMissions(getApplicationContext());
 	        
+	        
 		    /**Reception de bundles*/
 		    //Creation du bundle et reception des objets transferes
 	        Bundle receptionBundle  = this.getIntent().getExtras().getBundle("AjoutBundleDansIntent2");        

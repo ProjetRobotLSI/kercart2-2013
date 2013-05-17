@@ -36,6 +36,7 @@ public class CreationForm extends Activity{
 	private EditText txtEmail = null;
 	private CheckBox cbxRetourDepart = null;
 	private CheckBox cbxPhotoArrivee = null;
+	private TextView lblEmailError= null;
 	
 	 @Override
 	  public void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class CreationForm extends Activity{
 	    cbxPhotoArrivee = (CheckBox) findViewById(R.id.cbxPhotoArrivee);
 	    btnSuivant = (Button) findViewById(R.id.btnSuivant);
 	    btnAnnuler = (Button) findViewById(R.id.btnAnnuler);
+	    lblEmailError= (TextView) findViewById(R.id.lblEmailError);
 	    
 	    /**Reception de bundles*/
 	    //Creation du bundle et reception des objets transferes
@@ -120,15 +122,16 @@ public class CreationForm extends Activity{
 //			txtEmail.setHintTextColor(Color.parseColor("#000000"));
 //			txtEmail.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
 //			txtEmail.setLines(5);
-//			txtEmail.setOnFocusChangeListener(new OnFocusChangeListener() {
-//				
-//				@Override
-//				public void onFocusChange(View arg0, boolean arg1) {
-//					
-//					txtEmail.setHintTextColor(Color.parseColor("#000000"));
-//					txtEmail.setHint(R.string.edit_email);
-//				}
-//			});
+			txtEmail.setOnFocusChangeListener(new OnFocusChangeListener() {
+				
+				@Override
+				public void onFocusChange(View arg0, boolean arg1) {
+					
+					txtEmail.setHintTextColor(Color.parseColor("#000000"));
+					txtEmail.setHint(R.string.edit_email);
+					lblEmailError.setVisibility(TRIM_MEMORY_BACKGROUND);
+				}
+			});
 		}
 		else if(typeFonctionnalite.equals("Editer")){
 			txtEmail.setText(newMission.getEmail());
@@ -206,17 +209,15 @@ public class CreationForm extends Activity{
 					
 					txtNom.setHint("Champs obligatoire");
 					txtNom.setHintTextColor(Color.parseColor("#ff0000"));
-				}/*
+				}
 				if((emptyEmail.equals(""))){
 					
 					txtEmail.setHint("Champs obligatoire");
 					txtEmail.setHintTextColor(Color.parseColor("#ff0000"));
-				}*/
+				}
 				if(!isEmailValid(txtEmail.getText().toString())){
-					
-					txtEmail.setText("");
-					txtEmail.setHint("Syntaxe de mail invalide");
-					txtEmail.setHintTextColor(Color.parseColor("#ff0000"));
+				
+					lblEmailError.setVisibility(BIND_IMPORTANT);
 					System.out.println("Debug");
 				}
 
