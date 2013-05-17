@@ -69,8 +69,8 @@ public class Core extends Thread implements IIA, SerialListener {
 		this.inMission = false;
 		this.pathfinder = new Pathfinder(this);
 		serialManager = new SerialManager();
-		serialManager.initialize();
 		serialManager.setListener(this);
+		serialManager.initialize();
 		handler = new MessageHandler(this);
 		
 		long startTimeUpdate = 0;
