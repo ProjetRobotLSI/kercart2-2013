@@ -4,7 +4,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import BaseDeDonnees.Mission;
+import Client.ClientMissions;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -30,18 +33,23 @@ public class CreationForm extends Activity{
 	private TextView lblEmail= null;
 	private TextView lblRetourDepart= null;
 	private TextView lblPhotoArrivee= null;
+	private TextView lblEmailError= null;
 	private Button btnSuivant= null;
 	private Button btnAnnuler= null;
+	private Button btnSupprimer= null;
 	private EditText txtNom = null;
 	private EditText txtEmail = null;
 	private CheckBox cbxRetourDepart = null;
 	private CheckBox cbxPhotoArrivee = null;
-	private TextView lblEmailError= null;
+	
+	private ClientMissions clientMissions;
+
 	
 	 @Override
 	  public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    requestWindowFeature(Window.FEATURE_NO_TITLE);
+
 	    
 	    /**ContentView*/
 	    setContentView(R.layout.creation_frm);
@@ -50,6 +58,7 @@ public class CreationForm extends Activity{
 	    lblTitre = (TextView) findViewById(R.id.lblTitre);
 	    lblNom = (TextView) findViewById(R.id.lblNom);
 	    lblEmail = (TextView) findViewById(R.id.lblEmail);
+	    lblEmailError = (TextView) findViewById(R.id.lblEmailError);
 	    lblRetourDepart = (TextView) findViewById(R.id.lblRetourDepart);
 	    lblPhotoArrivee = (TextView) findViewById(R.id.lblPhotoArrivee);
 	    txtNom = (EditText) findViewById(R.id.txtNom);
@@ -57,8 +66,10 @@ public class CreationForm extends Activity{
 	    cbxRetourDepart = (CheckBox) findViewById(R.id.cbxRetourDepart);
 	    cbxPhotoArrivee = (CheckBox) findViewById(R.id.cbxPhotoArrivee);
 	    btnSuivant = (Button) findViewById(R.id.btnSuivant);
+	    btnSupprimer= (Button) findViewById(R.id.btnSupprimer);
 	    btnAnnuler = (Button) findViewById(R.id.btnAnnuler);
-	    lblEmailError= (TextView) findViewById(R.id.lblEmailError);
+
+	    clientMissions = new ClientMissions(getApplicationContext());
 	    
 	    /**Reception de bundles*/
 	    //Creation du bundle et reception des objets transferes
@@ -122,16 +133,15 @@ public class CreationForm extends Activity{
 //			txtEmail.setHintTextColor(Color.parseColor("#000000"));
 //			txtEmail.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
 //			txtEmail.setLines(5);
-			txtEmail.setOnFocusChangeListener(new OnFocusChangeListener() {
-				
-				@Override
-				public void onFocusChange(View arg0, boolean arg1) {
-					
-					txtEmail.setHintTextColor(Color.parseColor("#000000"));
-					txtEmail.setHint(R.string.edit_email);
-					lblEmailError.setVisibility(TRIM_MEMORY_BACKGROUND);
-				}
-			});
+//			txtEmail.setOnFocusChangeListener(new OnFocusChangeListener() {
+//				
+//				@Override
+//				public void onFocusChange(View arg0, boolean arg1) {
+//					
+//					txtEmail.setHintTextColor(Color.parseColor("#000000"));
+//					txtEmail.setHint(R.string.edit_email);
+//				}
+//			});
 		}
 		else if(typeFonctionnalite.equals("Editer")){
 			txtEmail.setText(newMission.getEmail());
@@ -216,15 +226,14 @@ public class CreationForm extends Activity{
 					txtEmail.setHintTextColor(Color.parseColor("#ff0000"));
 				}
 				if(!isEmailValid(txtEmail.getText().toString())){
-				
+					
 					lblEmailError.setVisibility(BIND_IMPORTANT);
-					System.out.println("Debug");
 				}
 
 			}
 		});
 	    
-	    /**Traitement de btnAnnuler*/
+/**Traitement de btnAnnuler//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 	    btnAnnuler.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -234,9 +243,26 @@ public class CreationForm extends Activity{
 				startActivity(intent);
 			}
 		});
-	    
+	 
+/**Traitement de btnSupprimer//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/		    
+	    btnSupprimer.setOnClickListener(new OnClickListener(){
+	    	
+	    	public void onClick(View arg0){
+	    		
+	    		try {
+	    			
+	    			Mission deleteMission= clientMissions.getListeMissions().getMissions(txtNom.getText().toString());
+					clientMissions.supprimerMission(deleteMission);
+					msbox("Information","Mission supprimée avec succès !");
+				} catch (Exception e) {
+					
+					e.printStackTrace();
+				}
+	    	}
+	    });
 	  }
 	 
+
 	 
 	 
 	 
@@ -263,7 +289,21 @@ public class CreationForm extends Activity{
 	        return false;
 	}
 	 
-	 
+	 public void msbox(String titre,String message)
+	 {
+	     AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);                      
+	     dlgAlert.setTitle(titre); 
+	     dlgAlert.setMessage(message); 
+	     dlgAlert.setPositiveButton("OK",new DialogInterface.OnClickListener() {
+	         public void onClick(DialogInterface dialog, int whichButton) {
+				 Intent intent = new Intent(CreationForm.this, MenuSelection.class);
+				 startActivity(intent);
+	         }
+	     });
+	     
+	     dlgAlert.setCancelable(true);
+	     dlgAlert.create().show();
+	 }
 	 
 	 
 	 

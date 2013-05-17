@@ -6,10 +6,20 @@
     android:orientation="vertical" >    
     
     <TextView
+	    android:id="@+id/lblTitre"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="20dp"
+		android:layout_centerHorizontal="true"
+		android:textSize="50sp"
+		android:text="@string/edit_nom"
+		android:textColor="#ffffff"/>
+        
+    <TextView
 	    android:id="@+id/lblNom"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_marginTop="70dp"
+	    android:layout_marginTop="100dp"
 		android:layout_marginLeft="50dp"
 		android:textSize="25sp"
 		android:text="@string/edit_nom"
@@ -19,7 +29,7 @@
 	    android:id="@+id/txtNom"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_marginTop="70dp"
+	    android:layout_marginTop="100dp"
 	    android:layout_marginLeft="250dp"
 	    android:textSize="25sp"
 	    android:hint="@string/edit_nom"/>   
@@ -28,7 +38,7 @@
 	    android:id="@+id/lblEmail"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_marginTop="180dp"
+	    android:layout_marginTop="210dp"
 		android:layout_marginLeft="50dp"
 		android:textSize="25sp"
 		android:text="@string/edit_email"
@@ -38,7 +48,7 @@
 	    android:id="@+id/txtEmail"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_marginTop="180dp"
+	    android:layout_marginTop="210dp"
 	    android:layout_marginLeft="250dp"
 	    android:textSize="25sp"
 	    android:inputType="textEmailAddress"
@@ -48,7 +58,7 @@
 	    android:id="@+id/lblRetourDepart"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_marginTop="290dp"
+	    android:layout_marginTop="320dp"
 		android:layout_marginLeft="50dp"
 		android:textSize="25sp"
 	    android:text="@string/edit_retour_robot" 
@@ -58,7 +68,7 @@
 	    android:id="@+id/lblPhotoArrivee"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_marginTop="400dp"
+	    android:layout_marginTop="430dp"
 		android:layout_marginLeft="50dp"
 		android:textSize="25sp"
 	    android:text="@string/edit_photo" 

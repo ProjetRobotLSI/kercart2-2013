@@ -16,6 +16,7 @@ import org.osmdroid.views.overlay.PathOverlay;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -68,7 +69,7 @@ public class OSMAndroid extends MapView implements OSMAndroidInterface {
         this.setMultiTouchControls(true);
         
         //No internet
-        this.setUseDataConnection(false);
+        this.setUseDataConnection(true);
         
         this.getController().setZoom(18);
         
@@ -110,11 +111,11 @@ public class OSMAndroid extends MapView implements OSMAndroidInterface {
 	public int addPointAndRoad(MotionEvent e) {
 		GeoPoint point = (GeoPoint) this.getProjection().fromPixels(e.getX(), e.getY());
 		if(this.isStartPoint) {
-			this.startPoint = this.creationPoint("D�part", "D�part du robot.", point);
+			this.startPoint = this.creationPoint("Depart", "Depart du robot.", point);
 			this.isStartPoint = false;
 			return this.startPoint;
 		} else {
-			this.endPoint = this.creationPoint("Arriv�e", "Arriv�e du robot.", point);
+			this.endPoint = this.creationPoint("Arrivee", "Arrivee du robot.", point);
 			this.isStartPoint = true;
 			this.lastRoad = this.addRoad(this.startPoint, this.endPoint);
 			return this.endPoint;
@@ -165,21 +166,23 @@ public class OSMAndroid extends MapView implements OSMAndroidInterface {
 		
 		Road road;
 		try {
-			
 			//Create a road between two points, and get this beautiful road 
-			road = new RoadAsyncTask().execute(this.spArOverlayItem.get(startPointId).getPoint(), this.spArOverlayItem.get(endPointId).getPoint()).get();
-	
-			//Visual road
-			PathOverlay roadOverlay = RoadManager.buildRoadOverlay(road, this.getContext());
-			this.getOverlays().add(roadOverlay);
-			this.spArPathOverlay.append(this.idRoad, roadOverlay);
-			this.spArRoad.append(this.idRoad, road);
+			
+			GeoPoint A = this.spArOverlayItem.get(startPointId).getPoint();
+			GeoPoint B = this.spArOverlayItem.get(endPointId).getPoint();
+//			road = new RoadAsyncTask().execute(A, B).get();
+			
 			this.idRoad++;
+	        Log.e("osmandro", "la 1");
+	        new RoadThread(this, A, B).start();
+	    //    new RoadAsyncTask(this, A, B).execute();
+	        Log.e("osmandro", "la 2");
+			//Visual road
 			this.lastRoad = idRoad - 1;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return -1;
-		} 
+		}
         return this.lastRoad;
 	}
 
@@ -296,5 +299,17 @@ public class OSMAndroid extends MapView implements OSMAndroidInterface {
 	@Override
 	public void setDefaultMarker(Drawable marker) {
 		this.defaultMarker = marker;
+	}
+	
+	public int getIdRoad() {
+		return this.idRoad;
+	}
+	
+	public SparseArray<Road> getSparRoad() {
+		return this.spArRoad;
+	}
+	
+	public SparseArray<PathOverlay> getSparPathOberlay() {
+		return this.spArPathOverlay;
 	}
 }

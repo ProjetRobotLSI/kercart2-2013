@@ -20,13 +20,11 @@ public class AsyncPrendrePhoto extends AsyncTask<Void, Void, Void> {
 	@Override
 	protected Void doInBackground(Void... params) {
 		try {
-			
 			Log.v("AsyncPrendrePhoto", "Prendre Photo");
 			CMDPhotoMessage cmdPhotoMessage = new CMDPhotoMessage(msgMail);
 			this.comAndroid.envoyerMessage(cmdPhotoMessage);
 			this.comAndroid.lireReponse();
 		} catch (Exception e) {e.printStackTrace();}
-		
 		return null;
 	}
 }

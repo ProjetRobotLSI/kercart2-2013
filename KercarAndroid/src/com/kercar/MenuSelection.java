@@ -22,7 +22,6 @@ public class MenuSelection extends Activity{
 		private Button comMan;
 		private Button creerEditer;
 		private Button lancer;
-		private Button arreter;
 		
 		private IComAndroid com;
 		
@@ -38,18 +37,8 @@ public class MenuSelection extends Activity{
 			comMan = (Button)findViewById(R.id.button_com_man);
 			creerEditer = (Button)findViewById(R.id.button_creer_editer);
 			lancer = (Button)findViewById(R.id.button_lancer);
-			arreter = (Button)findViewById(R.id.button_arreter);
 			
 			com = ComAndroid.getManager();
-			
-			//Adaptation de la vue en fonction de si une mission est en cours
-			final SharedPreferences missionLancee = PreferenceManager.getDefaultSharedPreferences(this);
-			final SharedPreferences.Editor editor = missionLancee.edit();
-			
-			Boolean mission = missionLancee.getBoolean("missionLancee", false);
-			
-			lancer.setEnabled(!mission);
-			arreter.setEnabled(mission);
 			
 			//Listeners
 			comMan.setOnClickListener(new OnClickListener(){
@@ -73,23 +62,6 @@ public class MenuSelection extends Activity{
 				public void onClick(View v) {
 					Intent intent = new Intent(MenuSelection.this, MenuLancement.class);
 					startActivity(intent);
-				}
-			});
-			
-			arreter.setOnClickListener(new OnClickListener(){
-				@Override
-				public void onClick(View v) {
-					//Edition des preferences : mission arretee
-					editor.putBoolean("missionLancee", false);
-					editor.commit();
-					
-					//Mise a jour de l'interface
-					Boolean mission = missionLancee.getBoolean("missionLancee", false);
-					lancer.setEnabled(!mission);
-					arreter.setEnabled(mission);
-					
-					//Envoi de l'ordre d'arret au robot // VERIFIER COMMANDE
-					new AsyncStop(com).execute();
 				}
 			});
 	    }

@@ -49,13 +49,10 @@
 	        android:textColor="#ffffff"/>
 	    
 	    <Button
-	        android:id="@+id/button_arreter"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:text="@string/button_arreter_mission"
-	        android:textSize="30sp"
-	        android:textColor="#ffffff"/>
+	        android:background="@android:color/transparent"/>
 	    
 	</LinearLayout>
 	
