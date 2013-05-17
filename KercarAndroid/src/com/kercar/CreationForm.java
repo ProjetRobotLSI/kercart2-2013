@@ -1,5 +1,8 @@
 package com.kercar;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import BaseDeDonnees.Mission;
 import android.app.Activity;
 import android.content.Intent;
@@ -62,11 +65,10 @@ public class CreationForm extends Activity{
 //        final
     	final String typeFonctionnalite= receptionBundle.getString("Titre");
 
-//    	/**Traitement sur lblTitre*/
-//	    lblTitre.setText(Html.fromHtml(typeFonctionnalite+" une mission"));
-//	    lblTitre.setTextSize(50);
-//	    lblTitre.setTextColor(Color.parseColor("#00ff00"));
-//    	
+    	/**Traitement sur lblTitre*/
+	    lblTitre.setText(Html.fromHtml(typeFonctionnalite+" une mission"));
+	
+    	
 //	    /**Traitement sur lblNom*/
 //	    lblNom.setText(Html.fromHtml("<p style='color:green'> Nom de la mission: </p>"));
 //	    lblNom.setTextSize(30);
@@ -89,7 +91,7 @@ public class CreationForm extends Activity{
 //	    lblPhotoArrivee.setTextColor(Color.parseColor("#00ff00"));
 	    
 /**Traitement sur txtNom////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-	    if(typeFonctionnalite.equals("Creer")){
+	    if(typeFonctionnalite.equals("Créer")){
 
 //			txtNom.setHint(R.string.edit_nom);
 //			txtNom.setHintTextColor(Color.parseColor("#000000"));
@@ -113,7 +115,7 @@ public class CreationForm extends Activity{
 
 		
 /**Traitement sur txtEmail//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-		if(typeFonctionnalite.equals("Creer")){
+		if(typeFonctionnalite.equals("Créer")){
 		
 //			txtEmail.setHint(R.string.edit_email);
 //			txtEmail.setHintTextColor(Color.parseColor("#000000"));
@@ -139,7 +141,7 @@ public class CreationForm extends Activity{
 /**Traitement sur cbxRetourDepart////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 //	    cbxRetourDepart.setTextColor(Color.parseColor("#00ff00"));
 		
-		if(typeFonctionnalite.equals("Creer")){
+		if(typeFonctionnalite.equals("Créer")){
 
 //			cbxRetourDepart.setText(R.string.cbx_retour);
 //			cbxRetourDepart.setChecked(true);
@@ -156,7 +158,7 @@ public class CreationForm extends Activity{
 
 /**Traitement sur cbxPhotoArrivee////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 //		cbxPhotoArrivee.setTextColor(Color.parseColor("#00ff00"));
-		if(typeFonctionnalite.equals("Creer")){
+		if(typeFonctionnalite.equals("Créer")){
 			
 //			cbxPhotoArrivee.setText(R.string.cbx_retour);
 //			cbxPhotoArrivee.setChecked(true);			
@@ -184,7 +186,7 @@ public class CreationForm extends Activity{
 				String emptyEmail= txtEmail.getText().toString();
 				boolean emptyVerif= false;
 				
-				if(!(emptyNom.equals("")) && !(emptyEmail.equals(""))){
+				if(!(emptyNom.equals("")) && !(emptyEmail.equals("")) && isEmailValid(txtEmail.getText().toString())){
 					
 					newMission.setNom(txtNom.getText().toString());
 					newMission.setEmail(txtEmail.getText().toString());
@@ -203,20 +205,70 @@ public class CreationForm extends Activity{
 				}
 				if((emptyNom.equals(""))){
 					
-					txtNom.setHint("Champs obligatoire !");
+					txtNom.setHint("Champs obligatoire");
 					txtNom.setHintTextColor(Color.parseColor("#ff0000"));
-				}
+				}/*
 				if((emptyEmail.equals(""))){
 					
-					txtEmail.setHint("Champs obligatoire !");
+					txtEmail.setHint("Champs obligatoire");
 					txtEmail.setHintTextColor(Color.parseColor("#ff0000"));
-				}	/**/
+				}*/
+				if(!isEmailValid(txtEmail.getText().toString())){
+					
+					txtEmail.setText("");
+					txtEmail.setHint("Syntaxe de mail invalide");
+					txtEmail.setHintTextColor(Color.parseColor("#ff0000"));
+					System.out.println("Debug");
+				}
 
 			}
 		});
 	    
 	    /**Traitement de btnAnnuler*/
-//	    btnAnnuler.setText(Html.fromHtml("Annuler"));
-//	    btnAnnuler.setTextSize(30);
+	    btnAnnuler.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				
+				Intent intent = new Intent(CreationForm.this, MenuCreation.class);
+				startActivity(intent);
+			}
+		});
+	    
 	  }
+	 
+	 
+	 
+	 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	 public boolean isEmailValid(String email)
+	    {
+	         String regExpn =
+	             "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
+	                 +"((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+	                   +"[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
+	                   +"([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+	                   +"[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
+	                   +"([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
+
+	     CharSequence inputStr = email;
+
+	     
+	     Pattern pattern = Pattern.compile(regExpn,Pattern.CASE_INSENSITIVE);
+	     Matcher matcher = pattern.matcher(inputStr);
+
+	     if(matcher.matches())
+	        return true;
+	     else
+	        return false;
+	}
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
 }

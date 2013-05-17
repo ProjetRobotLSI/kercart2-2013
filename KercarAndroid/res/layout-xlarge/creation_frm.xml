@@ -6,10 +6,20 @@
     android:orientation="vertical" >    
     
     <TextView
+	    android:id="@+id/lblTitre"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="60dp"
+		android:layout_marginLeft="110dp"
+		android:textSize="70sp"
+		android:text="@string/edit_nom"
+		android:textColor="#ffffff"/>
+    
+    <TextView
 	    android:id="@+id/lblNom"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_marginTop="100dp"
+	    android:layout_marginTop="300dp"
 		android:layout_marginLeft="70dp"
 		android:textSize="40sp"
 		android:text="@string/edit_nom"
@@ -19,16 +29,17 @@
 	    android:id="@+id/txtNom"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_marginTop="100dp"
+	    android:layout_marginTop="300dp"
 	    android:layout_marginLeft="410dp"
 	    android:textSize="40sp"
-	    android:hint="@string/edit_nom"/>   
+	    android:hint="@string/edit_nom"
+	    android:textColor="#ffffff"/>   
     
     <TextView
 	    android:id="@+id/lblEmail"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_marginTop="300dp"
+	    android:layout_marginTop="500dp"
 		android:layout_marginLeft="70dp"
 		android:textSize="40sp"
 		android:text="@string/edit_email"
@@ -38,17 +49,18 @@
 	    android:id="@+id/txtEmail"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_marginTop="300dp"
+	    android:layout_marginTop="500dp"
 	    android:layout_marginLeft="410dp"
 	    android:textSize="40sp"
 	    android:inputType="textEmailAddress"
-	    android:hint="@string/edit_email"/>    
+	    android:hint="@string/edit_email"
+	    android:textColor="#ffffff"/>    
     
     <TextView
 	    android:id="@+id/lblRetourDepart"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_marginTop="500dp"
+	    android:layout_marginTop="700dp"
 		android:layout_marginLeft="70dp"
 		android:textSize="40sp"
 	    android:text="@string/edit_retour_robot" 
@@ -58,7 +70,7 @@
 	    android:id="@+id/lblPhotoArrivee"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_marginTop="700dp"
+	    android:layout_marginTop="900dp"
 		android:layout_marginLeft="70dp"
 		android:textSize="40sp"
 	    android:text="@string/edit_photo" 
@@ -95,7 +107,7 @@
 	    android:id="@+id/btnSuivant"
 	    android:layout_width="170dp"
 	    android:layout_height="80dp"
-	    android:layout_marginTop="950dp"
+	    android:layout_marginTop="1050dp"
 		android:layout_marginLeft="200dp"
 		android:text="@string/button_suivant"
 		android:textSize="40sp"

@@ -64,7 +64,7 @@ public class ChoixPointArrive extends Activity{
 				@Override
 				public void onClick(View v) {
 					
-					if(typeFonctionnalite.equals("Creer")){
+					if(typeFonctionnalite.equals("CrÃ©er")){
 						
 						try {
 					        //Enregistrement du point d'arrivé du Robot
