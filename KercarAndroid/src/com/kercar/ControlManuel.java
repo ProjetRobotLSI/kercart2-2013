@@ -74,20 +74,15 @@ public class ControlManuel extends Activity{
 //		get = new AsyncGetEtatUnPoint(list, com, OSM);
 //		get.execute();
 		
-//		OSM.addPoint(list.get(0), list.get(1), "Emplacement du robot", "L'emplacement du Robot");
-		
-		//Listeners				LES ANGLES SONT A MODIFIER
 		avance.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				switch(event.getAction()) {
 	            case MotionEvent.ACTION_DOWN:
 	            	new AsyncAvancer(vitesse.getProgress(), com).execute();
-	            	System.out.println("Avancer : " + vitesse.getProgress());
 	                break;
 	            case MotionEvent.ACTION_UP:
 	            	new AsyncStop(com).execute();
-	            	System.out.println("Stop");
 	                break;
 	            }
 				return false;
@@ -100,11 +95,9 @@ public class ControlManuel extends Activity{
 				switch(event.getAction()) {
 	            case MotionEvent.ACTION_DOWN:
 	            	new AsyncReculer(vitesse.getProgress(), com).execute();
-	            	System.out.println("Reculer : " + vitesse.getProgress());
 	                break;
 	            case MotionEvent.ACTION_UP:
 	            	new AsyncStop(com).execute();
-	            	System.out.println("Stop");
 	                break;
 	            }
 				return false;
@@ -117,11 +110,9 @@ public class ControlManuel extends Activity{
 				switch(event.getAction()) {
 	            case MotionEvent.ACTION_DOWN:
 	            	new AsyncGauche(com).execute();
-	            	System.out.println("Gauche");
 	                break;
 	            case MotionEvent.ACTION_UP:
 	            	new AsyncStop(com).execute();
-	            	System.out.println("Stop");
 	                break;
 	            }
 				return false;
@@ -134,11 +125,9 @@ public class ControlManuel extends Activity{
 				switch(event.getAction()) {
 	            case MotionEvent.ACTION_DOWN:
 	            	new AsyncDroite(com).execute();
-	            	System.out.println("Droite");
 	                break;
 	            case MotionEvent.ACTION_UP:
 	            	new AsyncStop(com).execute();
-	            	System.out.println("Stop");
 	                break;
 	            }
 				return false;

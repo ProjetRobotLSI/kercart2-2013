@@ -20,9 +20,8 @@ public class AsyncReculer extends AsyncTask<Void, Void, Void> {
 	@Override
 	protected Void doInBackground(Void... params) {
 		try {
-			Log.e("AsyncStop", "ParReculer");
-
 			CMDMoveMessage cmdCommand = new CMDMoveMessage(this.vitesse, true);
+			Log.e("AsyncReculer", "Reculer");
 			this.comAndroid.envoyerMessage(cmdCommand);
 			this.comAndroid.lireReponse();
 		} catch (Exception e) {e.printStackTrace();}

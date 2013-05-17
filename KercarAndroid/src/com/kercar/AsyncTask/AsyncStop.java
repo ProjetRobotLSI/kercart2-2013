@@ -19,7 +19,7 @@ public class AsyncStop extends AsyncTask<Void, Void, Void> {
 	protected Void doInBackground(Void... params) {
 		try {
 			CMDStopMessage cmdCommand = new CMDStopMessage();
-			Log.e("AsyncStop", "ParIci");
+			Log.e("AsyncStop", "Stop");
 			this.comAndroid.envoyerMessage(cmdCommand);
 			this.comAndroid.lireReponse();
 		} catch (Exception e) {e.printStackTrace();}
