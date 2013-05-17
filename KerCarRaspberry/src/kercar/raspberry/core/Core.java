@@ -187,15 +187,15 @@ public class Core extends Thread implements IIA, SerialListener {
 	}
 	
 	private void askAngle() {
-		Core.Log("Core : ASK_ANGLE");
-		System.out.println("Core : ASK_ANGLE");
+	//	Core.Log("Core : ASK_ANGLE");
+	//	System.out.println("Core : ASK_ANGLE");
 		AskPos arduinoMsg = new AskPos();
 		this.serialManager.write(arduinoMsg.toBytes());	
 	}
 	
 	private void askCoordonnates() {
-		Core.Log("Core : ASK_COORDONNATES");
-		System.out.println("Core : ASK_COORDONNATES");
+	//	Core.Log("Core : ASK_COORDONNATES");
+	//	System.out.println("Core : ASK_COORDONNATES");
 		AskAngle arduinoMsg = new AskAngle();
 		this.serialManager.write(arduinoMsg.toBytes());	
 	}
