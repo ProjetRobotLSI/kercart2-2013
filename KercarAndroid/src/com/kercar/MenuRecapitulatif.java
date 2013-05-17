@@ -7,6 +7,7 @@ import java.util.List;
 import kercar.android.ComAndroid;
 import kercar.android.IComAndroid;
 
+import com.kercar.AsyncTask.AsyncGetEtatDeuxPoints;
 import com.kercar.AsyncTask.AsyncLancerMission;
 import com.kercar.osmandroid.OSMAndroid;
 
@@ -33,6 +34,8 @@ public class MenuRecapitulatif extends Activity{
 	private CheckBox cbxPhotoArrivee;
 	private OSMAndroid OSM;
 	
+	private List<Integer> list;
+	
 	private IComAndroid com;
 	
 	 @Override
@@ -49,10 +52,12 @@ public class MenuRecapitulatif extends Activity{
 	    btnOK = (Button) findViewById(R.id.btnOK);
 	    OSM = (OSMAndroid) findViewById(R.id.OSM_choix_point);
 	    
+	    list = new LinkedList<Integer>();
+	    
 	    com = ComAndroid.getManager();
 	    
 	    //Creation du bundle et reception des objets transferes
-        Bundle receptionBundle  = this.getIntent().getExtras().getBundle("AjoutBundleDansIntent");        
+        Bundle receptionBundle  = this.getIntent().getExtras().getBundle("AjoutBundleDansIntent");
     	final Mission newMission= (Mission) receptionBundle.getSerializable("AjoutMissionDansBundle");
 	    
     	/**Traitement sur txtNom*/
@@ -62,13 +67,14 @@ public class MenuRecapitulatif extends Activity{
 		txtEmail.setText(newMission.getEmail());
 		
 		/**Traitement sur cbxRetourDepart*/
-		cbxRetourDepart.setChecked(newMission.getRetourDepart());	
+		cbxRetourDepart.setChecked(newMission.getRetourDepart());
 
 		/**Traitement sur cbxPhotoArrivee*/
 		cbxPhotoArrivee.setChecked(newMission.getPrendrePhotosArrivee());
 		
 		//Initialisation de la carte OSM
-		OSM.addPoint(newMission.getM_fin()[0], newMission.getM_fin()[1], "Point Arrivee", "");
+//		OSM.addPoint(newMission.getM_fin()[0], newMission.getM_fin()[1], "Point Arrivee", "");
+//		new AsyncGetEtatDeuxPoints(list, com, OSM);
 		
 		/**Traitement de btnOK*/
 		btnOK.setOnClickListener(new OnClickListener(){
