@@ -79,14 +79,22 @@ public class ChoixPointArrive extends Activity{
 //					        System.out.println(longitude);
 					        
 
+//<<<<<<< HEAD
 							clientMissions.creerMission(newMission);
-							clientMissions.changerMissionEnCours(newMission);
+/*							clientMissions.changerMissionEnCours(newMission);
 												        
-							/*clientMissions.setPointArriveeMissionsEnCours(arrive);*/
+							clientMissions.setPointArriveeMissionsEnCours(arrive);
 							
 							int[] a = clientMissions.getPointArriveeMissionEnCours();
-/*				        	System.out.println("a : "+ a[0]);
-				        	System.out.println("a : "+ a[1]);*/
+				        	System.out.println("a : "+ a[0]);
+				        	System.out.println("a : "+ a[1]);
+=======
+//					        newMission.setM_fin(arrive);							
+							clientMissions.creerMission(newMission);
+							clientMissions.changerMissionEnCours(newMission);
+							clientMissions.setPointArriveeMissionsEnCours(arrive);
+//							int[] a = clientMissions.getPointArriveeMissionEnCours();
+>>>>>>> a89e8d4e4584329961bdcad2a7c68554811ca7f0*/
 					        
 							msbox("Information","Mission ajoutée avec succès !");
 						} catch (Exception e) {

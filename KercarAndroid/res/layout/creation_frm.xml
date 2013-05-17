@@ -106,10 +106,21 @@
 	    android:layout_width="100dp"
 	    android:layout_height="40dp"
 	    android:layout_marginTop="380dp"
-		android:layout_marginLeft="30dp"
+		android:layout_marginLeft="20dp"
 		android:text="@string/button_suivant"
 		android:textSize="15sp"
 		android:textColor="#ffffff"/>
+    
+    <Button
+	    android:id="@+id/btnSupprimer"
+	    android:layout_width="100dp"
+	    android:layout_height="40dp"
+	    android:layout_alignBaseline="@+id/btnSuivant"
+	    android:layout_alignBottom="@+id/btnSuivant"
+		android:layout_marginLeft="220dp"
+	    android:text="@string/button_supprimer"
+	    android:textSize="15sp"
+	    android:textColor="#ffffff"/> 
     
     <Button
 	    android:id="@+id/btnAnnuler"
@@ -117,7 +128,7 @@
 	    android:layout_height="40dp"
 	    android:layout_alignBaseline="@+id/btnSuivant"
 	    android:layout_alignBottom="@+id/btnSuivant"
-	    android:layout_alignLeft="@+id/cbxPhotoArrivee"
+	    android:layout_marginLeft="120dp"
 	    android:text="@string/button_annuler"
 	    android:textSize="15sp"
 	    android:textColor="#ffffff"/>    

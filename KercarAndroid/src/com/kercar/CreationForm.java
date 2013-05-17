@@ -78,6 +78,7 @@ public class CreationForm extends Activity{
     	final String typeFonctionnalite= receptionBundle.getString("Titre");
 
     	/**Traitement sur lblTitre*/
+
 	    if(typeFonctionnalite.equals("Creer"))
 	    	lblTitre.setText(Html.fromHtml("Créer une mission"));
 	    else if(typeFonctionnalite.equals("Editer"))
@@ -105,6 +106,7 @@ public class CreationForm extends Activity{
 //	    lblPhotoArrivee.setText(Html.fromHtml("Photo point d'arrivee :"));
 //	    lblPhotoArrivee.setTextSize(30);
 //	    lblPhotoArrivee.setTextColor(Color.parseColor("#00ff00"));
+	    
 	    
 /**Traitement sur txtNom////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
@@ -287,7 +289,7 @@ public class CreationForm extends Activity{
 	 
 	 
 	 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	 public boolean isEmailValid(String email)
 	    {
 	         String regExpn =
@@ -325,11 +327,4 @@ public class CreationForm extends Activity{
 	     dlgAlert.setCancelable(true);
 	     dlgAlert.create().show();
 	 }
-	 
-	 
-	 
-	 
-	 
-	 
-	 
 }

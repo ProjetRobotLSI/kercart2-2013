@@ -1,5 +1,7 @@
 package com.kercar;
 
+import java.util.LinkedList;
+
 import kercar.android.ComAndroid;
 import kercar.android.IComAndroid;
 
@@ -22,7 +24,9 @@ public class MenuMissionEnCours extends Activity{
 	private Button arreter;
 	private TextView latitude;
 	private TextView longitude;
+	private TextView boussole;
 	private OSMAndroid OSM;
+	private LinkedList<Integer> list;
 	
 	private IComAndroid com;
 	private AsyncGetEtat get;
@@ -38,10 +42,16 @@ public class MenuMissionEnCours extends Activity{
 		arreter = (Button)findViewById(R.id.button_arreter);
 		latitude = (TextView)findViewById(R.id.latitudeEdit);
 		longitude = (TextView)findViewById(R.id.longitudeEdit);
-		OSM = (OSMAndroid)findViewById(R.id.OSM_recap);
+		boussole = (TextView)findViewById(R.id.boussoleEdit);
+		
+		OSM = (OSMAndroid)findViewById(R.id.OSM_mission_cours);
+		list = new LinkedList<Integer>();
+		list.add(0);
+		list.add(1);
+		list.add(2);
 		
 		com = ComAndroid.getManager();
-		get = new AsyncGetEtat(com, latitude, longitude, OSM);
+		get = new AsyncGetEtat(com, latitude, longitude, boussole, OSM);
 		get.execute();
 		
 		

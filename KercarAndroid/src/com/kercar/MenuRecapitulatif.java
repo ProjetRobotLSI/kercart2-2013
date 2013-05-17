@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
@@ -57,7 +58,7 @@ public class MenuRecapitulatif extends Activity{
 	    cbxRetourDepart = (CheckBox) findViewById(R.id.cbxRetourDepart);
 	    cbxPhotoArrivee = (CheckBox) findViewById(R.id.cbxPhotoArrivee);
 	    btnOK = (Button) findViewById(R.id.btnOK);
-	    OSM = (OSMAndroid) findViewById(R.id.OSM_choix_point);
+	    OSM = (OSMAndroid) findViewById(R.id.OSM_recap);
 	    
 	    clientMissions = new ClientMissions(getApplicationContext());
 	    arrive = new int[2];
@@ -108,6 +109,7 @@ public class MenuRecapitulatif extends Activity{
 //			        intList.add(ints[i]);
 //			    }
 				//Envoi de la mission au robot //VERIFIER LIST INTEGER
+				get.cancel(true);
 				new AsyncLancerMission(new LinkedList<Integer>(), newMission.getPrendrePhotosArrivee(), newMission.getRetourDepart(), newMission.getEmail(), com).execute();
 				
 				//Demarrage de l'activite

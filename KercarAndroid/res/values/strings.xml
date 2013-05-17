@@ -44,5 +44,6 @@
     <!-- Menu Mission en Cours -->
     <string name="latitude">Latitude :</string>
     <string name="longitude">Longitude :</string>
+    <string name="boussole">Boussole :</string>
     
 </resources>
