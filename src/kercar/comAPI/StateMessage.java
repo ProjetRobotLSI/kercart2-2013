@@ -77,7 +77,7 @@ public class StateMessage extends Message implements IStateMessage {
 	}
 	
 	@Override
-	public boolean getGPSState(boolean state){
+	public boolean getGPSState(){
 		return Boolean.parseBoolean(this.params.get(INDEX_GPS));
 	}
 
