@@ -79,7 +79,7 @@ void servoMoteur_turnRight(int angleRasp){
 */
 void servoMoteur_stop(){
 	servoAngle.write(90);
-	servoSpeed.write(90);
+	servoSpeed.write(75);//BUG : doit être 90
 }
 
 /************************************************/

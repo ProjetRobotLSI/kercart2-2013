@@ -24,6 +24,9 @@
 #define SENDGPSINFO 14
 #define STOPTURN 16
 
+#define VITESSETOURNER 40
+#define MARGEROTATION 8
+
 Compass compass;
 
 typedef union
@@ -45,16 +48,21 @@ static inline void turnScrutation(char sens, int angleAtourner)
 	compass.sendOrder('A');
 	delay(10);
 	orientationCourante = compass.RetrieveValueNumeric();
+	Serial.print("Orient init : ");
+	Serial.println(orientationCourante);
 	//calcul modulo de l'angle que l'on veut obtenir
 	if(sens == 'L')
 		orientationFinale = (360 +  orientationCourante - angleAtourner) % 360;
 	else
 		orientationFinale = (orientationCourante + angleAtourner) % 360;
-	if(sens == 'L')
-			servoMoteur_turnLeft(30);
-		else
-			servoMoteur_turnRight(30);
+	Serial.print("Finale : ");
+	Serial.println(orientationFinale);
 	do{
+		if(sens == 'L')
+			servoMoteur_turnLeft(VITESSETOURNER);
+		else
+			servoMoteur_turnRight(VITESSETOURNER);
+		delay(100);
 		compass.sendOrder('A');
 		delay(10);
 		orientationCourante = compass.RetrieveValueNumeric();
@@ -68,7 +76,10 @@ static inline void turnScrutation(char sens, int angleAtourner)
 			if(orientationCourante < 360 && orientationCourante > orientationFinale)
 				orientationCourante -= 360;
 		}
-	}while((orientationCourante >= orientationFinale && sens == 'L') || (orientationCourante <= orientationFinale && sens == 'R'));
+		Serial.print("Courant : ");
+		Serial.println(orientationCourante);
+	}while((orientationCourante > orientationFinale+MARGEROTATION && sens == 'L') || (orientationCourante < orientationFinale-MARGEROTATION && sens == 'R'));
+	Serial.println("Stop");
 	servoMoteur_stop();
 }
 
