@@ -17,7 +17,6 @@ Compass::Compass() :
  */
 void Compass::begin() {
 	Wire.begin();
-	Serial.begin(9600);
 }
 
 void Compass::sendOrder(char order) {

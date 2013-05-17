@@ -79,7 +79,7 @@ void servoMoteur_turnRight(int angleRasp){
 */
 void servoMoteur_stop(){
 	servoAngle.write(90);
-	servoSpeed.write(75);//BUG : doit être 90
+	servoSpeed.write(90);//BUG : doit être 90
 }
 
 /************************************************/
@@ -114,13 +114,13 @@ void servoMoteur_test()
 {
 	servoMoteur_stop();
 	delay(1000);
-	servoMoteur_moveForward(10);
+	servoMoteur_moveForward(40);
 	delay(1000);
-	servoMoteur_moveBackward(10);
+	servoMoteur_moveBackward(40);
 	delay(1000);
-	servoMoteur_turnLeft(10);
+	servoMoteur_turnLeft(40);
 	delay(1000);
-	servoMoteur_turnRight(10);
+	servoMoteur_turnRight(40);
 	delay(1000);
 	servoMoteur_stop();
 	delay(1000);

@@ -19,7 +19,6 @@ GPS::GPS(int address = 0x68) :
 
 void GPS::begin() {
 	Wire.begin();
-	Serial.begin(9600);
 }
 void GPS::retrieveTime() {
 	output += (this->getDouble(0)*10);

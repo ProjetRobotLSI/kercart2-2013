@@ -8,6 +8,7 @@
 #include <libComArduino.h>
 
 int compassAddress = 0x42 >> 1;
+int prems = 0;
 
 void setup() {
   Serial.begin(9600);
@@ -21,7 +22,12 @@ void setup() {
 
 void loop(){
     int i, distTelemeter;
-    //on attend que le buffer est le bon nombre d'octets (taille d'un message)
+    if(prems == 0)
+    {
+        servoMoteur_test();
+        prems = 1;
+    }
+    //on attend que le buffer ait le bon nombre d'octets (taille d'un message)
     if(Serial.available() == NB_OCTETS)
     {
         message msgRecu;
@@ -48,7 +54,7 @@ void loop(){
         }
     }
     //Traitement du télémetre
-    if(forward == 1)
+    /*if(forward == 1)
     {
         distTelemeter = readTelemeter(PIN_TELEMETER_FRONT);
     }
@@ -68,6 +74,6 @@ void loop(){
             delay(25);
         }
         free(msgAenvoyer);
-    }
+    }*/
     delay(25);
 }
