@@ -10,16 +10,18 @@ public class StateMessage extends Message implements IStateMessage {
 	public static final int INDEX_LATITUDE = 1;
 	public static final int INDEX_ORIENTATION = 2;
 	public static final int INDEX_STUCK = 3;
+	public static final int INDEX_GPS = 4;
 	//public static final int INDEX_TELEMETRE = 2;
 	//public static final int INDEX_BATTERY = 3;
 	
-	public StateMessage(int longitude, int latitude, int orientation, boolean stuck) {
+	public StateMessage(int longitude, int latitude, int orientation, boolean stuck, boolean GPSReady) {
 		super(Message.STATE);
 		
 		this.params.add(INDEX_LONGITUDE, Integer.toString(longitude));
 		this.params.add(INDEX_LATITUDE, Integer.toString(latitude));
 		this.params.add(INDEX_ORIENTATION, Integer.toString(orientation));
 		this.params.add(INDEX_STUCK, Boolean.toString(stuck));
+		this.params.add(INDEX_GPS, Boolean.toString(GPSReady));
 		//this.params.add(INDEX_TELEMETRE, Integer.toString(telemetre));
 		//this.params.add(INDEX_BATTERY, Integer.toString(battery));
 	}
@@ -67,6 +69,16 @@ public class StateMessage extends Message implements IStateMessage {
 	@Override
 	public void stick(boolean obstacle) {
 		this.params.set(INDEX_STUCK, Boolean.toString(obstacle));
+	}
+	
+	@Override
+	public void setGPSState(boolean state){
+		this.params.set(INDEX_GPS, Boolean.toString(state));
+	}
+	
+	@Override
+	public boolean getGPSState(boolean state){
+		return Boolean.parseBoolean(this.params.get(INDEX_GPS));
 	}
 
 	/*
