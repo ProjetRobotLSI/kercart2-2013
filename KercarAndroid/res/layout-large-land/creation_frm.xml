@@ -32,7 +32,8 @@
         android:layout_marginTop="70dp"
         android:layout_marginLeft="400dp"
         android:textSize="20sp"
-        android:hint="@string/edit_nom_edit"/>
+        android:hint="@string/edit_nom_edit"
+        android:textColor="#ffffff"/>
     
     <TextView
 	    android:id="@+id/lblEmail"
@@ -52,7 +53,8 @@
         android:layout_marginLeft="400dp"
         android:textSize="20sp"
         android:inputType="textEmailAddress"
-        android:hint="@string/edit_email_edit"/>
+        android:hint="@string/edit_email_edit"
+        android:textColor="#ffffff"/>
     
     <TextView
 	    android:id="@+id/lblRetourDepart"

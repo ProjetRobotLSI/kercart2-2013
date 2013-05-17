@@ -44,7 +44,7 @@ public class MenuRecapitulatif extends Activity{
 	private LinkedList<Integer> list;
 	
 	private IComAndroid com;
-	private AsyncGetEtatDeuxPoints get;
+	private static AsyncGetEtatDeuxPoints get;
 	
 	 @Override
 	  public void onCreate(Bundle savedInstanceState) {
@@ -103,12 +103,7 @@ public class MenuRecapitulatif extends Activity{
 		btnOK.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-//				int[] ints = newMission.get
-//			    List<Integer> intList = new ArrayList<Integer>();
-//			    for (int i= 0 ; i<ints.length ; i++){
-//			        intList.add(ints[i]);
-//			    }
-				//Envoi de la mission au robot //VERIFIER LIST INTEGER
+				//Envoi de la mission au robot
 				get.cancel(true);
 				new AsyncLancerMission(new LinkedList<Integer>(), newMission.getPrendrePhotosArrivee(), newMission.getRetourDepart(), newMission.getEmail(), com).execute();
 				

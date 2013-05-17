@@ -71,8 +71,8 @@ public class ControlManuel extends Activity{
 		list.add(1);
 		list.add(2);
 		
-		get = new AsyncGetEtatUnPoint(list, com, OSM);
-		get.execute();
+//		get = new AsyncGetEtatUnPoint(list, com, OSM);
+//		get.execute();
 		
 //		OSM.addPoint(list.get(0), list.get(1), "Emplacement du robot", "L'emplacement du Robot");
 		

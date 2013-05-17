@@ -50,11 +50,6 @@ public class AsyncGetEtatDeuxPoints extends AsyncTask<Void, Integer, Void> {
 	protected void onProgressUpdate(Integer... values) {
 		super.onProgressUpdate(values);
 		
-		//Donnees du robot
-//		list.set(0, values[0]);
-//		list.set(1, values[1]);
-//		list.set(2, values[2]);
-		
 		//Localisation du robot
 		if(tmp != 0){
 			OSM.removePoint(emplacement);
@@ -76,11 +71,7 @@ public class AsyncGetEtatDeuxPoints extends AsyncTask<Void, Integer, Void> {
 				orientation = stateMessage.getOrientation();
 
 				publishProgress(new Integer[]{latitude,longitude,orientation});
-//				publishProgress(new Integer[]{48120002,-1635540,1});
-//				
-//				Thread.sleep(5000);
-//				publishProgress(new Integer[]{48120002,-1634000,1});
-				Thread.sleep(3000);
+				Thread.sleep(10000);
 			}
 		} catch (Exception e) {e.printStackTrace();}
 		return null;

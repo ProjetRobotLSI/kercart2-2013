@@ -68,17 +68,14 @@ public class AsyncGetEtatUnPoint extends AsyncTask<Void, Integer, Void> {
 				orientation = stateMessage.getOrientation();
 
 				publishProgress(new Integer[]{latitude,longitude,orientation});
-//				publishProgress(new Integer[]{48120002,-1635540,1});
-////				
-//				Thread.sleep(5000);
-//				publishProgress(new Integer[]{48120002,-1634000,1});
-				Thread.sleep(3000);
+				Thread.sleep(10000);
 			}
 		} catch (Exception e) {e.printStackTrace();}
 		return null;
 	}
 	
-	protected void StopActualisation(){
+	@Override
+	protected void onCancelled(){
 		stop = true;
 	}
 }
