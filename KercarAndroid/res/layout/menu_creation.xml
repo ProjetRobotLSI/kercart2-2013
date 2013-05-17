@@ -12,7 +12,8 @@
       android:layout_height="wrap_content"
       android:layout_gravity="center"
       android:text="@string/createMission" 
-      android:background="@color/background"/>
+      android:background="@drawable/bouton_plus"
+      android:textColor="#ffffff" />
    
     <ListView
       android:id="@+id/lstListeMissions"
