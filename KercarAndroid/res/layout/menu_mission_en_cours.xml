@@ -5,6 +5,49 @@
     android:background="@drawable/fond_portrait"
     android:orientation="vertical" >
     
+   	<TextView
+	    android:id="@+id/latitude"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="20dp"
+		android:layout_marginLeft="20dp"
+		android:textSize="15sp"
+		android:text="@string/latitude"
+		android:textColor="#ffffff"/>
+
+   <TextView
+	    android:id="@+id/latitudeEdit"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="20dp"
+	    android:layout_marginLeft="150dp"
+	    android:textSize="15sp"
+	    android:textColor="#e3e3e3"/>   
+    
+    <TextView
+	    android:id="@+id/longitude"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+		android:layout_marginLeft="20dp"
+		android:textSize="15sp"
+		android:text="@string/longitude"
+		android:textColor="#ffffff"/>
+    
+    <TextView
+	    android:id="@+id/longitudeEdit"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_marginLeft="150dp"
+	    android:textSize="15sp"
+	    android:textColor="#e3e3e3"/>
+    
+    <com.kercar.osmandroid.OSMAndroid
+	   android:id="@+id/OSM_choix_point"
+	   android:layout_width="280dp"
+	   android:layout_height="200dp"
+	   android:layout_centerHorizontal="true"
+	   android:layout_marginTop="40dp"/>
+    
     <Button
         android:id="@+id/button_arreter"
         android:layout_width="250dp"

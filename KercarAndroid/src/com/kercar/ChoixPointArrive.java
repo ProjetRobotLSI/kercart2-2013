@@ -108,7 +108,7 @@ public class ChoixPointArrive extends Activity{
 //				        	System.out.println("a : "+ arrive[1]);
 //							OSM.addPoint(arrive[0], arrive[1], "Point Arrivee", "");
 							
-							msbox("Information", "Mission modifiee avec succes !");
+							msbox("Information", "Mission modifiée avec succès !");
 						} catch (Exception e) {
 							
 							e.printStackTrace();

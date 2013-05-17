@@ -7,6 +7,8 @@ import com.kercar.osmandroid.OSMAndroid;
 import kercar.android.IComAndroid;
 import kercar.comAPI.IStateMessage;
 import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.TextView;
 
 public class AsyncGetEtat extends AsyncTask<Void, Integer, Void> {
 	//Attributs
@@ -14,7 +16,9 @@ public class AsyncGetEtat extends AsyncTask<Void, Integer, Void> {
 	private int longitude;
 	private int orientation;
 	
-	private LinkedList<Integer> list;
+	private TextView latitudeEdit;
+	private TextView longitudeEdit;
+	
 	private IComAndroid comAndroid;
 	private OSMAndroid OSM;
 	
@@ -25,13 +29,15 @@ public class AsyncGetEtat extends AsyncTask<Void, Integer, Void> {
 	private IStateMessage stateMessage;
 	
 	//Constructeurs
-	public AsyncGetEtat(LinkedList<Integer> list, IComAndroid comAndroid, OSMAndroid OSM) {
+	public AsyncGetEtat(IComAndroid comAndroid, TextView latitude, TextView longitude, OSMAndroid OSM) {
 		//Initialisation des attributs
 		this.latitude = 0;
 		this.longitude = 0;
 		this.orientation = 0;
 		
-		this.list = list;
+		this.latitudeEdit = latitude;
+		this.longitudeEdit = longitude;
+		
 		this.comAndroid = comAndroid;
 		this.OSM = OSM;
 		
@@ -44,17 +50,17 @@ public class AsyncGetEtat extends AsyncTask<Void, Integer, Void> {
 	protected void onProgressUpdate(Integer... values) {
 		super.onProgressUpdate(values);
 		
-		//Donnees du robot
-		list.set(0, values[0]);
-		list.set(1, values[1]);
-		list.set(2, values[2]);
+		latitudeEdit.setText("salut");
+		Log.e("coucou", "c "+values[0]);
+		longitudeEdit.setText(values[1]);
+		Log.e("coucou 3", "c "+values[1]);
 		
 		//Localisation du robot
 		if(tmp != 0){
-			OSM.removePoint(emplacement);
+//			OSM.removePoint(emplacement);
 		}
-		emplacement = OSM.addPoint(values[0], values[1], "Emplacement du robot", "");
-		OSM.invalidate();
+//		emplacement = OSM.addPoint(values[0], values[1], "Emplacement du robot", "");
+//		OSM.invalidate();
 		tmp = 1;
 	}
 
@@ -62,16 +68,16 @@ public class AsyncGetEtat extends AsyncTask<Void, Integer, Void> {
 	protected Void doInBackground(Void... arg0) {
 		try {
 			while(!stop){
-				stateMessage = this.comAndroid.demanderEtat();
-				latitude = stateMessage.getLatitude();
-				longitude = stateMessage.getLongitude();
-				orientation = stateMessage.getOrientation();
-
-				publishProgress(new Integer[]{latitude,longitude,orientation});
-//				publishProgress(new Integer[]{48120002,-1635540,1});
-////				
-//				Thread.sleep(5000);
-//				publishProgress(new Integer[]{48120002,-1634000,1});
+//				stateMessage = this.comAndroid.demanderEtat();
+//				latitude = stateMessage.getLatitude();
+//				longitude = stateMessage.getLongitude();
+//				orientation = stateMessage.getOrientation();
+//
+//				publishProgress(new Integer[]{latitude,longitude,orientation});
+				publishProgress(new Integer[]{48120002,-1635540,1});
+	
+				Thread.sleep(5000);
+				publishProgress(new Integer[]{48120002,-1634000,1});
 				Thread.sleep(3000);
 			}
 		} catch (Exception e) {e.printStackTrace();}

@@ -19,6 +19,7 @@ import com.kercar.AsyncTask.AsyncAvancer;
 import com.kercar.AsyncTask.AsyncDroite;
 import com.kercar.AsyncTask.AsyncGauche;
 import com.kercar.AsyncTask.AsyncGetEtat;
+import com.kercar.AsyncTask.AsyncGetEtatUnPoint;
 import com.kercar.AsyncTask.AsyncPrendrePhoto;
 import com.kercar.AsyncTask.AsyncReculer;
 import com.kercar.AsyncTask.AsyncStop;
@@ -38,7 +39,7 @@ public class ControlManuel extends Activity{
 	private IComAndroid com;
 	
 	private LinkedList<Integer> list;
-	AsyncGetEtat get;
+	private AsyncGetEtatUnPoint get;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +71,7 @@ public class ControlManuel extends Activity{
 		list.add(1);
 		list.add(2);
 		
-		get = new AsyncGetEtat(list, com, OSM);
+		get = new AsyncGetEtatUnPoint(list, com, OSM);
 		get.execute();
 		
 //		OSM.addPoint(list.get(0), list.get(1), "Emplacement du robot", "L'emplacement du Robot");

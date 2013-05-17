@@ -7,11 +7,13 @@ import java.util.List;
 import kercar.android.ComAndroid;
 import kercar.android.IComAndroid;
 
+import com.kercar.AsyncTask.AsyncGetEtat;
 import com.kercar.AsyncTask.AsyncGetEtatDeuxPoints;
 import com.kercar.AsyncTask.AsyncLancerMission;
 import com.kercar.osmandroid.OSMAndroid;
 
 import BaseDeDonnees.Mission;
+import Client.ClientMissions;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,9 +36,14 @@ public class MenuRecapitulatif extends Activity{
 	private CheckBox cbxPhotoArrivee;
 	private OSMAndroid OSM;
 	
-	private List<Integer> list;
+	private ClientMissions clientMissions;
+	private int[] arrive;
+	private int emplacement;
+	
+	private LinkedList<Integer> list;
 	
 	private IComAndroid com;
+	private AsyncGetEtatDeuxPoints get;
 	
 	 @Override
 	  public void onCreate(Bundle savedInstanceState) {
@@ -52,7 +59,14 @@ public class MenuRecapitulatif extends Activity{
 	    btnOK = (Button) findViewById(R.id.btnOK);
 	    OSM = (OSMAndroid) findViewById(R.id.OSM_choix_point);
 	    
+	    clientMissions = new ClientMissions(getApplicationContext());
+	    arrive = new int[2];
+	    emplacement = 0;
+	    
 	    list = new LinkedList<Integer>();
+		list.add(0);
+		list.add(1);
+		list.add(2);
 	    
 	    com = ComAndroid.getManager();
 	    
@@ -73,8 +87,16 @@ public class MenuRecapitulatif extends Activity{
 		cbxPhotoArrivee.setChecked(newMission.getPrendrePhotosArrivee());
 		
 		//Initialisation de la carte OSM
-//		OSM.addPoint(newMission.getM_fin()[0], newMission.getM_fin()[1], "Point Arrivee", "");
-//		new AsyncGetEtatDeuxPoints(list, com, OSM);
+		try {
+			clientMissions.changerMissionEnCours(newMission);
+	    	arrive = clientMissions.getPointArriveeMissionEnCours();
+	    	emplacement = OSM.addPoint(arrive[0], arrive[1], "Point Arrivee", "");
+	    	
+			get = new AsyncGetEtatDeuxPoints(list, com, OSM, emplacement);
+			get.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		/**Traitement de btnOK*/
 		btnOK.setOnClickListener(new OnClickListener(){
