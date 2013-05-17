@@ -71,6 +71,14 @@ public class Core extends Thread implements IIA, SerialListener {
 		serialManager = new SerialManager();
 		serialManager.setListener(this);
 		serialManager.initialize();
+		
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		handler = new MessageHandler(this);
 		
 		long startTimeUpdate = 0;
