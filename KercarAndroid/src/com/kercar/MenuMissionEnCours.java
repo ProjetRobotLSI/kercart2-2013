@@ -29,7 +29,7 @@ public class MenuMissionEnCours extends Activity{
 	private LinkedList<Integer> list;
 	
 	private IComAndroid com;
-	private AsyncGetEtat get;
+	private static AsyncGetEtat get;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
