@@ -14,8 +14,6 @@ import kercar.raspberry.arduino.SerialListener;
 import kercar.raspberry.arduino.SerialManager;
 import kercar.raspberry.arduino.message.AskAngle;
 import kercar.raspberry.arduino.message.AskPos;
-import kercar.raspberry.arduino.message.GetAngle;
-import kercar.raspberry.arduino.message.GetPos;
 import kercar.raspberry.arduino.message.GoBackward;
 import kercar.raspberry.arduino.message.GoForward;
 import kercar.raspberry.arduino.message.IArduinoMessage;
@@ -41,6 +39,10 @@ public class Core extends Thread implements IIA, SerialListener {
 	private String mail;
 	private boolean takePhoto = false;
 	private boolean blocked = false;
+	
+	private int angle = 0;
+	private int longitude = 0;
+	private int latitude = 0;
 	
 	public Core(String initPath){
 		System.out.println("Starting core...");
@@ -69,7 +71,11 @@ public class Core extends Thread implements IIA, SerialListener {
 		serialManager.setListener(this);
 		handler = new MessageHandler(this);
 		
-		long startTime = 0;
+		long startTimeUpdate = 0;
+		
+		this.askAngle();
+		this.askCoordonnates();
+		long startTimeAsk = System.currentTimeMillis();
 		while(true)
 		{
 			if (!controlQueue.isEmpty())
@@ -78,11 +84,15 @@ public class Core extends Thread implements IIA, SerialListener {
 			if (!arduinoQueue.isEmpty())
 				handler.handle(arduinoQueue.poll());
 			
+			if(System.currentTimeMillis() - startTimeAsk >= 5000) {
+				this.askAngle();
+				this.askCoordonnates();
+				startTimeAsk = System.currentTimeMillis();
+			}
+			
 			if(inMission) {
-				GetPos pos = this.getGPSCoordonnates();
-				GetAngle angle = this.getAngle();
 			//	if(this.pathfinder.isArrived(1, 1)) {
-				if(this.pathfinder.isArrived(pos.getLatitude(), pos.getLongitude())) {
+				if(this.pathfinder.isArrived(this.latitude, this.longitude)) {
 					System.out.println("Core : ISARRIVED");
 					Core.Log("Core : ISARRIVED");
 					
@@ -95,16 +105,16 @@ public class Core extends Thread implements IIA, SerialListener {
 						}
 					} else {					
 			//			this.pathfinder.goToNextPoint(1,1, 10);
-						this.pathfinder.goToNextPoint(pos.getLatitude(), pos.getLongitude(), angle.getDegree());
+						this.pathfinder.goToNextPoint(this.latitude, this.longitude, this.angle);
 					}
-				} else if((System.currentTimeMillis() - startTime) >= 2000){
+				} else if((System.currentTimeMillis() - startTimeUpdate) >= 2000){
 		//			this.pathfinder.updateAngle(1, 1, 10);
-					this.pathfinder.updateAngle(pos.getLatitude(), pos.getLongitude(), angle.getDegree());
-					startTime = 0;
+					this.pathfinder.updateAngle(this.latitude, this.longitude, this.angle);
+					startTimeUpdate = 0;
 				}	
 				
-				if(startTime == 0)
-					startTime = System.currentTimeMillis();
+				if(startTimeUpdate == 0)
+					startTimeUpdate = System.currentTimeMillis();
 			}		
 		}
 	}
@@ -137,72 +147,46 @@ public class Core extends Thread implements IIA, SerialListener {
 		}
 	}
 
-        private String getProcessOutput(Process p){
+    private String getProcessOutput(Process p){
 
-                BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-                String tmp;
-                StringBuffer bf = new StringBuffer();
+            BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String tmp;
+            StringBuffer bf = new StringBuffer();
 
-                try{
-                        while( (tmp = br.readLine()) != null ){
-                                bf.append(tmp+System.getProperty("line.separator"));
-                        }
-                        br.close();
-                } catch(Exception e){
-                        e.printStackTrace();
-                }
-                System.out.println(bf.toString());
-                return bf.toString();
-        }
+            try{
+                    while( (tmp = br.readLine()) != null ){
+                            bf.append(tmp+System.getProperty("line.separator"));
+                    }
+                    br.close();
+            } catch(Exception e){
+                    e.printStackTrace();
+            }
+            System.out.println(bf.toString());
+            return bf.toString();
+    }
         
 	public StateMessage getRobotState(){
-		Core.Log("MessageHandler : GET_STATE");
-		System.out.println("MessageHandler : GET_STATE");
-		GetPos pos = this.getGPSCoordonnates();
-		GetAngle angle = this.getAngle();
-		return new StateMessage(pos.getLongitude(), pos.getLatitude(), angle.getDegree(), blocked);
+		Core.Log("Core : GET_STATE");
+		System.out.println("Core : GET_STATE");
+		return new StateMessage(this.longitude, this.latitude, this.angle, blocked);
 	}
 	
 	public PingMessage getPing(){
 		return new PingMessage();
 	}
-
-	@Override
-	public GetAngle getAngle() {
+	
+	private void askAngle() {
+		Core.Log("Core : ASK_ANGLE");
+		System.out.println("Core : ASK_ANGLE");
 		AskPos arduinoMsg = new AskPos();
 		this.serialManager.write(arduinoMsg.toBytes());	
-		
-		GetAngle angle = null;
-		while(angle == null) {	
-			if(!this.arduinoQueue.isEmpty()) {
-				IArduinoMessage message = this.arduinoQueue.poll();
-				if(message.getID() != IArduinoMessage.RECEIVE_ANGLE) {
-					this.handler.handle(message);
-				} else {
-					angle = (GetAngle) message;
-				}
-			}
-		}
-		return angle;
 	}
-
-	@Override
-	public GetPos getGPSCoordonnates() {
+	
+	private void askCoordonnates() {
+		Core.Log("Core : ASK_COORDONNATES");
+		System.out.println("Core : ASK_COORDONNATES");
 		AskAngle arduinoMsg = new AskAngle();
 		this.serialManager.write(arduinoMsg.toBytes());	
-		
-		GetPos pos = null;
-		while(pos == null) {
-			if(!this.arduinoQueue.isEmpty()) {
-				IArduinoMessage message = this.arduinoQueue.poll();
-				if(message.getID() != IArduinoMessage.RECEIVE_POS) {
-					this.handler.handle(message);
-				} else {
-					pos = (GetPos) message;
-				}
-			}
-		}
-		return pos;
 	}
 
 	@Override
@@ -253,11 +237,9 @@ public class Core extends Thread implements IIA, SerialListener {
 		this.inMission = true;
 		this.pathfinder.setPath(points);
 		this.pathfinder.setSpeed(speed);
-		GetPos pos = this.getGPSCoordonnates();
-		GetAngle angle = this.getAngle();
 		
 	//	this.pathfinder.goToNextPoint(1, 1, 10);
-		this.pathfinder.goToNextPoint(pos.getLatitude(), pos.getLongitude(), angle.getDegree());
+		this.pathfinder.goToNextPoint(this.latitude, this.longitude, this.angle);
 	}
 	
 	public void stopMission() {
@@ -274,7 +256,15 @@ public class Core extends Thread implements IIA, SerialListener {
 		arduinoQueue.add(IArduinoMessage.fromBytes(data));
 	}
 	
-	public MessageHandler getMessageHandler() {
-		return this.handler;
+	public void setAngle(int angle) {
+		this.angle = angle;
+	}
+	
+	public void setLatitude(int latitude) {
+		this.latitude = latitude;
+	}
+	
+	public void setLongitude(int longitude) {
+		this.longitude = longitude;
 	}
 }

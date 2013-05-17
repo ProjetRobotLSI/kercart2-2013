@@ -5,6 +5,8 @@ import kercar.comAPI.CMDMoveMessage;
 import kercar.comAPI.CMDTurnMessage;
 import kercar.comAPI.IMessage;
 import kercar.comAPI.Message;
+import kercar.raspberry.arduino.message.GetAngle;
+import kercar.raspberry.arduino.message.GetPos;
 import kercar.raspberry.arduino.message.IArduinoMessage;
 
 public class MessageHandler {
@@ -71,8 +73,7 @@ public class MessageHandler {
 		}
 	}
 	
-	public void handle(IArduinoMessage message)
-	{
+	public void handle(IArduinoMessage message) {
 		Core.Log("MessageHandler : Message from Arduino");
 		System.out.println("MessageHandler : Message from Arduino");
 		if(message.getID() == IArduinoMessage.RECEIVE_BLOCK) {
@@ -81,6 +82,19 @@ public class MessageHandler {
 			this.ia.stopMission();
 			this.ia.setBlocked(true);
 			//this.ia.getServletQueue().add(new Stop());
+		} 
+		else if(message.getID() == IArduinoMessage.RECEIVE_ANGLE) {
+			Core.Log("MessageHandler : RECEIVE_ANGLE");
+			System.out.println("MessageHandler : RECEIVE_ANGLE");
+			GetAngle angle = (GetAngle) message;
+			this.ia.setAngle(angle.getDegree());
+		}
+		else if(message.getID() == IArduinoMessage.RECEIVE_GPSINFO) {
+			Core.Log("MessageHandler : RECEIVE_GPSINFO");
+			System.out.println("MessageHandler : RECEIVE_GPSINFO");
+			GetPos pos = (GetPos) message;
+			this.ia.setLongitude(pos.getLongitude());
+			this.ia.setLatitude(pos.getLatitude());
 		}
 	}
 }
