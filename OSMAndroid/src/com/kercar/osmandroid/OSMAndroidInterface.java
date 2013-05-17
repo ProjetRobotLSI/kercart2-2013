@@ -122,7 +122,12 @@ public interface OSMAndroidInterface {
 	 */
 	public int getPointLongitude(int id);
 	
-	
+	/**
+	 * Set a default marker
+	 * @param marker
+	 */
 	public void setDefaultMarker(Drawable marker);
+	
+	public boolean roadIsFinished(); 
 }
 

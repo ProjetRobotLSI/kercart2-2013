@@ -37,6 +37,7 @@ public class OSMAndroid extends MapView implements OSMAndroidInterface {
 	private boolean isStartPoint;
 	private int startPoint, endPoint;
 	private int lastRoad;
+	private boolean roadIsFinished;
 	
 	/**
 	 * Map Creation
@@ -93,7 +94,7 @@ public class OSMAndroid extends MapView implements OSMAndroidInterface {
         
         this.startPoint = 0;
         this.endPoint = 0;
-        
+        this.setRoadIsFinished(false);
         this.setLongClickable(true);
         this.gestureDetector = new GestureDetector(activity, new MapViewGestureListener(this));
         this.gestureDetector.setIsLongpressEnabled(true);
@@ -164,19 +165,16 @@ public class OSMAndroid extends MapView implements OSMAndroidInterface {
 			return -1;
 		}
 		
-		Road road;
 		try {
 			//Create a road between two points, and get this beautiful road 
-			
+			this.setRoadIsFinished(false);
 			GeoPoint A = this.spArOverlayItem.get(startPointId).getPoint();
 			GeoPoint B = this.spArOverlayItem.get(endPointId).getPoint();
 //			road = new RoadAsyncTask().execute(A, B).get();
 			
 			this.idRoad++;
-	        Log.e("osmandro", "la 1");
 	        new RoadThread(this, A, B).start();
 	    //    new RoadAsyncTask(this, A, B).execute();
-	        Log.e("osmandro", "la 2");
 			//Visual road
 			this.lastRoad = idRoad - 1;
 		} catch (Exception e) {
@@ -311,5 +309,13 @@ public class OSMAndroid extends MapView implements OSMAndroidInterface {
 	
 	public SparseArray<PathOverlay> getSparPathOberlay() {
 		return this.spArPathOverlay;
+	}
+	
+	public synchronized boolean roadIsFinished() {
+		return this.roadIsFinished;
+	}
+	
+	public synchronized void setRoadIsFinished(boolean bool) {
+		this.roadIsFinished = bool;
 	}
 }
