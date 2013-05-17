@@ -51,8 +51,9 @@ public class ChoixPointArrive extends Activity{
 	        if(typeFonctionnalite.equals("Editer")){
 	        	try {
 					clientMissions.changerMissionEnCours(newMission);
-		        	arrive = clientMissions.getPointArriveeMissionEnCours();
-		        	OSM.addPoint(arrive[0], arrive[1], "Point Arrivee", "");
+		        	int[] a = clientMissions.getPointArriveeMissionEnCours();
+		        	System.out.println("a : "+ a[0]);
+		        	System.out.println("a : "+ a[1]);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -67,20 +68,35 @@ public class ChoixPointArrive extends Activity{
 					if(typeFonctionnalite.equals("Creer")){
 						
 						try {
-					        //Enregistrement du point d'arrive du Robot
+					        //Enregistrement du point d'arriv� du Robot
 					        int id = OSM.getLastStartPoint();
 					        int latitude = OSM.getPointLatitude(id);
 					        int longitude = OSM.getPointLongitude(id);
 					        arrive[0] = latitude;
 					        arrive[1] = longitude;
+					        newMission.setM_fin(arrive);
+//					        System.out.println(latitude);
+//					        System.out.println(longitude);
+					        
 
+//<<<<<<< HEAD
+							clientMissions.creerMission(newMission);
+/*							clientMissions.changerMissionEnCours(newMission);
+												        
+							clientMissions.setPointArriveeMissionsEnCours(arrive);
+							
+							int[] a = clientMissions.getPointArriveeMissionEnCours();
+				        	System.out.println("a : "+ a[0]);
+				        	System.out.println("a : "+ a[1]);
+=======
 //					        newMission.setM_fin(arrive);							
 							clientMissions.creerMission(newMission);
 							clientMissions.changerMissionEnCours(newMission);
 							clientMissions.setPointArriveeMissionsEnCours(arrive);
 //							int[] a = clientMissions.getPointArriveeMissionEnCours();
+>>>>>>> a89e8d4e4584329961bdcad2a7c68554811ca7f0*/
 					        
-							msbox("Information","Mission ajoutee avec succes !");
+							msbox("Information","Mission ajoutée avec succès !");
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -89,11 +105,18 @@ public class ChoixPointArrive extends Activity{
 						
 						try {
 							//ENREGISTRER ROUTE DANS BASE DE DONNEE
+//							clientMissions.changerMissionEnCours(newMission);
 							clientMissions.setEMailMissionEnCours(newMission.getEmail());
 							clientMissions.setRetourDepartMissionEnCours(newMission.getRetourDepart());
 							clientMissions.setPrendrePhotosArriveeMissionEnCours(newMission.getPrendrePhotosArrivee());
+//							clientMissions.saveMissions(getApplicationContext());
 							
-							msbox("Information", "Mission modifiee avec succes !");
+//							arrive = clientMissions.getPointArriveeMissionEnCours();
+//				        	System.out.println("a : "+ arrive[0]);
+//				        	System.out.println("a : "+ arrive[1]);
+//							OSM.addPoint(arrive[0], arrive[1], "Point Arrivee", "");
+							
+							msbox("Information", "Mission modifiée avec succès !");
 						} catch (Exception e) {
 							
 							e.printStackTrace();
@@ -101,7 +124,7 @@ public class ChoixPointArrive extends Activity{
 
 					}
 					else
-						throw new IllegalStateException("Exception ! Type de fonctionnalite inexistant !");
+						throw new IllegalStateException("ChoixPointArrive: Exception ! Type de fonctionnalite inexistant !");
 				}
 			});
 	    }

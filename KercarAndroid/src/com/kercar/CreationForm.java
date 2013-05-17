@@ -78,9 +78,38 @@ public class CreationForm extends Activity{
     	final String typeFonctionnalite= receptionBundle.getString("Titre");
 
     	/**Traitement sur lblTitre*/
-	    lblTitre.setText(Html.fromHtml(typeFonctionnalite+" une mission"));
+
+	    if(typeFonctionnalite.equals("Creer"))
+	    	lblTitre.setText(Html.fromHtml("Créer une mission"));
+	    else if(typeFonctionnalite.equals("Editer"))
+	    	lblTitre.setText(Html.fromHtml("Éditer une mission"));
+	    else
+	    	throw new IllegalStateException("CreationForm: Exception ! Type de fonctionnalite inexistant !");
+    	
+//	    /**Traitement sur lblNom*/
+//	    lblNom.setText(Html.fromHtml("<p style='color:green'> Nom de la mission: </p>"));
+//	    lblNom.setTextSize(30);
+//	    lblNom.setTextColor(Color.parseColor("#00ff00"));
+//	    
+//	    
+//	    /**Traitement sur lblEmail*/
+//	    lblEmail.setText(Html.fromHtml("Adresse e-mail:"));
+//	    lblEmail.setTextSize(30);
+//	    lblEmail.setTextColor(Color.parseColor("#00ff00"));
+//	    
+//	    /**Traitement sur lblRetourDepart*/
+//	    lblRetourDepart.setText(Html.fromHtml("Retour du robot:"));
+//	    lblRetourDepart.setTextSize(30);
+//	    lblRetourDepart.setTextColor(Color.parseColor("#00ff00"));
+//	    
+//	    /**Traitement sur lblPhotoArrivee*/
+//	    lblPhotoArrivee.setText(Html.fromHtml("Photo point d'arrivee :"));
+//	    lblPhotoArrivee.setTextSize(30);
+//	    lblPhotoArrivee.setTextColor(Color.parseColor("#00ff00"));
+	    
 	    
 /**Traitement sur txtNom////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
 	    if(typeFonctionnalite.equals("Creer")){
 
 //			txtNom.setHint(R.string.edit_nom);
@@ -98,7 +127,8 @@ public class CreationForm extends Activity{
 //			});
 	    }
 	    else if(typeFonctionnalite.equals("Editer")){
-//	    	txtNom.setEnabled(false);
+	    	txtNom.setEnabled(false);
+	    	txtNom.setTextColor(Color.parseColor("#888888"));
 	    	txtNom.setText(newMission.getNom());
 	    }else
 	    	System.err.println("Erreur transfert de donnees !");
@@ -212,32 +242,47 @@ public class CreationForm extends Activity{
 		});
 	    
 /**Traitement de btnAnnuler//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-	    btnAnnuler.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				
-				Intent intent = new Intent(CreationForm.this, MenuCreation.class);
-				startActivity(intent);
-			}
-		});
+
+	    	 btnAnnuler.setOnClickListener(new OnClickListener() {
+	 			
+	 			@Override
+	 			public void onClick(View arg0) {
+	 				
+	 				Intent intent = new Intent(CreationForm.this, MenuCreation.class);
+	 				startActivity(intent);
+	 			}
+	 		});
+
+	    
+	   
 	 
 /**Traitement de btnSupprimer//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/		    
-	    btnSupprimer.setOnClickListener(new OnClickListener(){
+	    
+	    if(typeFonctionnalite.equals("Creer")){
 	    	
-	    	public void onClick(View arg0){
-	    		
-	    		try {
-	    			
-	    			Mission deleteMission= clientMissions.getListeMissions().getMissions(txtNom.getText().toString());
-					clientMissions.supprimerMission(deleteMission);
-					msbox("Information","Mission supprimée avec succès !");
-				} catch (Exception e) {
-					
-					e.printStackTrace();
-				}
-	    	}
-	    });
+	    	btnSupprimer.setEnabled(false);
+	    }
+	    else{
+	    	
+	    	btnSupprimer.setEnabled(true);
+		    btnSupprimer.setOnClickListener(new OnClickListener(){
+		    	
+		    	public void onClick(View arg0){
+		    		
+		    		try {
+		    			
+		    			Mission deleteMission= clientMissions.getListeMissions().getMissions(txtNom.getText().toString());
+						clientMissions.supprimerMission(deleteMission);
+						msbox("Information","Mission supprimée avec succès !");
+					} catch (Exception e) {
+						
+						e.printStackTrace();
+					}
+		    	}
+		    });
+	    }
+	    
+
 	  }
 	 
 
