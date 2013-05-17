@@ -21,7 +21,9 @@ void Compass::begin() {
 }
 
 void Compass::sendOrder(char order) {
+	Wire.beginTransmission(a_address);
 	Wire.write(order);
+	Wire.endTransmission();
 }
 
 int Compass::RetrieveValueNumeric() {

@@ -1,3 +1,4 @@
+#include <Arduino.h>
 int numPinLeft(4),numPinRight(7);
 int SpeedForward(0);
 int SpeedBackward(180);
@@ -107,4 +108,20 @@ int servoMoteur_isBlock(){
 */
 int servoMoteur_getStateAngle(){
 	return (servoAngle.read());
+}
+
+void servoMoteur_test()
+{
+	servoMoteur_stop();
+	delay(1000);
+	servoMoteur_moveForward(10);
+	delay(1000);
+	servoMoteur_moveBackward(10);
+	delay(1000);
+	servoMoteur_turnLeft(10);
+	delay(1000);
+	servoMoteur_turnRight(10);
+	delay(1000);
+	servoMoteur_stop();
+	delay(1000);
 }

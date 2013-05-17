@@ -22,6 +22,9 @@
 #define SENDANGLE 12
 #define ARRIVED 13
 #define SENDGPSINFO 14
+#define STOPTURN 16
+
+Compass compass;
 
 typedef union
 {
@@ -36,17 +39,49 @@ typedef struct
 	longToChar param2;
 } message;
 
+static inline void turnScrutation(char sens, int angleAtourner)
+{
+	int orientationCourante, orientationFinale;
+	compass.sendOrder('A');
+	delay(10);
+	orientationCourante = compass.RetrieveValueNumeric();
+	//calcul modulo de l'angle que l'on veut obtenir
+	if(sens == 'L')
+		orientationFinale = (360 +  orientationCourante - angleAtourner) % 360;
+	else
+		orientationFinale = (orientationCourante + angleAtourner) % 360;
+	if(sens == 'L')
+			servoMoteur_turnLeft(30);
+		else
+			servoMoteur_turnRight(30);
+	do{
+		compass.sendOrder('A');
+		delay(10);
+		orientationCourante = compass.RetrieveValueNumeric();
+		if(sens == 'L')
+		{
+			if(orientationCourante < orientationFinale && orientationCourante > 0)
+				orientationCourante += 360;
+		}
+		else
+		{
+			if(orientationCourante < 360 && orientationCourante > orientationFinale)
+				orientationCourante -= 360;
+		}
+	}while((orientationCourante >= orientationFinale && sens == 'L') || (orientationCourante <= orientationFinale && sens == 'R'));
+	servoMoteur_stop();
+}
+
 /*
 * Envoie un message
 */
 static inline char* send_order(int id)
 {
 	char* message;
-	longToChar test;
 	message = (char*)malloc(NB_OCTETS);
 	
 	//Initialisation du message
-	int i;
+	int i, valCompass;
 	for(i = 0; i < NB_OCTETS; i++)
 		message[i] = 0;
 	
@@ -60,8 +95,14 @@ static inline char* send_order(int id)
 			//ToDo : récupérer valeur GPS
 			break;
 		case GETANGLE:
+			compass.sendOrder('A');
+			delay(10);
 			message[0] = SENDANGLE;
-			//ToDo : récupérer infos boussole
+			valCompass = compass.RetrieveValueNumeric();
+			for(i=0;i<SIZE_PARAM;i++)
+			{
+				message[i+1] = (char)(*(&valCompass)+i);
+			}
 			break;
 		case ARRIVED :
 			message[0] = ARRIVED;
@@ -69,6 +110,9 @@ static inline char* send_order(int id)
 		case GETGPSINFO :
 			message[0] = SENDGPSINFO;
 			//ToDO : récupérer info gps
+			break;
+		case STOPTURN:
+			message[0] = STOPTURN;
 			break;
 	}
 	return message;//ToDo : faire free du malloc
@@ -91,12 +135,12 @@ static inline char* call_order(message* msg)
 			servoMoteur_moveBackward((int) (msg->param1.entier));
 			break;
 		case LEFT :
-			servoMoteur_turnLeft(90);
-			//turnLeft((int) (msg->param1.entier));
+			turnScrutation('L', (int) (msg->param1.entier));
+			return(send_order(STOPTURN));
 			break;
 		case RIGHT :
-			servoMoteur_turnRight(90);
-			//turnRight((int) (msg->param1.entier));
+			turnScrutation('R', (int) (msg->param1.entier));
+			return(send_order(STOPTURN));
 			break;
 		case GOTOPOS :
 			//TODO

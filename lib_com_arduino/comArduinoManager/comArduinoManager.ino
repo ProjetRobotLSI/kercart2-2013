@@ -1,13 +1,21 @@
 #include <Servo.h>
+#include <Wire.h>
+#include <HardwareSerial.h>
 #include <servoMoteur.h>
+#include <compass.h>
 #include <telemeter.h>
 #include <libComArduino.h>
 
-// initialisation de la bete
+int compassAddress = 0x42 >> 1;
+
 void setup() {
   Serial.begin(9600);
-  servoAngle.attach(numPinLeft);  //the pin for the servo control 
+  servoAngle.attach(numPinLeft);
   servoSpeed.attach(numPinRight);
+  servoMoteur_test();
+  compass.begin();
+  compass.setNormalizeValue(5);
+  compass.setAddress(compassAddress);
 }
 
 void loop(){
@@ -30,7 +38,6 @@ void loop(){
         //s'il y a un message à envoyer :
         if(msgAenvoyer != NULL)
         {
-          
             for(i = 0; i < NB_OCTETS; i++)
             {
               Serial.print(msgAenvoyer[i]);
@@ -39,21 +46,19 @@ void loop(){
             free(msgAenvoyer);
         }
     }
-    //Test du télémetre
-    //ToDo : savoir si on avance ou si on recule et ne lire qu'un seul des deux télémetre, sinon on est bloqué
-    switch(forward)
+    //Traitement du télémetre
+    if(forward == 1)
     {
-        case 1:
         distTelemeter = readTelemeter(PIN_TELEMETER_FRONT);
-        break;
-        default:
+    }
+    else
+    {
         distTelemeter = readTelemeter(PIN_TELEMETER_BACK);
-        break;
     }
     if(distTelemeter < SEUIL_ARRET && servoMoteur_isBlock() == 0)
     {
-         servoMoteur_stop();
-         //envoie au raspberry qu'on est bloqué
+        servoMoteur_stop();
+        //envoie au raspberry qu'on est bloqué
         char* msgAenvoyer;
         msgAenvoyer = send_order(BLOCK);
         for(i = 0; i < NB_OCTETS; i++)

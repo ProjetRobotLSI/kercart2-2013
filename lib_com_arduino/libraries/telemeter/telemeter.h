@@ -3,7 +3,7 @@
 //Telemetre
 #define PIN_TELEMETER_BACK 2
 #define PIN_TELEMETER_FRONT 4
-#define SEUIL_ARRET 8
+#define SEUIL_ARRET 15
 
 float readTelemeter(int pinTelemetre)
 {
