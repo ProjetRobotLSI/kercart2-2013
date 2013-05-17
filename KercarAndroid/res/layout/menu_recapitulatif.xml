@@ -91,7 +91,7 @@
         android:button="@drawable/checkbox"/>
     
    	<com.kercar.osmandroid.OSMAndroid
-	   android:id="@+id/OSM_choix_point"
+	   android:id="@+id/OSM_recap"
 	   android:layout_width="280dp"
 	   android:layout_height="200dp"
 	   android:layout_centerHorizontal="true"

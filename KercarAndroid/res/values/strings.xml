@@ -39,4 +39,8 @@
     <string name="nom_mission">Mission :</string>
     <string name="email_mission">Email :</string>
     
+    <!-- Menu Mission en Cours -->
+    <string name="latitude">Latitude :</string>
+    <string name="longitude">Longitude :</string>
+    
 </resources>

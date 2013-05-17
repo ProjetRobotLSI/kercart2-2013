@@ -50,9 +50,8 @@ public class ChoixPointArrive extends Activity{
 	        if(typeFonctionnalite.equals("Editer")){
 	        	try {
 					clientMissions.changerMissionEnCours(newMission);
-		        	int[] a = clientMissions.getPointArriveeMissionEnCours();
-		        	System.out.println("a : "+ a[0]);
-		        	System.out.println("a : "+ a[1]);
+		        	arrive = clientMissions.getPointArriveeMissionEnCours();
+		        	OSM.addPoint(arrive[0], arrive[1], "Point Arrivee", "");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -64,7 +63,7 @@ public class ChoixPointArrive extends Activity{
 				@Override
 				public void onClick(View v) {
 					
-					if(typeFonctionnalite.equals("CrÃ©er")){
+					if(typeFonctionnalite.equals("Creer")){
 						
 						try {
 					        //Enregistrement du point d'arrivé du Robot
@@ -73,16 +72,10 @@ public class ChoixPointArrive extends Activity{
 					        int longitude = OSM.getPointLongitude(id);
 					        arrive[0] = latitude;
 					        arrive[1] = longitude;
-//					        System.out.println(latitude);
-//					        System.out.println(longitude);
 							
-							clientMissions.creerMission(newMission.getNom(), newMission.getEmail(), newMission.getRetourDepart(), newMission.getPrendrePhotosArrivee());
+							clientMissions.creerMission(newMission);
 							clientMissions.changerMissionEnCours(newMission);
 							clientMissions.setPointArriveeMissionsEnCours(arrive);
-							
-							int[] a = clientMissions.getPointArriveeMissionEnCours();
-				        	System.out.println("a : "+ a[0]);
-				        	System.out.println("a : "+ a[1]);
 					        
 							msbox("Information","Mission ajoutee avec succes !");
 						} catch (Exception e) {
@@ -97,12 +90,6 @@ public class ChoixPointArrive extends Activity{
 							clientMissions.setEMailMissionEnCours(newMission.getEmail());
 							clientMissions.setRetourDepartMissionEnCours(newMission.getRetourDepart());
 							clientMissions.setPrendrePhotosArriveeMissionEnCours(newMission.getPrendrePhotosArrivee());
-//							clientMissions.saveMissions(getApplicationContext());
-							
-//							arrive = clientMissions.getPointArriveeMissionEnCours();
-//				        	System.out.println("a : "+ arrive[0]);
-//				        	System.out.println("a : "+ arrive[1]);
-//							OSM.addPoint(arrive[0], arrive[1], "Point Arrivee", "");
 							
 							msbox("Information", "Mission modifiee avec succes !");
 						} catch (Exception e) {

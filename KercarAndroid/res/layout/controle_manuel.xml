@@ -9,28 +9,32 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="270dp"
-		android:layout_marginLeft="50dp"/>
+		android:layout_marginLeft="50dp"
+		android:background="@drawable/fleche_haut"/>
    
     <Button
         android:id="@+id/buttonDroite"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_below="@id/buttonAvance"
-        android:layout_toRightOf="@id/buttonAvance"/>
+        android:layout_toRightOf="@id/buttonAvance"
+        android:background="@drawable/fleche_droite"/>
 
     <Button
         android:id="@+id/buttonRecule"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_toLeftOf="@id/buttonDroite"
-        android:layout_below="@id/buttonDroite"/>
+        android:layout_below="@id/buttonDroite"
+        android:background="@drawable/fleche_bas"/>
     
     <Button
         android:id="@+id/buttonGauche"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_below="@id/buttonAvance"
-        android:layout_toLeftOf="@id/buttonRecule"/>
+        android:layout_toLeftOf="@id/buttonRecule"
+        android:background="@drawable/fleche_gauche"/>
     
      <com.kercar.osmandroid.OSMAndroid
         android:id="@+id/OSM"
