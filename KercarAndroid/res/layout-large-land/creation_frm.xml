@@ -110,6 +110,17 @@
 		android:text="@string/button_suivant"
 		android:textSize="20sp"
 		android:textColor="#ffffff"/>
+    
+    <Button
+	    android:id="@+id/btnSupprimer"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignBaseline="@+id/btnSuivant"
+	    android:layout_alignBottom="@+id/btnSuivant"
+		android:layout_marginLeft="530dp"
+	    android:text="@string/button_supprimer"
+	    android:textSize="20sp"
+	    android:textColor="#ffffff"/> 
 
     <Button
 	    android:id="@+id/btnAnnuler"

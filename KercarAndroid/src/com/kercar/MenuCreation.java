@@ -34,10 +34,10 @@ public class MenuCreation extends Activity{
 		listeMissions = (ListView) findViewById(R.id.lstListeMissions);
 		btnCreation = (Button)findViewById(R.id.send);
 
-		// r�cup�ration des missions dans la base de donn�es
+		// recuperation des missions dans la base de donnees
 		clientMissions = new ClientMissions(getApplicationContext());
 
-		// Affichage des missions cr��es		
+		// Affichage des missions crees
 		ArrayAdapter<Mission> adapter = new ArrayAdapter<Mission>(this, android.R.layout.simple_list_item_1, clientMissions.getListeMissions().getListe()){
 			//Affichage du texte en blanc
 			public View getView(int position, View convertView,
@@ -52,7 +52,7 @@ public class MenuCreation extends Activity{
 		};
 		listeMissions.setAdapter(adapter);
 
-		/**Listener de cr�ation d'une nouvelle mission*/
+		/**Listener de creation d'une nouvelle mission*/
 		btnCreation.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
@@ -73,7 +73,7 @@ public class MenuCreation extends Activity{
 		});
 
 		/**
-		 * Listener d'edition des missions deja cr��es
+		 * Listener d'edition des missions deja crees
 		 */
 		listeMissions.setOnItemClickListener(new OnItemClickListener(){
 			@Override

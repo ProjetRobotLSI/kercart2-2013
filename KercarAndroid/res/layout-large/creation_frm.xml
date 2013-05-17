@@ -103,8 +103,8 @@
     
     <Button
 	    android:id="@+id/btnSuivant"
-	    android:layout_width="170dp"
-	    android:layout_height="80dp"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
 	    android:layout_marginTop="550dp"
 		android:layout_marginLeft="70dp"
 		android:text="@string/button_suivant"
@@ -112,12 +112,23 @@
 		android:textColor="#ffffff"/>
     
     <Button
-	    android:id="@+id/btnAnnuler"
-	    android:layout_width="170dp"
-	    android:layout_height="80dp"
+	    android:id="@+id/btnSupprimer"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
 	    android:layout_alignBaseline="@+id/btnSuivant"
 	    android:layout_alignBottom="@+id/btnSuivant"
-	    android:layout_alignLeft="@+id/cbxPhotoArrivee"
+		android:layout_marginLeft="320dp"
+	    android:text="@string/button_supprimer"
+	    android:textSize="20sp"
+	    android:textColor="#ffffff"/> 
+    
+    <Button
+	    android:id="@+id/btnAnnuler"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignBaseline="@+id/btnSuivant"
+	    android:layout_alignBottom="@+id/btnSuivant"
+	    android:layout_marginLeft="200dp"
 	    android:text="@string/button_annuler"
 	    android:textSize="25sp"
 	    android:textColor="#ffffff"/>    

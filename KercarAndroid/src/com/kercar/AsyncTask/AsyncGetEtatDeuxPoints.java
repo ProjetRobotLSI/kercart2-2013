@@ -51,9 +51,9 @@ public class AsyncGetEtatDeuxPoints extends AsyncTask<Void, Integer, Void> {
 		super.onProgressUpdate(values);
 		
 		//Donnees du robot
-		list.set(0, values[0]);
-		list.set(1, values[1]);
-		list.set(2, values[2]);
+//		list.set(0, values[0]);
+//		list.set(1, values[1]);
+//		list.set(2, values[2]);
 		
 		//Localisation du robot
 		if(tmp != 0){
@@ -70,13 +70,13 @@ public class AsyncGetEtatDeuxPoints extends AsyncTask<Void, Integer, Void> {
 	protected Void doInBackground(Void... arg0) {
 		try {
 			while(!stop){
-//				stateMessage = this.comAndroid.demanderEtat();
-//				latitude = stateMessage.getLatitude();
-//				longitude = stateMessage.getLongitude();
-//				orientation = stateMessage.getOrientation();
-//
-//				publishProgress(new Integer[]{latitude,longitude,orientation});
-				publishProgress(new Integer[]{48120002,-1635540,1});
+				stateMessage = this.comAndroid.demanderEtat();
+				latitude = stateMessage.getLatitude();
+				longitude = stateMessage.getLongitude();
+				orientation = stateMessage.getOrientation();
+
+				publishProgress(new Integer[]{latitude,longitude,orientation});
+//				publishProgress(new Integer[]{48120002,-1635540,1});
 //				
 //				Thread.sleep(5000);
 //				publishProgress(new Integer[]{48120002,-1634000,1});
@@ -86,8 +86,8 @@ public class AsyncGetEtatDeuxPoints extends AsyncTask<Void, Integer, Void> {
 		return null;
 	}
 	
-	protected void StopActualisation(){
+	@Override
+	protected void onCancelled(){
 		stop = true;
 	}
-	
 }

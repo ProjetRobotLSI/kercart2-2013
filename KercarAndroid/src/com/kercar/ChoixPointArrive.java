@@ -74,9 +74,11 @@ public class ChoixPointArrive extends Activity{
 					        arrive[0] = latitude;
 					        arrive[1] = longitude;
 
-					        newMission.setM_fin(arrive);							
-							clientMissions.creerMission(newMission);							
-							int[] a = clientMissions.getPointArriveeMissionEnCours();
+//					        newMission.setM_fin(arrive);							
+							clientMissions.creerMission(newMission);
+							clientMissions.changerMissionEnCours(newMission);
+							clientMissions.setPointArriveeMissionsEnCours(arrive);
+//							int[] a = clientMissions.getPointArriveeMissionEnCours();
 					        
 							msbox("Information","Mission ajoutee avec succes !");
 						} catch (Exception e) {
