@@ -7,6 +7,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.List;
 import java.util.Map;
 
+import kercar.comAPI.CMDMissionMessage;
 import kercar.comAPI.IMessage;
 import kercar.comAPI.PingMessage;
 import kercar.comAPI.StateMessage;
@@ -36,13 +37,14 @@ public class Core extends Thread implements IIA, SerialListener {
 	private SerialManager serialManager;
 	private static String initPath;
 	private boolean inMission;
-	private String mail;
 	private boolean takePhoto = false;
 	private boolean blocked = false;
 	
 	private int angle = 0;
 	private int longitude = 0;
 	private int latitude = 0;
+	private boolean gpsReady = false;
+//	private CMDMissionMessage misssionPaused;
 	
 	public Core(String initPath){
 		System.out.println("Starting core...");
@@ -76,6 +78,9 @@ public class Core extends Thread implements IIA, SerialListener {
 		this.askAngle();
 		this.askCoordonnates();
 		long startTimeAsk = System.currentTimeMillis();
+		
+		//Sale bouuuuuuuuu
+		boolean first = true;
 		while(true)
 		{
 			if (!controlQueue.isEmpty())
@@ -84,21 +89,27 @@ public class Core extends Thread implements IIA, SerialListener {
 			if (!arduinoQueue.isEmpty())
 				handler.handle(arduinoQueue.poll());
 			
-			if(System.currentTimeMillis() - startTimeAsk >= 5000) {
+			if(controlQueue.isEmpty() && System.currentTimeMillis() - startTimeAsk >= 5000) {
 				this.askAngle();
 				this.askCoordonnates();
 				startTimeAsk = System.currentTimeMillis();
 			}
 			
-			if(inMission) {
+			
+			if(inMission && gpsReady) {
+				if(first) {
+					this.pathfinder.goToNextPoint(latitude, longitude, angle);
+					first = false;
+				}
 			//	if(this.pathfinder.isArrived(1, 1)) {
-				if(this.pathfinder.isArrived(this.latitude, this.longitude)) {
+				else if(this.pathfinder.isArrived(this.latitude, this.longitude)) {
 					System.out.println("Core : ISARRIVED");
 					Core.Log("Core : ISARRIVED");
 					
 					this.stopKercar();
 					if(this.pathfinder.isLastPoint() ) {
 						this.stopMission();
+						first = true;
 						if(takePhoto) {
 							JapaneseTourist.takePhoto();
 							JapaneseTourist.sendPhotos();
@@ -168,7 +179,7 @@ public class Core extends Thread implements IIA, SerialListener {
 	public StateMessage getRobotState(){
 		Core.Log("Core : GET_STATE");
 		System.out.println("Core : GET_STATE");
-		return new StateMessage(this.longitude, this.latitude, this.angle, blocked);
+		return new StateMessage(this.longitude, this.latitude, this.angle, this.blocked, this.gpsReady);
 	}
 	
 	public PingMessage getPing(){
@@ -232,14 +243,14 @@ public class Core extends Thread implements IIA, SerialListener {
 	@Override
 	public void launchMission(List<Integer> points, String mail, int speed, boolean takePhoto) {
 		System.out.println("Launching mission...");
-		this.mail = mail;
+	//	this.mail = mail;
 		this.takePhoto = 
 		this.inMission = true;
 		this.pathfinder.setPath(points);
 		this.pathfinder.setSpeed(speed);
 		
 	//	this.pathfinder.goToNextPoint(1, 1, 10);
-		this.pathfinder.goToNextPoint(this.latitude, this.longitude, this.angle);
+	//	this.pathfinder.goToNextPoint(this.latitude, this.longitude, this.angle);
 	}
 	
 	public void stopMission() {
@@ -262,9 +273,19 @@ public class Core extends Thread implements IIA, SerialListener {
 	
 	public void setLatitude(int latitude) {
 		this.latitude = latitude;
+		
+		if(latitude != 0)
+			this.gpsReady = true;
+		else
+			this.gpsReady = false;
 	}
 	
 	public void setLongitude(int longitude) {
 		this.longitude = longitude;
+		
+		if(longitude != 0)
+			this.gpsReady = true;
+		else
+			this.gpsReady = false;
 	}
 }
