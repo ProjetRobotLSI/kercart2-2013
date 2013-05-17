@@ -35,6 +35,7 @@ public class ChoixPointArrive extends Activity{
 	        clientMissions = new ClientMissions(getApplicationContext());
 	        arrive = new int[2];
 	        
+	        
 		    /**Reception de bundles*/
 		    //Creation du bundle et reception des objets transferes
 	        Bundle receptionBundle = this.getIntent().getExtras().getBundle("AjoutBundleDansIntent2");        
@@ -66,16 +67,16 @@ public class ChoixPointArrive extends Activity{
 					if(typeFonctionnalite.equals("Creer")){
 						
 						try {
-					        //Enregistrement du point d'arrivé du Robot
+					        //Enregistrement du point d'arrive du Robot
 					        int id = OSM.getLastStartPoint();
 					        int latitude = OSM.getPointLatitude(id);
 					        int longitude = OSM.getPointLongitude(id);
 					        arrive[0] = latitude;
 					        arrive[1] = longitude;
-							
-							clientMissions.creerMission(newMission);
-							clientMissions.changerMissionEnCours(newMission);
-							clientMissions.setPointArriveeMissionsEnCours(arrive);
+
+					        newMission.setM_fin(arrive);							
+							clientMissions.creerMission(newMission);							
+							int[] a = clientMissions.getPointArriveeMissionEnCours();
 					        
 							msbox("Information","Mission ajoutee avec succes !");
 						} catch (Exception e) {
@@ -86,7 +87,6 @@ public class ChoixPointArrive extends Activity{
 						
 						try {
 							//ENREGISTRER ROUTE DANS BASE DE DONNEE
-//							clientMissions.changerMissionEnCours(newMission);
 							clientMissions.setEMailMissionEnCours(newMission.getEmail());
 							clientMissions.setRetourDepartMissionEnCours(newMission.getRetourDepart());
 							clientMissions.setPrendrePhotosArriveeMissionEnCours(newMission.getPrendrePhotosArrivee());

@@ -45,6 +45,17 @@
 		android:text="@string/edit_email"
 		android:textColor="#ffffff"/>
     
+     <TextView
+	    android:id="@+id/lblEmailError"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="450dp"
+		android:layout_marginLeft="410dp"
+		android:textSize="30sp"
+		android:text="@string/syntax_error"
+		android:textColor="#ff0000"
+		android:visibility="invisible"/>
+    
     <EditText
 	    android:id="@+id/txtEmail"
 	    android:layout_width="wrap_content"
@@ -108,18 +119,29 @@
 	    android:layout_width="170dp"
 	    android:layout_height="80dp"
 	    android:layout_marginTop="1050dp"
-		android:layout_marginLeft="200dp"
+		android:layout_marginLeft="100dp"
 		android:text="@string/button_suivant"
 		android:textSize="40sp"
 		android:textColor="#ffffff"/>
     
     <Button
-	    android:id="@+id/btnAnnuler"
-	    android:layout_width="170dp"
+	    android:id="@+id/btnSupprimer"
+	    android:layout_width="220dp"
 	    android:layout_height="80dp"
 	    android:layout_alignBaseline="@+id/btnSuivant"
 	    android:layout_alignBottom="@+id/btnSuivant"
-	    android:layout_alignLeft="@+id/cbxPhotoArrivee"
+		android:layout_marginLeft="295dp"
+	    android:text="@string/button_supprimer"
+	    android:textSize="40sp"
+	    android:textColor="#ffffff"/>   
+    
+    <Button
+	    android:id="@+id/btnAnnuler"
+	    android:layout_width="170dp"
+	    android:layout_height="80dp"
+	    android:layout_alignBaseline="@+id/btnSupprimer"
+	    android:layout_alignBottom="@+id/btnSupprimer"
+	    android:layout_marginLeft="540dp"
 	    android:text="@string/button_annuler"
 	    android:textSize="40sp"
 	    android:textColor="#ffffff"/>    
