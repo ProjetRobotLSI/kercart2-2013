@@ -78,8 +78,12 @@ public class CreationForm extends Activity{
     	final String typeFonctionnalite= receptionBundle.getString("Titre");
 
     	/**Traitement sur lblTitre*/
-	    lblTitre.setText(Html.fromHtml(typeFonctionnalite+" une mission"));
-	
+	    if(typeFonctionnalite.equals("Creer"))
+	    	lblTitre.setText(Html.fromHtml("Créer une mission"));
+	    else if(typeFonctionnalite.equals("Editer"))
+	    	lblTitre.setText(Html.fromHtml("Éditer une mission"));
+	    else
+	    	throw new IllegalStateException("CreationForm: Exception ! Type de fonctionnalite inexistant !");
     	
 //	    /**Traitement sur lblNom*/
 //	    lblNom.setText(Html.fromHtml("<p style='color:green'> Nom de la mission: </p>"));
@@ -103,7 +107,8 @@ public class CreationForm extends Activity{
 //	    lblPhotoArrivee.setTextColor(Color.parseColor("#00ff00"));
 	    
 /**Traitement sur txtNom////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-	    if(typeFonctionnalite.equals("Créer")){
+
+	    if(typeFonctionnalite.equals("Creer")){
 
 //			txtNom.setHint(R.string.edit_nom);
 //			txtNom.setHintTextColor(Color.parseColor("#000000"));
@@ -120,14 +125,15 @@ public class CreationForm extends Activity{
 //			});
 	    }
 	    else if(typeFonctionnalite.equals("Editer")){
-//	    	txtNom.setEnabled(false);
+	    	txtNom.setEnabled(false);
+	    	txtNom.setTextColor(Color.parseColor("#888888"));
 	    	txtNom.setText(newMission.getNom());
 	    }else
 	    	System.err.println("Erreur transfert de donnees !");
 
 		
 /**Traitement sur txtEmail//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-		if(typeFonctionnalite.equals("Créer")){
+		if(typeFonctionnalite.equals("Creer")){
 		
 //			txtEmail.setHint(R.string.edit_email);
 //			txtEmail.setHintTextColor(Color.parseColor("#000000"));
@@ -153,7 +159,7 @@ public class CreationForm extends Activity{
 /**Traitement sur cbxRetourDepart////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 //	    cbxRetourDepart.setTextColor(Color.parseColor("#00ff00"));
 		
-		if(typeFonctionnalite.equals("Créer")){
+		if(typeFonctionnalite.equals("Creer")){
 
 //			cbxRetourDepart.setText(R.string.cbx_retour);
 //			cbxRetourDepart.setChecked(true);
@@ -170,7 +176,7 @@ public class CreationForm extends Activity{
 
 /**Traitement sur cbxPhotoArrivee////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 //		cbxPhotoArrivee.setTextColor(Color.parseColor("#00ff00"));
-		if(typeFonctionnalite.equals("Créer")){
+		if(typeFonctionnalite.equals("Creer")){
 			
 //			cbxPhotoArrivee.setText(R.string.cbx_retour);
 //			cbxPhotoArrivee.setChecked(true);			
@@ -234,32 +240,47 @@ public class CreationForm extends Activity{
 		});
 	    
 /**Traitement de btnAnnuler//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-	    btnAnnuler.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				
-				Intent intent = new Intent(CreationForm.this, MenuCreation.class);
-				startActivity(intent);
-			}
-		});
+
+	    	 btnAnnuler.setOnClickListener(new OnClickListener() {
+	 			
+	 			@Override
+	 			public void onClick(View arg0) {
+	 				
+	 				Intent intent = new Intent(CreationForm.this, MenuCreation.class);
+	 				startActivity(intent);
+	 			}
+	 		});
+
+	    
+	   
 	 
 /**Traitement de btnSupprimer//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/		    
-	    btnSupprimer.setOnClickListener(new OnClickListener(){
+	    
+	    if(typeFonctionnalite.equals("Creer")){
 	    	
-	    	public void onClick(View arg0){
-	    		
-	    		try {
-	    			
-	    			Mission deleteMission= clientMissions.getListeMissions().getMissions(txtNom.getText().toString());
-					clientMissions.supprimerMission(deleteMission);
-					msbox("Information","Mission supprimée avec succès !");
-				} catch (Exception e) {
-					
-					e.printStackTrace();
-				}
-	    	}
-	    });
+	    	btnSupprimer.setEnabled(false);
+	    }
+	    else{
+	    	
+	    	btnSupprimer.setEnabled(true);
+		    btnSupprimer.setOnClickListener(new OnClickListener(){
+		    	
+		    	public void onClick(View arg0){
+		    		
+		    		try {
+		    			
+		    			Mission deleteMission= clientMissions.getListeMissions().getMissions(txtNom.getText().toString());
+						clientMissions.supprimerMission(deleteMission);
+						msbox("Information","Mission supprimée avec succès !");
+					} catch (Exception e) {
+						
+						e.printStackTrace();
+					}
+		    	}
+		    });
+	    }
+	    
+
 	  }
 	 
 

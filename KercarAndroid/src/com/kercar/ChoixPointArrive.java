@@ -65,7 +65,7 @@ public class ChoixPointArrive extends Activity{
 				@Override
 				public void onClick(View v) {
 					
-					if(typeFonctionnalite.equals("Créer")){
+					if(typeFonctionnalite.equals("Creer")){
 						
 						try {
 					        //Enregistrement du point d'arriv� du Robot
@@ -77,16 +77,18 @@ public class ChoixPointArrive extends Activity{
 					        newMission.setM_fin(arrive);
 //					        System.out.println(latitude);
 //					        System.out.println(longitude);
-							
+					        
+
 							clientMissions.creerMission(newMission);
-/*							clientMissions.changerMissionEnCours(newMission);
-							clientMissions.setPointArriveeMissionsEnCours(arrive);*/
+							clientMissions.changerMissionEnCours(newMission);
+												        
+							/*clientMissions.setPointArriveeMissionsEnCours(arrive);*/
 							
 							int[] a = clientMissions.getPointArriveeMissionEnCours();
 /*				        	System.out.println("a : "+ a[0]);
 				        	System.out.println("a : "+ a[1]);*/
 					        
-							msbox("Information","Mission ajoutee avec succes !");
+							msbox("Information","Mission ajoutée avec succès !");
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -114,7 +116,7 @@ public class ChoixPointArrive extends Activity{
 
 					}
 					else
-						throw new IllegalStateException("Exception ! Type de fonctionnalite inexistant !");
+						throw new IllegalStateException("ChoixPointArrive: Exception ! Type de fonctionnalite inexistant !");
 				}
 			});
 	    }
