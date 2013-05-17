@@ -2,16 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fond_paysage"
+    android:background="@drawable/fond_blanc_noir_vert"
     android:orientation="vertical" >
-    
-    <TextView
+
+     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
         android:text="@string/app_version"
         android:textColor="#ffffff"
-        android:textSize="20sp"/>
+        android:textSize="15sp" />
     
+    <ListView
+        android:id="@+id/listeview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center" 
+        android:layout_marginTop="250dp">
+    </ListView>
+    
+  
 </LinearLayout>

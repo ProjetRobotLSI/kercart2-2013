@@ -46,4 +46,22 @@
     <string name="longitude">Longitude :</string>
     <string name="boussole">Boussole :</string>
     
+    <!-- Nom de l'équipe -->
+    <string name="gael">Gaël GOINVIC</string>
+    <string name="quentin">Quentin DE GRANDMAISON</string>
+    <string name="clement">Clement RIVAILLE</string>
+    <string name="guillaume">Guillaume MARREC</string>
+    <string name="loulou">Lou-Anne AUDEBERT</string>
+    <string name="yasser">Yasser LAMSAOUGAR</string>
+    <string name="xavier">Xavier CAILLAT</string>
+    <string name="manu">Emmanuel BILHEUDE</string>
+    <string name="lama">Lama RIHAN</string>
+    <string name="anass">Anass ASBAHI</string>
+    <string name="brice">Brice PEPIN</string>
+    <string name="florian">Florian DUROS</string>
+    <string name="omar">Omar EL KHALDI</string>
+    <string name="olivier">Olivier BARAIS</string>
+    <string name="benoit">Benoit COMBEMALE</string>
+    <string name="johann">Johann BOURCIER</string>
+    
 </resources>

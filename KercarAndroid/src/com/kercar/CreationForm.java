@@ -319,7 +319,7 @@ public class CreationForm extends Activity{
 	     dlgAlert.setMessage(message); 
 	     dlgAlert.setPositiveButton("OK",new DialogInterface.OnClickListener() {
 	         public void onClick(DialogInterface dialog, int whichButton) {
-				 Intent intent = new Intent(CreationForm.this, MenuSelection.class);
+				 Intent intent = new Intent(CreationForm.this, MenuCreation.class);
 				 startActivity(intent);
 	         }
 	     });
