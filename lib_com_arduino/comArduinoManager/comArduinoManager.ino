@@ -3,6 +3,7 @@
 #include <HardwareSerial.h>
 #include <servoMoteur.h>
 #include <compass.h>
+#include <GPS.h>
 #include <telemeter.h>
 #include <libComArduino.h>
 
@@ -12,10 +13,10 @@ void setup() {
   Serial.begin(9600);
   servoAngle.attach(numPinLeft);
   servoSpeed.attach(numPinRight);
-  servoMoteur_test();
   compass.begin();
   compass.setNormalizeValue(5);
   compass.setAddress(compassAddress);
+  gps.begin();
 }
 
 void loop(){

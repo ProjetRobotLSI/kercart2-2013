@@ -22,8 +22,9 @@ public:
 	void retrieveHeading();
 	void retrieveSpeed();
 	void retrieveLatitude();
-	void retrieveLongtitude();
+	void retrieveLongitude();
 	void retrieveLatLong();
+	int getState(); 
 	/**
 	 * runs all the retrieve methods
 	 */

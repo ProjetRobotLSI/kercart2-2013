@@ -22,77 +22,121 @@ void GPS::begin() {
 	Serial.begin(9600);
 }
 void GPS::retrieveTime() {
-	output = (this->getDouble(0)*10);
+	output += (this->getDouble(0)*10);
 	output += (this->getDouble(2)*10);
 	output += (this->getDouble(4));
 	a_time = output.toInt();
+	output = "";
 }
 void GPS::retrieveDate() {
-	output = (this->getDouble(6)*10);
+	output += (this->getDouble(6)*10);
 	output += (this->getDouble(8)*10);
 	output += (this->getDouble(10));
 	output += (this->getDouble(12));
 	a_date = output.toInt();
+	output = "";
 }
 void GPS::retrieveHeading() {
-	output = (this->getDouble(44));
+	output += (this->getDouble(44));
 	output += (this->getSingle(46));
 	output += (this->getSingle(47));
 	a_heading = output.toInt();
+	output = "";
 }
 void GPS::retrieveSpeed() {
-	output = (this->getDouble(52));
+	output += (this->getDouble(52));
 	output += (this->getSingle(54));
 	output += (this->getSingle(55));
 	a_speed = output.toInt();
+	output = "";
 }
 void GPS::retrieveLatitude() {
-	a_latitude = this->getSingle(14)  << 8;
-	a_latitude += this->getSingle(15) << 7;
-	a_latitude += this->getSingle(16) << 6;
-	a_latitude += this->getSingle(17) << 5;
-	a_latitude += this->getSingle(18) << 4;
-	a_latitude += this->getSingle(19) << 3;
-	a_latitude += this->getSingle(20) << 2;
-	a_latitude += this->getSingle(21) << 1;
-	a_latitude += this->getLetter(22);
+	if(getState() == 0)
+	{
+		a_latitude = 0;
+	}
+	else
+	{
+		a_latitude = this->getSingle(14)* 100000000;
+		a_latitude += this->getSingle(15)*10000000;
+		
+		a_latitude += this->getSingle(16)*1000000;
+		a_latitude += this->getSingle(17)*100000;
+		
+		a_latitude += (long)this->getSingle(18)*10000;
+		a_latitude += (long)this->getSingle(19)*1000;
+		a_latitude += (long)this->getSingle(20)*100;
+		a_latitude += (long)this->getSingle(21)*10;
+		
+		a_latitude += this->getLetter(22);
+		
+		/*
+		Serial.print(this->getSingle(14));
+		Serial.print(this->getSingle(15));
+		Serial.print(" ");
+		Serial.print(this->getSingle(16));
+		Serial.print(this->getSingle(17));
+		Serial.print(".");
+		Serial.print(this->getSingle(18));
+		Serial.print(this->getSingle(19));
+		Serial.print(this->getSingle(20));
+		Serial.print(this->getSingle(21));
+		Serial.print("/");
+		Serial.println(this->getSingle(22));*/
+	}
 }
-void GPS::retrieveLongtitude() {
-
-	a_longitude = this->getSingle(23)  << 9;
-	a_longitude += this->getSingle(24) << 8;
-	a_longitude += this->getSingle(25) << 7;
-	a_longitude += this->getSingle(26) << 6;
-	a_longitude += this->getSingle(27) << 5;
-	a_longitude += this->getSingle(28) << 4;
-	a_longitude += this->getSingle(29) << 3;
-	a_longitude += this->getSingle(30) << 2;
-	a_longitude += this->getSingle(31) << 1;
-	a_longitude += this->getLetter(32);
-	
-
+void GPS::retrieveLongitude() {
+	if(getState() == 0)
+	{
+		a_longitude = 0;
+	}
+	else
+	{
+		a_longitude = this->getSingle(23)* 1000000000;
+		a_longitude += this->getSingle(24)*100000000;
+		a_longitude += this->getSingle(25)*10000000;
+		a_longitude += this->getSingle(26)*1000000;
+		a_longitude += this->getSingle(27)*100000;
+		a_longitude += (long)this->getSingle(28)*10000;
+		a_longitude += (long)this->getSingle(29)*1000;
+		a_longitude += (long)this->getSingle(30)*100;
+		a_longitude += (long)this->getSingle(31)*10;
+		a_longitude += this->getLetter(32)*1;
+		
+		/*
+		Serial.print(this->getSingle(23));
+		Serial.print(this->getSingle(24));
+		Serial.print(" ");
+		Serial.print(this->getSingle(25));
+		Serial.print(this->getSingle(26));
+		Serial.print(".");
+		Serial.print(this->getSingle(27));
+		Serial.print(this->getSingle(28));
+		Serial.print(this->getSingle(29));
+		Serial.print(this->getSingle(30));
+		Serial.println(this->getSingle(31));*/
+	}
 }
 int GPS::getLetter(int address){
-	char temp =  this->getSingle(address);
-	if(temp == 'N') {
-		a_longitude += 0;
+	int value = 4;
+	int temp =  this->getSingle(address);
+	if(temp == 78) { //N
+		value = 0;
 	}
-	else if( temp == 'S') {
-		a_longitude += 1;
+	else if( temp == 83) { //S
+		value = 1;
 		}
-	else if( temp == 'E') {
-		a_longitude += 2;
+	else if( temp == 69) { //E
+		value = 2;
 		}
-	else if( temp == 'W'){
-		a_longitude += 3;
-		}
-	else {
-		a_longitude += 4;
-		}
+	else if( temp == 87){ //W
+		value = 3;
+	}
+	return value;
 }
 void GPS::retrieveLatLong() {
 	this->retrieveLatitude();
-	this->retrieveLongtitude();
+	this->retrieveLongitude();
 }
 void GPS::retrieveAllatOnce() {
 	this->retrieveTime();
@@ -100,9 +144,11 @@ void GPS::retrieveAllatOnce() {
 	this->retrieveHeading();
 	this->retrieveSpeed();
 	this->retrieveLatitude();
-	this->retrieveLongtitude();
+	this->retrieveLongitude();
 }
-	int GPS::getDouble(int address) {
+
+
+int GPS::getDouble(int address) {
 	int Value = 0;
 	byte  H_Byte = 0;
 	byte  L_Byte = 0;
@@ -121,7 +167,7 @@ void GPS::retrieveAllatOnce() {
 	return Value;
 }
 
-	int GPS::getSingle(int address) {
+int GPS::getSingle(int address) {
 	int Value = 0;
 	Wire.beginTransmission(a_address);
 	Wire.write(address);
@@ -131,6 +177,18 @@ void GPS::retrieveAllatOnce() {
 		;
 	Value = Wire.read();
 	return Value;
+}
+
+int GPS::getState() {
+
+int state = this->getSingle(112);
+Serial.println(state);
+
+	if(state & 16 == 16) {
+		return 1;
+	}
+	else return 0;
+
 }
 
 void GPS::send(int choice) {
@@ -156,6 +214,7 @@ void GPS::send(int choice) {
 		break;
 	}
 }
+
 
 void GPS::sendAll() {
 		Serial.println("Time");

@@ -28,6 +28,7 @@
 #define MARGEROTATION 8
 
 Compass compass;
+GPS gps(0x68);
 
 typedef union
 {
@@ -89,6 +90,7 @@ static inline void turnScrutation(char sens, int angleAtourner)
 static inline char* send_order(int id)
 {
 	char* message;
+	longToChar tmp;
 	message = (char*)malloc(NB_OCTETS);
 	
 	//Initialisation du message
@@ -103,16 +105,27 @@ static inline char* send_order(int id)
 			break;
 		case GETPOS :
 			message[0] = SENDPOS;
-			//ToDo : récupérer valeur GPS
-			break;
-		case GETANGLE:
-			compass.sendOrder('A');
-			delay(10);
-			message[0] = SENDANGLE;
-			valCompass = compass.RetrieveValueNumeric();
+			gps.retrieveLongitude();
+			tmp.entier = gps.a_longitude;
 			for(i=0;i<SIZE_PARAM;i++)
 			{
-				message[i+1] = (char)(*(&valCompass)+i);
+				message[i+1] = (char)tmp.octets[i];
+			}
+			gps.retrieveLatitude();
+			tmp.entier = gps.a_latitude;
+			for(i=0;i<SIZE_PARAM;i++)
+			{
+				message[i+1+SIZE_PARAM] = (char)tmp.octets[i];
+			}
+			break;
+		case GETANGLE:
+			message[0] = SENDANGLE;
+			compass.sendOrder('A');
+			delay(10);
+			tmp.entier = (long)compass.RetrieveValueNumeric();
+			for(i=0;i<SIZE_PARAM;i++)
+			{
+				message[i+1] = (char)tmp.octets[i];
 			}
 			break;
 		case ARRIVED :
@@ -126,7 +139,7 @@ static inline char* send_order(int id)
 			message[0] = STOPTURN;
 			break;
 	}
-	return message;//ToDo : faire free du malloc
+	return message;
 }
 
 /*
