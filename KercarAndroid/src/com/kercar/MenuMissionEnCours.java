@@ -59,6 +59,7 @@ public class MenuMissionEnCours extends Activity{
 		arreter.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
+				get.cancel(true);
 				new AsyncStop(com).execute();
 				Intent intent = new Intent(MenuMissionEnCours.this, MenuSelection.class);
 				startActivity(intent);
