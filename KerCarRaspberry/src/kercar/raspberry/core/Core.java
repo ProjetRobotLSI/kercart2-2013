@@ -81,6 +81,7 @@ public class Core extends Thread implements IIA, SerialListener {
 		
 		//Sale bouuuuuuuuu
 		boolean first = true;
+		long timeStart = System.currentTimeMillis();
 		while(true)
 		{
 			if (!controlQueue.isEmpty())
@@ -89,10 +90,15 @@ public class Core extends Thread implements IIA, SerialListener {
 			if (!arduinoQueue.isEmpty())
 				handler.handle(arduinoQueue.poll());
 			
-			if(controlQueue.isEmpty() && System.currentTimeMillis() - startTimeAsk >= 5000) {
+			if(controlQueue.isEmpty() && ((System.currentTimeMillis() - startTimeAsk) >= 5000)) {
 				this.askAngle();
 				this.askCoordonnates();
 				startTimeAsk = System.currentTimeMillis();
+			}
+			
+			if(System.currentTimeMillis() - timeStart >= 3000) {
+				System.out.println("Size + " + controlQueue.size() + " " + arduinoQueue.size());
+				timeStart = System.currentTimeMillis();
 			}
 			
 			
@@ -189,14 +195,14 @@ public class Core extends Thread implements IIA, SerialListener {
 	private void askAngle() {
 	//	Core.Log("Core : ASK_ANGLE");
 	//	System.out.println("Core : ASK_ANGLE");
-		AskPos arduinoMsg = new AskPos();
+		AskAngle arduinoMsg = new AskAngle();
 		this.serialManager.write(arduinoMsg.toBytes());	
 	}
 	
 	private void askCoordonnates() {
 	//	Core.Log("Core : ASK_COORDONNATES");
 	//	System.out.println("Core : ASK_COORDONNATES");
-		AskAngle arduinoMsg = new AskAngle();
+		AskPos arduinoMsg = new AskPos();
 		this.serialManager.write(arduinoMsg.toBytes());	
 	}
 
@@ -264,7 +270,8 @@ public class Core extends Thread implements IIA, SerialListener {
 
 	@Override
 	public void onSerialMessage(byte[] data) {
-		arduinoQueue.add(IArduinoMessage.fromBytes(data));
+		System.out.println("SERIAL MESSAGE");
+		messageArduinoReceived(IArduinoMessage.fromBytes(data));
 	}
 	
 	public void setAngle(int angle) {
