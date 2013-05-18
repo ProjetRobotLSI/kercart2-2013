@@ -50,24 +50,23 @@ public class Core extends Thread implements IIA, SerialListener {
 		System.out.println("Starting core...");
 		initUSB0(initPath);
 		Core.initPath = initPath;
-		new WifiIA(initPath);
+	//	new WifiIA(initPath);
 		
 		controlQueue = new LinkedBlockingDeque<IMessage>();
-		arduinoQueue = new LinkedBlockingDeque<IArduinoMessage>();		
+		arduinoQueue = new LinkedBlockingDeque<IArduinoMessage>();	
 	}
 	
 	public synchronized void messageReceived(IMessage message){
 		controlQueue.add(message);
 	}
 	
-	public synchronized void messageArduinoReceived(IArduinoMessage message){
-		arduinoQueue.add(message);
-	}
-	
 	public void run(){
 		System.out.println("Running core...");
 		this.inMission = false;
 		this.pathfinder = new Pathfinder(this);
+			
+		handler = new MessageHandler(this);
+		
 		serialManager = new SerialManager();
 		serialManager.setListener(this);
 		serialManager.initialize();
@@ -79,37 +78,32 @@ public class Core extends Thread implements IIA, SerialListener {
 			e1.printStackTrace();
 		}
 		
-		handler = new MessageHandler(this);
-		
 		long startTimeUpdate = 0;
 		
 		this.askAngle();
+		this.dodo(50);
 		this.askCoordonnates();
+		this.dodo(200);
 		long startTimeAsk = System.currentTimeMillis();
 		
 		//Sale bouuuuuuuuu
 		boolean first = true;
-		long timeStart = System.currentTimeMillis();
 		while(true)
 		{
-			if (!controlQueue.isEmpty())
+			if (!controlQueue.isEmpty()) {
 				handler.handle(controlQueue.poll());
-			
-			if (!arduinoQueue.isEmpty())
-				handler.handle(arduinoQueue.poll());
-			
-			if(controlQueue.isEmpty() && ((System.currentTimeMillis() - startTimeAsk) >= 5000)) {
+			} else if((System.currentTimeMillis() - startTimeAsk) >= 5000) {
 				this.askAngle();
+				//Sinon port serial saturé
+				this.dodo(50);			
 				this.askCoordonnates();
 				startTimeAsk = System.currentTimeMillis();
 			}
+			this.dodo(200);
 			
-			if(System.currentTimeMillis() - timeStart >= 3000) {
-				System.out.println("Size + " + controlQueue.size() + " " + arduinoQueue.size());
-				timeStart = System.currentTimeMillis();
-			}
-			
-			
+			if (!arduinoQueue.isEmpty())
+				handler.handle(arduinoQueue.poll());
+						
 			if(inMission && gpsReady) {
 				if(first) {
 					this.pathfinder.goToNextPoint(latitude, longitude, angle);
@@ -141,6 +135,15 @@ public class Core extends Thread implements IIA, SerialListener {
 				if(startTimeUpdate == 0)
 					startTimeUpdate = System.currentTimeMillis();
 			}		
+		}
+	}
+	
+	private void dodo(int time) {
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -202,14 +205,14 @@ public class Core extends Thread implements IIA, SerialListener {
 	
 	private void askAngle() {
 	//	Core.Log("Core : ASK_ANGLE");
-	//	System.out.println("Core : ASK_ANGLE");
+		System.out.println("Core : ASK_ANGLE");
 		AskAngle arduinoMsg = new AskAngle();
 		this.serialManager.write(arduinoMsg.toBytes());	
 	}
 	
 	private void askCoordonnates() {
 	//	Core.Log("Core : ASK_COORDONNATES");
-	//	System.out.println("Core : ASK_COORDONNATES");
+		System.out.println("Core : ASK_COORDONNATES");
 		AskPos arduinoMsg = new AskPos();
 		this.serialManager.write(arduinoMsg.toBytes());	
 	}
@@ -279,7 +282,7 @@ public class Core extends Thread implements IIA, SerialListener {
 	@Override
 	public void onSerialMessage(byte[] data) {
 		System.out.println("SERIAL MESSAGE");
-		messageArduinoReceived(IArduinoMessage.fromBytes(data));
+		this.arduinoQueue.add(IArduinoMessage.fromBytes(data));
 	}
 	
 	public void setAngle(int angle) {

@@ -86,15 +86,18 @@ public class MessageHandler {
 		else if(message.getID() == IArduinoMessage.RECEIVE_ANGLE) {
 			Core.Log("MessageHandler : RECEIVE_ANGLE");
 			System.out.println("MessageHandler : RECEIVE_ANGLE");
-			GetAngle angle = (GetAngle) message;
-			this.ia.setAngle(angle.getDegree());
+		//	GetAngle angle = (GetAngle) message;
+			this.ia.setAngle(message.getParam(0));
 		}
-		else if(message.getID() == IArduinoMessage.RECEIVE_GPSINFO) {
-			Core.Log("MessageHandler : RECEIVE_GPSINFO");
-			System.out.println("MessageHandler : RECEIVE_GPSINFO");
-			GetPos pos = (GetPos) message;
-			this.ia.setLongitude(pos.getLongitude());
-			this.ia.setLatitude(pos.getLatitude());
+		else if(message.getID() == IArduinoMessage.RECEIVE_POS) {
+			Core.Log("MessageHandler : RECEIVE_POS");
+			System.out.println("MessageHandler : RECEIVE_POS");
+	//		GetPos pos = (GetPos) message;
+			
+			//TODO Traitement des coordonnées venant de l'arduino !
+			
+			this.ia.setLongitude(message.getParam(0));
+			this.ia.setLatitude(message.getParam(1));
 		}
 	}
 }
