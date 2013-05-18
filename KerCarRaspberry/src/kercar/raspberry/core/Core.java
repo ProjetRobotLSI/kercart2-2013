@@ -92,7 +92,7 @@ public class Core extends Thread implements IIA, SerialListener {
 		{
 			if (!controlQueue.isEmpty()) {
 				handler.handle(controlQueue.poll());
-			} else if((System.currentTimeMillis() - startTimeAsk) >= 5000) {
+			} else if((System.currentTimeMillis() - startTimeAsk) >= 3000) {
 				this.askAngle();
 				//Sinon port serial saturé
 				this.dodo(50);			
