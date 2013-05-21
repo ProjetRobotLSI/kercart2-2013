@@ -57,6 +57,17 @@
         android:textColor="#ffffff"/>
     
     <TextView
+	    android:id="@+id/lblEmailError"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="115dp"
+		android:layout_marginLeft="400dp"
+		android:textSize="20sp"
+		android:text="@string/syntax_error"
+		android:textColor="#ff0000"
+		android:visibility="invisible"/>
+    
+    <TextView
 	    android:id="@+id/lblRetourDepart"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
@@ -104,35 +115,33 @@
         android:button="@drawable/checkbox"/>
     
     <Button
-	    android:id="@+id/btnSuivant"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_marginTop="310dp"
-		android:layout_marginLeft="200dp"
-		android:text="@string/button_suivant"
-		android:textSize="20sp"
-		android:textColor="#ffffff"/>
-    
-    <Button
 	    android:id="@+id/btnSupprimer"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignBaseline="@+id/btnSuivant"
-	    android:layout_alignBottom="@+id/btnSuivant"
-		android:layout_marginLeft="530dp"
+	    android:layout_width="150dp"
+	    android:layout_height="45dp"
+	    android:layout_centerHorizontal="true"
+	    android:layout_alignParentBottom="true"
 	    android:text="@string/button_supprimer"
 	    android:textSize="20sp"
 	    android:textColor="#ffffff"/> 
+	    
+    <Button
+	    android:id="@+id/btnSuivant"
+	    android:layout_width="150dp"
+	    android:layout_height="45dp"
+	    android:layout_alignBottom="@id/btnSupprimer"
+	    android:layout_toLeftOf="@id/btnSupprimer"
+		android:text="@string/button_suivant"
+		android:textSize="20sp"
+		android:textColor="#ffffff"/>
 
     <Button
 	    android:id="@+id/btnAnnuler"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignBaseline="@+id/btnSuivant"
-	    android:layout_alignBottom="@+id/btnSuivant"
-	    android:layout_alignLeft="@+id/cbxPhotoArrivee"
+	    android:layout_width="150dp"
+	    android:layout_height="45dp"
+	    android:layout_alignBottom="@+id/btnSupprimer"
+	    android:layout_toRightOf="@id/btnSupprimer"
 	    android:text="@string/button_annuler"
 	    android:textSize="20sp"
-	    android:textColor="#ffffff"/>
+	    android:textColor="#ffffff"/> 
     
 </RelativeLayout>

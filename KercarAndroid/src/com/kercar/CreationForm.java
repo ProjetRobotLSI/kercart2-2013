@@ -27,184 +27,93 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 public class CreationForm extends Activity{
-
-	private TextView lblTitre= null;
-	private TextView lblNom= null;
-	private TextView lblEmail= null;
-	private TextView lblRetourDepart= null;
-	private TextView lblPhotoArrivee= null;
-	private TextView lblEmailError= null;
-	private Button btnSuivant= null;
-	private Button btnAnnuler= null;
-	private Button btnSupprimer= null;
+	
+	//Attributs
+	private TextView lblTitre = null;
+	private TextView lblEmailError = null;
 	private EditText txtNom = null;
 	private EditText txtEmail = null;
 	private CheckBox cbxRetourDepart = null;
 	private CheckBox cbxPhotoArrivee = null;
 	
+	private Button btnSuivant = null;
+	private Button btnSupprimer = null;
+	private Button btnAnnuler = null;
+	
 	private ClientMissions clientMissions;
-
 	
 	 @Override
 	  public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    requestWindowFeature(Window.FEATURE_NO_TITLE);
-
 	    
-	    /**ContentView*/
+	    //ContentView
 	    setContentView(R.layout.creation_frm);
 
-	    /**Initialisation des attributs*/
+	    //Initialisation des Attributs
 	    lblTitre = (TextView) findViewById(R.id.lblTitre);
-	    lblNom = (TextView) findViewById(R.id.lblNom);
-	    lblEmail = (TextView) findViewById(R.id.lblEmail);
 	    lblEmailError = (TextView) findViewById(R.id.lblEmailError);
-	    lblRetourDepart = (TextView) findViewById(R.id.lblRetourDepart);
-	    lblPhotoArrivee = (TextView) findViewById(R.id.lblPhotoArrivee);
 	    txtNom = (EditText) findViewById(R.id.txtNom);
-	    txtEmail= (EditText) findViewById(R.id.txtEmail);
+	    txtEmail = (EditText) findViewById(R.id.txtEmail);
 	    cbxRetourDepart = (CheckBox) findViewById(R.id.cbxRetourDepart);
 	    cbxPhotoArrivee = (CheckBox) findViewById(R.id.cbxPhotoArrivee);
+	    
 	    btnSuivant = (Button) findViewById(R.id.btnSuivant);
-	    btnSupprimer= (Button) findViewById(R.id.btnSupprimer);
+	    btnSupprimer = (Button) findViewById(R.id.btnSupprimer);
 	    btnAnnuler = (Button) findViewById(R.id.btnAnnuler);
 
 	    clientMissions = new ClientMissions(getApplicationContext());
 	    
-	    /**Reception de bundles*/
 	    //Creation du bundle et reception des objets transferes
-        Bundle receptionBundle  = this.getIntent().getExtras().getBundle("AjoutBundleDansIntent");        
-    	final Mission newMission= (Mission) receptionBundle.getSerializable("AjoutMissionDansBundle");
-    	final String typeFonctionnalite= receptionBundle.getString("Titre");
+        Bundle receptionBundle = this.getIntent().getExtras().getBundle("AjoutBundleDansIntent");        
+    	final Mission newMission = (Mission) receptionBundle.getSerializable("AjoutMissionDansBundle");
+    	final String typeFonctionnalite = receptionBundle.getString("Titre");
 
-    	/**Traitement sur lblTitre*/
-
-	    if(typeFonctionnalite.equals("Creer"))
-	    	lblTitre.setText(Html.fromHtml("Créer une mission"));
-	    else if(typeFonctionnalite.equals("Editer"))
-	    	lblTitre.setText(Html.fromHtml("Éditer une mission"));
-	    else
-	    	throw new IllegalStateException("CreationForm: Exception ! Type de fonctionnalite inexistant !");
-    	
-//	    /**Traitement sur lblNom*/
-//	    lblNom.setText(Html.fromHtml("<p style='color:green'> Nom de la mission: </p>"));
-//	    lblNom.setTextSize(30);
-//	    lblNom.setTextColor(Color.parseColor("#00ff00"));
-//	    
-//	    
-//	    /**Traitement sur lblEmail*/
-//	    lblEmail.setText(Html.fromHtml("Adresse e-mail:"));
-//	    lblEmail.setTextSize(30);
-//	    lblEmail.setTextColor(Color.parseColor("#00ff00"));
-//	    
-//	    /**Traitement sur lblRetourDepart*/
-//	    lblRetourDepart.setText(Html.fromHtml("Retour du robot:"));
-//	    lblRetourDepart.setTextSize(30);
-//	    lblRetourDepart.setTextColor(Color.parseColor("#00ff00"));
-//	    
-//	    /**Traitement sur lblPhotoArrivee*/
-//	    lblPhotoArrivee.setText(Html.fromHtml("Photo point d'arrivee :"));
-//	    lblPhotoArrivee.setTextSize(30);
-//	    lblPhotoArrivee.setTextColor(Color.parseColor("#00ff00"));
-	    
-	    
-/**Traitement sur txtNom////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-
+    	//Menu Creation
 	    if(typeFonctionnalite.equals("Creer")){
-
-//			txtNom.setHint(R.string.edit_nom);
-//			txtNom.setHintTextColor(Color.parseColor("#000000"));
-//			txtNom.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-//			txtNom.setLines(5);
-//			txtNom.setOnFocusChangeListener(new OnFocusChangeListener() {
-//				
-//				@Override
-//				public void onFocusChange(View arg0, boolean arg1) {
-//					
-//					txtNom.setHintTextColor(Color.parseColor("#000000"));
-//					txtNom.setHint(R.string.edit_nom);
-//				}
-//			});
+	    	//Titre
+	    	lblTitre.setText(Html.fromHtml("Creer une mission"));
 	    }
+	    //Menu Edition
 	    else if(typeFonctionnalite.equals("Editer")){
+	    	//Titre
+	    	lblTitre.setText(Html.fromHtml("Editer une mission"));
+	    
+	    	//Nom de la mission
 	    	txtNom.setEnabled(false);
 	    	txtNom.setTextColor(Color.parseColor("#888888"));
 	    	txtNom.setText(newMission.getNom());
-	    }else
-	    	System.err.println("Erreur transfert de donnees !");
-
+    	
+	    	//Email de la mission
+	    	txtEmail.setText(newMission.getEmail());
+    	
+	    	//Retour du Robot
+	    	if(newMission.getRetourDepart() && !cbxRetourDepart.isChecked()){
+	    		cbxRetourDepart.setChecked(true);
+	    	}
+	    	else if(!newMission.getRetourDepart() && cbxRetourDepart.isChecked()){
+	    		cbxRetourDepart.setChecked(false);
+	    	}
+	    	
+	    	//Prendre une photo		
+	    	if(newMission.getPrendrePhotosArrivee() && !cbxPhotoArrivee.isChecked()){
+	    		cbxPhotoArrivee.setChecked(true);
+	    	}
+	    	else if(!newMission.getPrendrePhotosArrivee() && cbxPhotoArrivee.isChecked()){
+	    		cbxPhotoArrivee.setChecked(false);
+	    	}
+    	}
+	    //Sinon exception
+	    else{
+	    	throw new IllegalStateException("CreationForm: Exception !");
+	    }		
 		
-/**Traitement sur txtEmail//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-		if(typeFonctionnalite.equals("Creer")){
-		
-//			txtEmail.setHint(R.string.edit_email);
-//			txtEmail.setHintTextColor(Color.parseColor("#000000"));
-//			txtEmail.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-//			txtEmail.setLines(5);
-//			txtEmail.setOnFocusChangeListener(new OnFocusChangeListener() {
-//				
-//				@Override
-//				public void onFocusChange(View arg0, boolean arg1) {
-//					
-//					txtEmail.setHintTextColor(Color.parseColor("#000000"));
-//					txtEmail.setHint(R.string.edit_email);
-//				}
-//			});
-		}
-		else if(typeFonctionnalite.equals("Editer")){
-			txtEmail.setText(newMission.getEmail());
-		}
-	    else
-	    	System.err.println("Erreur transfert de donnees !");	    
-		
-		
-/**Traitement sur cbxRetourDepart////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-//	    cbxRetourDepart.setTextColor(Color.parseColor("#00ff00"));
-		
-		if(typeFonctionnalite.equals("Creer")){
-
-//			cbxRetourDepart.setText(R.string.cbx_retour);
-//			cbxRetourDepart.setChecked(true);
-		}
-		else if(typeFonctionnalite.equals("Editer")){
-			
-			if(newMission.getRetourDepart() && !cbxRetourDepart.isChecked())
-				cbxRetourDepart.setChecked(true);
-			else if(!newMission.getRetourDepart() && cbxRetourDepart.isChecked())
-				cbxRetourDepart.setChecked(false);
-		}
-	    else
-	    	System.err.println("Erreur transfert de donnees !");	
-
-/**Traitement sur cbxPhotoArrivee////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-//		cbxPhotoArrivee.setTextColor(Color.parseColor("#00ff00"));
-		if(typeFonctionnalite.equals("Creer")){
-			
-//			cbxPhotoArrivee.setText(R.string.cbx_retour);
-//			cbxPhotoArrivee.setChecked(true);			
-		}
-		else if(typeFonctionnalite.equals("Editer")){
-			
-			if(newMission.getPrendrePhotosArrivee() && !cbxPhotoArrivee.isChecked())
-				cbxPhotoArrivee.setChecked(true);
-			else if(!newMission.getPrendrePhotosArrivee() && cbxPhotoArrivee.isChecked())
-				cbxPhotoArrivee.setChecked(false);
-		}
-		else
-			System.err.println("Erreur transfert de donnees !");	
-		
-		
-/**Traitement de btnSuivant//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-//	    btnSuivant.setText(Html.fromHtml("Suivant >"));
-//	    btnSuivant.setTextSize(30);
-		    
+	    //Bouton Suivant
 	    btnSuivant.setOnClickListener(new OnClickListener(){
 			@Override
-			public void onClick(View v) {
-				
+			public void onClick(View v) {				
 				String emptyNom= txtNom.getText().toString();
 				String emptyEmail= txtEmail.getText().toString();
-				boolean emptyVerif= false;
 				
 				if(!(emptyNom.equals("")) && !(emptyEmail.equals("")) && isEmailValid(txtEmail.getText().toString())){
 					
@@ -223,76 +132,56 @@ public class CreationForm extends Activity{
 					intent.putExtra("AjoutBundleDansIntent2", missionBundle);
 					startActivity(intent);
 				}
-				if((emptyNom.equals(""))){
-					
+				
+				if((emptyNom.equals(""))){					
 					txtNom.setHint("Champs obligatoire");
 					txtNom.setHintTextColor(Color.parseColor("#ff0000"));
 				}
-				if((emptyEmail.equals(""))){
-					
+				
+				if((emptyEmail.equals(""))){					
 					txtEmail.setHint("Champs obligatoire");
 					txtEmail.setHintTextColor(Color.parseColor("#ff0000"));
 				}
-				if(!isEmailValid(txtEmail.getText().toString())){
-					
+				
+				if(!isEmailValid(txtEmail.getText().toString())){					
 					lblEmailError.setVisibility(BIND_IMPORTANT);
 				}
-
 			}
 		});
 	    
-/**Traitement de btnAnnuler//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-
-	    	 btnAnnuler.setOnClickListener(new OnClickListener() {
-	 			
-	 			@Override
-	 			public void onClick(View arg0) {
-	 				
-	 				Intent intent = new Intent(CreationForm.this, MenuCreation.class);
-	 				startActivity(intent);
-	 			}
-	 		});
-
+	    //Bouton Annuler
+	    btnAnnuler.setOnClickListener(new OnClickListener() {		
+			@Override
+			public void onClick(View arg0) {			
+				Intent intent = new Intent(CreationForm.this, MenuCreation.class);
+				startActivity(intent);
+			}
+	    });
 	    
-	   
-	 
-/**Traitement de btnSupprimer//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/		    
-	    
-	    if(typeFonctionnalite.equals("Creer")){
-	    	
+	    //Bouton Supprimer
+	    if(typeFonctionnalite.equals("Creer")){	    	
 	    	btnSupprimer.setEnabled(false);
 	    }
-	    else{
-	    	
+	    else{	    	
 	    	btnSupprimer.setEnabled(true);
-		    btnSupprimer.setOnClickListener(new OnClickListener(){
-		    	
-		    	public void onClick(View arg0){
-		    		
-		    		try {
-		    			
+		    btnSupprimer.setOnClickListener(new OnClickListener(){		    	
+		    	public void onClick(View arg0){		    		
+		    		try {		    			
 		    			Mission deleteMission= clientMissions.getListeMissions().getMissions(txtNom.getText().toString());
 						clientMissions.supprimerMission(deleteMission);
-						msbox("Information","Mission supprimée avec succès !");
-					} catch (Exception e) {
-						
+						msbox("Information","Mission supprimee avec succes !");
+					} catch (Exception e) {						
 						e.printStackTrace();
 					}
 		    	}
 		    });
 	    }
-	    
-
-	  }
+	  } 
 	 
-
+	 //METHODES
 	 
-	 
-	 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	 public boolean isEmailValid(String email)
-	    {
-	         String regExpn =
+	 public boolean isEmailValid(String email) {
+		 String regExpn =
 	             "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
 	                 +"((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
 	                   +"[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
@@ -301,19 +190,15 @@ public class CreationForm extends Activity{
 	                   +"([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
 
 	     CharSequence inputStr = email;
-
 	     
 	     Pattern pattern = Pattern.compile(regExpn,Pattern.CASE_INSENSITIVE);
 	     Matcher matcher = pattern.matcher(inputStr);
 
-	     if(matcher.matches())
-	        return true;
-	     else
-	        return false;
+	     if(matcher.matches()) return true;
+	     else return false;
 	}
 	 
-	 public void msbox(String titre,String message)
-	 {
+	 public void msbox(String titre,String message) {
 	     AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);                      
 	     dlgAlert.setTitle(titre); 
 	     dlgAlert.setMessage(message); 

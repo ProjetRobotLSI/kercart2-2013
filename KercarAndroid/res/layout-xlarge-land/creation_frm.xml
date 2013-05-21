@@ -43,7 +43,6 @@
 		android:layout_marginLeft="150dp"
 		android:textSize="40sp"
 		android:text="@string/edit_email"
-		android:inputType="textEmailAddress"
 		android:textColor="#ffffff"/>
     
     <TextView
@@ -116,33 +115,31 @@
         android:button="@drawable/checkbox"/>
     
     <Button
-	    android:id="@+id/btnSuivant"
-	    android:layout_width="170dp"
-	    android:layout_height="70dp"
-	    android:layout_marginTop="600dp"
-		android:layout_marginLeft="200dp"
-		android:text="@string/button_suivant"
-		android:textSize="40sp"
-		android:textColor="#ffffff"/>
-    
-    <Button
 	    android:id="@+id/btnSupprimer"
-	    android:layout_width="220dp"
-	    android:layout_height="80dp"
-	    android:layout_alignBaseline="@+id/btnSuivant"
-	    android:layout_alignBottom="@+id/btnSuivant"
-		android:layout_marginLeft="530dp"
+	    android:layout_width="260dp"
+	    android:layout_height="70dp"
+	    android:layout_centerHorizontal="true"
+	    android:layout_alignParentBottom="true"
 	    android:text="@string/button_supprimer"
 	    android:textSize="40sp"
 	    android:textColor="#ffffff"/> 
+	    
+    <Button
+	    android:id="@+id/btnSuivant"
+	    android:layout_width="260dp"
+	    android:layout_height="70dp"
+	    android:layout_alignBottom="@id/btnSupprimer"
+	    android:layout_toLeftOf="@id/btnSupprimer"
+		android:text="@string/button_suivant"
+		android:textSize="40sp"
+		android:textColor="#ffffff"/>
 
     <Button
 	    android:id="@+id/btnAnnuler"
-	    android:layout_width="170dp"
-	    android:layout_height="80dp"
-	    android:layout_alignBaseline="@+id/btnSupprimer"
+	    android:layout_width="260dp"
+	    android:layout_height="70dp"
 	    android:layout_alignBottom="@+id/btnSupprimer"
-	    android:layout_marginLeft="860dp"
+	    android:layout_toRightOf="@id/btnSupprimer"
 	    android:text="@string/button_annuler"
 	    android:textSize="40sp"
 	    android:textColor="#ffffff"/> 
