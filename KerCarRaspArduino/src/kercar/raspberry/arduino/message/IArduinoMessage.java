@@ -11,7 +11,7 @@ public class IArduinoMessage {
 	public static final byte BACKWARD = 3;
 	public static final byte LEFT = 4;
 	public static final byte RIGHT = 5;
-	public static final byte GOTOPOS = 6;
+	public static final byte GETBLOCK = 6;
 	public static final byte GETPOS = 7;
 	public static final byte GETANGLE = 8;
 	public static final byte GETGPSINFO = 9;

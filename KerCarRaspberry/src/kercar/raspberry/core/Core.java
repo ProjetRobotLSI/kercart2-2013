@@ -14,6 +14,7 @@ import kercar.comAPI.StateMessage;
 import kercar.raspberry.arduino.SerialListener;
 import kercar.raspberry.arduino.SerialManager;
 import kercar.raspberry.arduino.message.AskAngle;
+import kercar.raspberry.arduino.message.AskBlocked;
 import kercar.raspberry.arduino.message.AskPos;
 import kercar.raspberry.arduino.message.GoBackward;
 import kercar.raspberry.arduino.message.GoForward;
@@ -81,9 +82,9 @@ public class Core extends Thread implements IIA, SerialListener {
 		long startTimeUpdate = 0;
 		
 		this.askAngle();
-		this.dodo(50);
+		this.waitMessage();
 		this.askCoordonnates();
-		this.dodo(200);
+		this.waitMessage();
 		long startTimeAsk = System.currentTimeMillis();
 		
 		//Sale bouuuuuuuuu
@@ -95,14 +96,16 @@ public class Core extends Thread implements IIA, SerialListener {
 			} else if((System.currentTimeMillis() - startTimeAsk) >= 3000) {
 				this.askAngle();
 				//Sinon port serial saturé
-				this.dodo(50);			
+				this.waitMessage();		
 				this.askCoordonnates();
+				this.waitMessage();
+				this.askBlocked();
+				this.waitMessage();
 				startTimeAsk = System.currentTimeMillis();
 			}
-			this.dodo(200);
 			
-			if (!arduinoQueue.isEmpty())
-				handler.handle(arduinoQueue.poll());
+		/* (!arduinoQueue.isEmpty())
+				handler.handle(arduinoQueue.poll()); */
 						
 			if(inMission && gpsReady) {
 				if(first) {
@@ -136,6 +139,11 @@ public class Core extends Thread implements IIA, SerialListener {
 					startTimeUpdate = System.currentTimeMillis();
 			}		
 		}
+	}
+	
+	private void waitMessage() {
+		while(arduinoQueue.isEmpty()) {}
+		handler.handle(arduinoQueue.poll());
 	}
 	
 	private void dodo(int time) {
@@ -201,6 +209,12 @@ public class Core extends Thread implements IIA, SerialListener {
 	
 	public PingMessage getPing(){
 		return new PingMessage();
+	}
+	
+	private void askBlocked() {
+		System.out.println("Core : ASK_ANGLE");
+		AskBlocked arduinoMsg = new AskBlocked();
+		this.serialManager.write(arduinoMsg.toBytes());	
 	}
 	
 	private void askAngle() {

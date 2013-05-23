@@ -80,7 +80,7 @@ public class MessageHandler {
 			Core.Log("MessageHandler : RECEIVE_BLOCK");
 			System.out.println("MessageHandler : RECEIVE_BLOCK");
 			this.ia.stopMission();
-			this.ia.setBlocked(true);
+			this.ia.setBlocked(message.getParam(0) == 1);
 			//this.ia.getServletQueue().add(new Stop());
 		} 
 		else if(message.getID() == IArduinoMessage.RECEIVE_ANGLE) {
