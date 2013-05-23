@@ -51,7 +51,7 @@ public class Core extends Thread implements IIA, SerialListener {
 		System.out.println("Starting core...");
 		initUSB0(initPath);
 		Core.initPath = initPath;
-		new WifiIA(initPath);
+	//	new WifiIA(initPath);
 		
 		controlQueue = new LinkedBlockingDeque<IMessage>();
 		arduinoQueue = new LinkedBlockingDeque<IArduinoMessage>();	
@@ -99,8 +99,8 @@ public class Core extends Thread implements IIA, SerialListener {
 				this.waitMessage();		
 				this.askCoordonnates();
 				this.waitMessage();
-				this.askBlocked();
-				this.waitMessage();
+	//			this.askBlocked();
+	//			this.waitMessage();
 				startTimeAsk = System.currentTimeMillis();
 			}
 			
