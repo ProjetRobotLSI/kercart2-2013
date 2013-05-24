@@ -107,11 +107,13 @@ static inline char* send_order(int id)
 			message[0] = SENDPOS;
 			gps.retrieveLongitude();
 			tmp.entier = gps.a_longitude;
+	//		tmp.entier = 2147483647;
 			for(i=0;i<SIZE_PARAM;i++)
 			{
 				message[i+1] = (char)tmp.octets[i];
 			}
 			gps.retrieveLatitude();
+	//		tmp.entier = 2147483647;
 			tmp.entier = gps.a_latitude;
 			for(i=0;i<SIZE_PARAM;i++)
 			{

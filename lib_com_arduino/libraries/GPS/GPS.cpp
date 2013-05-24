@@ -181,7 +181,6 @@ int GPS::getSingle(int address) {
 int GPS::getState() {
 
 int state = this->getSingle(112);
-Serial.println(state);
 
 	if(state & 16 == 16) {
 		return 1;
@@ -194,22 +193,22 @@ void GPS::send(int choice) {
 	switch(choice)
 	{
 	case 0 :
-		Serial.print(a_time, DEC);
+		Serial.print(a_time);
 		break;
 	case 1 :
-		Serial.print(a_date, DEC);
+		Serial.print(a_date);
 		break;
 	case 2 :
-		Serial.print(a_speed, DEC);
+		Serial.print(a_speed);
 		break;
 	case 3 : 
-		Serial.print(a_heading, DEC);
+		Serial.print(a_heading);
 		break;
 	case 4: 
-		Serial.print(a_latitude, DEC);
+		Serial.print(a_latitude);
 		break;
 	case 5:
-		Serial.print(a_longitude, DEC);
+		Serial.print(a_longitude);
 		break;
 	}
 }
@@ -217,15 +216,15 @@ void GPS::send(int choice) {
 
 void GPS::sendAll() {
 		Serial.println("Time");
-		Serial.println(a_time, DEC);
+		Serial.println(a_time);
 		Serial.println("Date");
-		Serial.println(a_date, DEC);
+		Serial.println(a_date);
 		Serial.println("speed");
-		Serial.println(a_speed, DEC);
+		Serial.println(a_speed);
 		Serial.println("heading");
-		Serial.println(a_heading, DEC);
+		Serial.println(a_heading);
 		Serial.println("lat:");
-		Serial.println(a_latitude, DEC);
+		Serial.println(a_latitude);
 		Serial.println("long:");
-		Serial.println(a_longitude, DEC);
+		Serial.println(a_longitude);
 }
