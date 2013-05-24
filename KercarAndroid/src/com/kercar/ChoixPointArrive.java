@@ -1,8 +1,5 @@
 package com.kercar;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import BaseDeDonnees.Mission;
 import Client.ClientMissions;
 import android.app.Activity;
@@ -15,6 +12,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.kercar.osmandroid.OSMAndroid;
 
@@ -52,8 +50,10 @@ public class ChoixPointArrive extends Activity{
 	        	try {
 					clientMissions.changerMissionEnCours(newMission);
 		        	int[] a = clientMissions.getPointArriveeMissionEnCours();
-		        	System.out.println("a : "+ a[0]);
-		        	System.out.println("a : "+ a[1]);
+
+		        	System.out.println("début : "+ a[0]);
+		        	System.out.println("début : "+ a[1]);
+		        	OSM.addPoint(a[0], a[1], "Point d'arrivé", "");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -65,36 +65,18 @@ public class ChoixPointArrive extends Activity{
 				@Override
 				public void onClick(View v) {
 					
-					if(typeFonctionnalite.equals("Creer")){
-						
+					//Action lors de la création
+					if(typeFonctionnalite.equals("Creer")){						
 						try {
-					        //Enregistrement du point d'arrivï¿½ du Robot
-					        int id = OSM.getLastStartPoint();
-					        int latitude = OSM.getPointLatitude(id);
-					        int longitude = OSM.getPointLongitude(id);
-					        arrive[0] = latitude;
-					        arrive[1] = longitude;
+							//Enregistrement du point d'arrive du Robot
+							int id = OSM.getLastStartPoint();
+						    int latitude = OSM.getPointLatitude(id);
+						    int longitude = OSM.getPointLongitude(id);
+						    arrive[0] = latitude;
+						    arrive[1] = longitude;
 					        newMission.setM_fin(arrive);
-//					        System.out.println(latitude);
-//					        System.out.println(longitude);
 					        
-
-//<<<<<<< HEAD
 							clientMissions.creerMission(newMission);
-/*							clientMissions.changerMissionEnCours(newMission);
-												        
-							clientMissions.setPointArriveeMissionsEnCours(arrive);
-							
-							int[] a = clientMissions.getPointArriveeMissionEnCours();
-				        	System.out.println("a : "+ a[0]);
-				        	System.out.println("a : "+ a[1]);
-=======
-//					        newMission.setM_fin(arrive);							
-							clientMissions.creerMission(newMission);
-							clientMissions.changerMissionEnCours(newMission);
-							clientMissions.setPointArriveeMissionsEnCours(arrive);
-//							int[] a = clientMissions.getPointArriveeMissionEnCours();
->>>>>>> a89e8d4e4584329961bdcad2a7c68554811ca7f0*/
 					        
 							msbox("Information","Mission ajoutee avec succes !");
 						} catch (Exception e) {
@@ -104,11 +86,20 @@ public class ChoixPointArrive extends Activity{
 					else if(typeFonctionnalite.equals("Editer")){
 						
 						try {
+					        int id1 = OSM.getLastStartPoint();
+					        int latitude1 = OSM.getPointLatitude(id1);
+					        int longitude1 = OSM.getPointLongitude(id1);
+					        arrive[0] = latitude1;
+					        arrive[1] = longitude1;
+				        	System.out.println("a : "+ arrive[0]);
+				        	System.out.println("a : "+ arrive[1]);
+				        	
 							//ENREGISTRER ROUTE DANS BASE DE DONNEE
 //							clientMissions.changerMissionEnCours(newMission);
 							clientMissions.setEMailMissionEnCours(newMission.getEmail());
 							clientMissions.setRetourDepartMissionEnCours(newMission.getRetourDepart());
 							clientMissions.setPrendrePhotosArriveeMissionEnCours(newMission.getPrendrePhotosArrivee());
+							clientMissions.setPointArriveeMissionsEnCours(arrive);
 //							clientMissions.saveMissions(getApplicationContext());
 							
 //							arrive = clientMissions.getPointArriveeMissionEnCours();
@@ -121,7 +112,6 @@ public class ChoixPointArrive extends Activity{
 							
 							e.printStackTrace();
 						}
-
 					}
 					else
 						throw new IllegalStateException("ChoixPointArrive: Exception ! Type de fonctionnalite inexistant !");
@@ -139,8 +129,7 @@ public class ChoixPointArrive extends Activity{
 				 Intent intent = new Intent(ChoixPointArrive.this, MenuSelection.class);
 				 startActivity(intent);
 	         }
-	     });
-	     
+	     });	     
 	     dlgAlert.setCancelable(true);
 	     dlgAlert.create().show();
 	 }
