@@ -103,9 +103,9 @@ public class CreationForm extends Activity{
 		    btnSupprimer.setOnClickListener(new OnClickListener(){
 		    	public void onClick(View arg0){
 		    		try {
+						msbox("Information","Mission supprimee avec succes !");
 		    			Mission deleteMission= clientMissions.getListeMissions().getMissions(txtNom.getText().toString());
 						clientMissions.supprimerMission(deleteMission);
-						msbox("Information","Mission supprimee avec succes !");
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
