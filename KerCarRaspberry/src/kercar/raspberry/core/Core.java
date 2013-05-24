@@ -296,6 +296,7 @@ public class Core extends Thread implements IIA, SerialListener {
 	@Override
 	public void onSerialMessage(byte[] data) {
 		System.out.println("SERIAL MESSAGE");
+		System.out.println("MESSAGE " + IArduinoMessage.toBinary(data));
 		this.arduinoQueue.add(IArduinoMessage.fromBytes(data));
 	}
 	
