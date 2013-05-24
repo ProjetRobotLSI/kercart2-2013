@@ -114,8 +114,9 @@ public class MessageHandler {
 		2 = E*/
 		
 		String tmp = String.valueOf(data);
-		
-//		int degree = Integer.parseInt((tmp.);
+		int degree = Integer.parseInt(tmp.substring(0, 2));
+		double minutes = Integer.parseInt(tmp.substring(2, 4));
+//		double minutes = minutes + ((tmp.substring(4, )) / 1000);
 		
 		//int degree
 		
