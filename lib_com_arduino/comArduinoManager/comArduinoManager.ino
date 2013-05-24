@@ -13,8 +13,8 @@
 
 int compassAddress = 0x42 >> 1;
 int prems = 0;
-Telemeter frontTelemeter(PIN_TELEMETER_FRONT);
-Telemeter backTelemeter(PIN_TELEMETER_BACK);
+//Telemeter frontTelemeter(PIN_TELEMETER_FRONT);
+//Telemeter backTelemeter(PIN_TELEMETER_BACK);
 
 void setup() {
   Serial.begin(9600);
@@ -40,11 +40,11 @@ void loop(){
         char* msgAenvoyer;
         msgRecu.id = Serial.read();
         for(i=0;i<4;i++){
-            delay(25);
+            delay(10);
             msgRecu.param1.octets[i] = Serial.read();
         }
         for(i=0;i<4;i++){
-            delay(25);
+            delay(10);
             msgRecu.param2.octets[i] = Serial.read();
         }
         msgAenvoyer = call_order(&msgRecu);
@@ -54,13 +54,14 @@ void loop(){
             for(i = 0; i < NB_OCTETS; i++)
             {
               Serial.print(msgAenvoyer[i]);
-              delay(35);
+              delay(10);
             }
             free(msgAenvoyer);
         }
     }
     //Traitement du télémetre
-    if(forward == 1)
+  
+/*  if(forward == 1)
     {
         distTelemeter = frontTelemeter.retreiveValue();
     }
@@ -76,6 +77,6 @@ void loop(){
     else
     {
         isRobotBlock = 0; 
-    }
+    }*/
     delay(25);
 }
