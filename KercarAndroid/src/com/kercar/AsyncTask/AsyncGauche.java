@@ -3,6 +3,7 @@ package com.kercar.AsyncTask;
 import kercar.android.IComAndroid;
 import kercar.comAPI.*;
 import android.os.AsyncTask;
+import android.util.Log;
 
 public class AsyncGauche extends AsyncTask<Void, Void, Void> {
 
@@ -18,6 +19,7 @@ public class AsyncGauche extends AsyncTask<Void, Void, Void> {
 	protected Void doInBackground(Void... params) {
 		try {
 			CMDTurnMessage cmdCommand = new CMDTurnMessage(false);
+			Log.e("AsyncGauche", "Gauche");
 			this.comAndroid.envoyerMessage(cmdCommand);
 			this.comAndroid.lireReponse();
 		} catch (Exception e) {e.printStackTrace();}

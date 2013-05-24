@@ -1,7 +1,5 @@
 package com.kercar.AsyncTask;
 
-import java.util.LinkedList;
-
 import com.kercar.osmandroid.OSMAndroid;
 
 import kercar.android.IComAndroid;
