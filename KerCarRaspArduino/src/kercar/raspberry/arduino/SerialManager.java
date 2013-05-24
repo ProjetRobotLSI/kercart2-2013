@@ -10,6 +10,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
 
+import kercar.raspberry.arduino.message.IArduinoMessage;
+
 
 
 public class SerialManager implements SerialPortEventListener {
@@ -100,6 +102,7 @@ public class SerialManager implements SerialPortEventListener {
 			try {
 				int tmpRead = input.read(tmp);
 				System.out.println("Octets lu :" + tmpRead);
+				System.out.println("TMPREAD " + tmp + " " + IArduinoMessage.toBinary(tmp));
 				System.arraycopy(tmp, 0, buffer, bytesRead, tmpRead);
 				bytesRead += tmpRead;
 				
