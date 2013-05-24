@@ -73,7 +73,7 @@ public class Core extends Thread implements IIA, SerialListener {
 		serialManager.initialize();
 		
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(3000);
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -81,10 +81,10 @@ public class Core extends Thread implements IIA, SerialListener {
 		
 		long startTimeUpdate = 0;
 		
-		this.askAngle();
+	/*	this.askAngle();
 		this.waitMessage();
 		this.askCoordonnates();
-		this.waitMessage();
+		this.waitMessage();*/
 		long startTimeAsk = System.currentTimeMillis();
 		
 		//Sale bouuuuuuuuu
@@ -93,7 +93,7 @@ public class Core extends Thread implements IIA, SerialListener {
 		{
 			if (!controlQueue.isEmpty()) {
 				handler.handle(controlQueue.poll());
-			} else if((System.currentTimeMillis() - startTimeAsk) >= 3000) {
+			} else if((System.currentTimeMillis() - startTimeAsk) >= 5000) {
 				this.askAngle();
 				//Sinon port serial saturé
 				this.waitMessage();		
@@ -300,10 +300,12 @@ public class Core extends Thread implements IIA, SerialListener {
 	}
 	
 	public void setAngle(int angle) {
+		System.out.println("Compass " + angle);
 		this.angle = angle;
 	}
 	
 	public void setLatitude(int latitude) {
+		System.out.println("Latitude " + latitude);
 		this.latitude = latitude;
 		
 		if(latitude != 0)
@@ -313,6 +315,7 @@ public class Core extends Thread implements IIA, SerialListener {
 	}
 	
 	public void setLongitude(int longitude) {
+		System.out.println("Longitude " + longitude);
 		this.longitude = longitude;
 		
 		if(longitude != 0)
