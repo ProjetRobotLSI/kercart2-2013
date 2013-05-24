@@ -20,6 +20,7 @@ public class IArduinoMessage {
 	public static final byte RECEIVE_ANGLE = 12;
 	public static final byte RECEIVE_ARRIVED = 13;
 	public static final byte RECEIVE_GPSINFO = 14;
+	public static final byte RECEIVE_TURN = 15;
 	
 	public static final int LENGTH = 9;
 
