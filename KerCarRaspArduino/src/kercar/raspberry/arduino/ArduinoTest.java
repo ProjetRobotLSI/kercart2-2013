@@ -2,7 +2,7 @@ package kercar.raspberry.arduino;
 
 import kercar.raspberry.arduino.message.GoForward;
 import kercar.raspberry.arduino.message.IArduinoMessage;
-
+import kercar.raspberry.arduino.message.AskPos;
 
 public class ArduinoTest {
 
