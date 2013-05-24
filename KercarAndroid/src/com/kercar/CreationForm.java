@@ -260,7 +260,7 @@ public class CreationForm extends Activity{
 	    
 	    if(typeFonctionnalite.equals("Creer")){
 	    	
-	    	btnSupprimer.setEnabled(false);
+	    	btnSupprimer.setVisibility(TRIM_MEMORY_UI_HIDDEN);
 	    }
 	    else{
 	    	
@@ -271,9 +271,8 @@ public class CreationForm extends Activity{
 		    		
 		    		try {
 		    			
-		    			Mission deleteMission= clientMissions.getListeMissions().getMissions(txtNom.getText().toString());
-						clientMissions.supprimerMission(deleteMission);
-						msbox("Information","Mission supprimée avec succès !");
+		    			msgboxConf("COnfirmation", "Voulez-vous vraiment effacer cette mission?");
+						
 					} catch (Exception e) {
 						
 						e.printStackTrace();
@@ -326,5 +325,43 @@ public class CreationForm extends Activity{
 	     
 	     dlgAlert.setCancelable(true);
 	     dlgAlert.create().show();
+	 }
+	 
+	 public void msgboxConf(String titre,String message){
+		 
+		 final boolean answer;
+	     AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);                      
+	     dlgAlert.setTitle(titre); 
+	     dlgAlert.setMessage(message); 
+	     
+	     //Suppression OK
+	     dlgAlert.setNegativeButton("Oui", new DialogInterface.OnClickListener() {
+	         public void onClick(DialogInterface dialog, int whichButton) {
+
+				try {
+					Mission deleteMission= clientMissions.getListeMissions().getMissions(txtNom.getText().toString());
+					clientMissions.supprimerMission(deleteMission);
+					msbox("Information","Mission supprimée avec succès !");
+					
+
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	         }
+	     });
+
+	     
+	     //Suppression KO
+	     dlgAlert.setPositiveButton("Non",new DialogInterface.OnClickListener() {
+	         public void onClick(DialogInterface dialog, int whichButton) {
+				 
+	        	 msbox("Information","Annulation de la suppression!");
+	         }
+	     });
+	     
+	     dlgAlert.setCancelable(true);
+	     dlgAlert.create().show();
+
 	 }
 }
