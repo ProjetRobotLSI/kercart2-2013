@@ -101,7 +101,7 @@ public class MessageHandler {
 		}
 	}
 	
-	private int toGPSCompatibleData(int data) {
+	private double toGPSCompatibleData(int data) {
 		//2 chiffres les plus à gauche : degré
 		//2 suivant : minutes
 		//4 suivant : décimales minutes
@@ -114,12 +114,14 @@ public class MessageHandler {
 		2 = E*/
 		
 		String tmp = String.valueOf(data);
-		int degree = Integer.parseInt(tmp.substring(0, 2));
+		double degree = Integer.parseInt(tmp.substring(0, 2));
 		double minutes = Integer.parseInt(tmp.substring(2, 4));
-//		double minutes = minutes + ((tmp.substring(4, )) / 1000);
+		double sec = Integer.parseInt(tmp.substring(4, 9));
+		
+		double result = degree + (minutes / 60.0) + (sec / 3600.0); 
 		
 		//int degree
 		
-		return 0;
+		return result;
 	}
 }

@@ -20,11 +20,13 @@ public class TestIA {
 		System.out.println(testCalculAngle(4, 5, 2, 1, 295));
 		System.out.println(testCalculAngle(5, 0, 2, 1, 315));
 		
+		System.out.println(toGPSCompatibleData(301043242));
+		
 		/*
 		 * Commenter les lignes concernant le serial manager pour les tests dans Core
 		 * Décommenter updateAnglet, goToNextPoint et isArrived dans Core pour ne pas utiliser les valeurs de l'arduino
 		 */
-		
+		/*
 		Core core = new Core(".");
 		core.start();
 		
@@ -51,8 +53,33 @@ public class TestIA {
 		list.add(0);
 		list.add(0);
 		mission = new CMDMissionMessage(list, false, false, "miaou");
-		core.messageReceived(mission);
+		core.messageReceived(mission);*/
 		
+	}
+	
+	private static double toGPSCompatibleData(int data) {
+		//2 chiffres les plus à gauche : degré
+		//2 suivant : minutes
+		//4 suivant : décimales minutes
+		//le plus à droite : orientation : N = O, S = 1, E = 2, W = 3
+		
+		// calc DD=Degré+min/60+sec/3600
+		/*301043242
+		
+		30 = degré
+		10,4324 = minutes
+		2 = E*/
+		
+		String tmp = String.valueOf(data);
+		double degree = Integer.parseInt(tmp.substring(0, 2));
+		double minutes = Integer.parseInt(tmp.substring(2, 4));
+		double sec = Integer.parseInt(tmp.substring(4, 9));
+		
+		double result = degree + (minutes / 60.0) + (sec / 3600.0); 
+		
+		//int degree
+		
+		return result;
 	}
 	
 	public static int testCalculAngle(int pointLongitude, int pointLatitude, int gpsLongitude, int gpsLatitude, int compass) {
