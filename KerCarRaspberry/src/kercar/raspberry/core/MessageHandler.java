@@ -113,7 +113,9 @@ public class MessageHandler {
 		10,4324 = minutes
 		2 = E*/
 		
-		Integer tmp = new Integer(data);
+		String tmp = String.valueOf(data);
+		
+//		int degree = Integer.parseInt((tmp.);
 		
 		//int degree
 		
