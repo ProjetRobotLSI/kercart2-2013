@@ -101,8 +101,7 @@ public class SerialManager implements SerialPortEventListener {
 		if (oEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
 			try {
 				int tmpRead = input.read(tmp);
-				System.out.println("Octets lu :" + tmpRead);
-				System.out.println("TMPREAD " + tmp + " " + IArduinoMessage.toBinary(tmp));
+				//System.out.println("Octets lu :" + tmpRead);
 				System.arraycopy(tmp, 0, buffer, bytesRead, tmpRead);
 				bytesRead += tmpRead;
 				

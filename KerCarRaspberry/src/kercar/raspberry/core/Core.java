@@ -103,6 +103,7 @@ public class Core extends Thread implements IIA, SerialListener {
 	//			this.waitMessage();
 				startTimeAsk = System.currentTimeMillis();
 			}
+			System.out.println(controlQueue.size() + " --- "+arduinoQueue.size());
 			
 		/* (!arduinoQueue.isEmpty())
 				handler.handle(arduinoQueue.poll()); */
@@ -295,8 +296,8 @@ public class Core extends Thread implements IIA, SerialListener {
 
 	@Override
 	public void onSerialMessage(byte[] data) {
-		System.out.println("SERIAL MESSAGE");
-		System.out.println("MESSAGE " + IArduinoMessage.toBinary(data));
+		//System.out.println("SERIAL MESSAGE");
+		//System.out.println("MESSAGE " + IArduinoMessage.toBinary(data));
 		this.arduinoQueue.add(IArduinoMessage.fromBytes(data));
 	}
 	

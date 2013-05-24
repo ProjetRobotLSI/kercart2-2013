@@ -23,8 +23,7 @@ public class ArduinoTest {
 		
 		// Init du message
 		//Stop msg = new Stop();
-		GoForward msg = new GoForward();
-		msg.setVitesse(40);
+		IArduinoMessage msg = new AskPos();
 		System.out.println("ID : "+IArduinoMessage.extractID(msg.toBytes()));
 		System.out.println(msg.toString());
 		
