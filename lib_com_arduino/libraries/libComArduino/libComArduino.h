@@ -12,7 +12,7 @@
 #define BACKWARD 3
 #define LEFT 4
 #define RIGHT 5
-#define GOTOPOS 6
+#define IS_BLOCK 6
 #define GETPOS 7
 #define GETANGLE 8
 #define GETGPSINFO 9
@@ -29,6 +29,7 @@
 
 Compass compass;
 GPS gps(0x68);
+int isRobotBlock(0);
 
 typedef union
 {
@@ -135,6 +136,14 @@ static inline char* send_order(int id)
 			message[0] = SENDGPSINFO;
 			//ToDO : récupérer info gps
 			break;
+		case IS_BLOCK :
+			message[0] = BLOCK;
+			tmp.entier = (long)isRobotBlock;
+			for(i=0;i<SIZE_PARAM;i++)
+			{
+				message[i+1] = (char)tmp.octets[i];
+			}
+			break;
 		case STOPTURN:
 			message[0] = STOPTURN;
 			break;
@@ -166,8 +175,8 @@ static inline char* call_order(message* msg)
 			turnScrutation('R', (int) (msg->param1.entier));
 			return(send_order(STOPTURN));
 			break;
-		case GOTOPOS :
-			//TODO
+		case IS_BLOCK :
+			return(send_order(IS_BLOCK));
 			break;
 		case GETPOS :
 			return(send_order(msg->id));
