@@ -12,6 +12,7 @@ public interface IIA {
 	
 	public void launchMission(List<Integer> points, String mail, int speed, boolean takePhoto);
 	
+	public void waitMessage();
 	public void stopMission();
 	public void setBlocked(boolean blocked);
 	public void setAngle(int angle);

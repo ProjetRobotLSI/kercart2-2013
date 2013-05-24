@@ -141,7 +141,7 @@ public class Core extends Thread implements IIA, SerialListener {
 		}
 	}
 	
-	private void waitMessage() {
+	public void waitMessage() {
 		while(arduinoQueue.isEmpty()) {}
 		handler.handle(arduinoQueue.poll());
 	}

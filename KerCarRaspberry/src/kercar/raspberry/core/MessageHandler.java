@@ -100,4 +100,23 @@ public class MessageHandler {
 			this.ia.setLatitude(message.getParam(1));
 		}
 	}
+	
+	private int toGPSCompatibleData(int data) {
+		//2 chiffres les plus à gauche : degré
+		//2 suivant : minutes
+		//4 suivant : décimales minutes
+		//le plus à droite : orientation : N = O, S = 1, E = 2, W = 3
+		
+		/*301043242
+		
+		30 = degré
+		10,4324 = minutes
+		2 = E*/
+		
+		Integer tmp = new Integer(data);
+		
+		//int degree
+		
+		return 0;
+	}
 }
