@@ -26,8 +26,7 @@ public class AsyncLancerMission extends AsyncTask<Void, Void, Void> {
 	
 	@Override
 	protected Void doInBackground(Void... params) {
-		try {
-			
+		try {			
 			Log.v("AsyncLancerMission", "Mission lancée");
 			CMDMissionMessage cmdCommand = new CMDMissionMessage(coords, takePhoto, goBack, email);
 			this.comAndroid.envoyerMessage(cmdCommand);

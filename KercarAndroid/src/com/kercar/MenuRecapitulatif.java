@@ -1,13 +1,10 @@
 package com.kercar;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 import kercar.android.ComAndroid;
 import kercar.android.IComAndroid;
 
-import com.kercar.AsyncTask.AsyncGetEtat;
 import com.kercar.AsyncTask.AsyncGetEtatDeuxPoints;
 import com.kercar.AsyncTask.AsyncLancerMission;
 import com.kercar.osmandroid.OSMAndroid;
@@ -16,10 +13,7 @@ import BaseDeDonnees.Mission;
 import Client.ClientMissions;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;

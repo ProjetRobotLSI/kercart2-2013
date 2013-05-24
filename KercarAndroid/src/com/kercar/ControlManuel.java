@@ -18,12 +18,9 @@ import android.widget.SeekBar;
 import com.kercar.AsyncTask.AsyncAvancer;
 import com.kercar.AsyncTask.AsyncDroite;
 import com.kercar.AsyncTask.AsyncGauche;
-import com.kercar.AsyncTask.AsyncGetEtat;
-import com.kercar.AsyncTask.AsyncGetEtatUnPoint;
 import com.kercar.AsyncTask.AsyncPrendrePhoto;
 import com.kercar.AsyncTask.AsyncReculer;
 import com.kercar.AsyncTask.AsyncStop;
-import com.kercar.osmandroid.OSMAndroid;
 
 public class ControlManuel extends Activity{
 	//Attributs
@@ -33,13 +30,11 @@ public class ControlManuel extends Activity{
 	private Button droite;
 	private Button photo;
 	private SeekBar vitesse;
-	private OSMAndroid OSM;
 	
 	private String url;
 	private IComAndroid com;
 	
 	private LinkedList<Integer> list;
-	private AsyncGetEtatUnPoint get;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,16 +45,12 @@ public class ControlManuel extends Activity{
         setContentView(R.layout.controle_manuel);
              
 		//Initialisation des attributs
-
-        OSMAndroid osmAndroid = (OSMAndroid) findViewById(R.id.OSM);
-        
 		avance = (Button)findViewById(R.id.buttonAvance);
 		recule = (Button)findViewById(R.id.buttonRecule);
 		gauche = (Button)findViewById(R.id.buttonGauche);
 		droite = (Button)findViewById(R.id.buttonDroite);
 		photo = (Button)findViewById(R.id.buttonPhoto);
 		vitesse = (SeekBar)findViewById(R.id.barVitesse);
-		OSM = (OSMAndroid)findViewById(R.id.OSM);
 
 		url = "http://kercar2013.no-ip.biz:8080/KerCarCommunication/";
 		
@@ -70,9 +61,6 @@ public class ControlManuel extends Activity{
 		list.add(0);
 		list.add(1);
 		list.add(2);
-		
-//		get = new AsyncGetEtatUnPoint(list, com, OSM);
-//		get.execute();
 		
 		avance.setOnTouchListener(new OnTouchListener() {
 			@Override
