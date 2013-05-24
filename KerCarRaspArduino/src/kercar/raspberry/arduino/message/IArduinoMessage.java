@@ -30,7 +30,7 @@ public class IArduinoMessage {
 	protected final int numParam = 2;
 	
 	public IArduinoMessage(byte id){
-		ByteBuffer bb = ByteBuffer.allocate(1);
+		ByteBuffer bb = ByteBuffer.allocate(1).order(ByteOrder.LITTLE_ENDIAN);
 		bb.put(id);
 		this.id = bb.array()[0];
 	}
