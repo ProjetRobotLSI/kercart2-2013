@@ -158,53 +158,6 @@ public class CreationForm extends Activity{
 			}
 		});
 	    
-<<<<<<< HEAD
-/**Traitement de btnAnnuler//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-
-	    	 btnAnnuler.setOnClickListener(new OnClickListener() {
-	 			
-	 			@Override
-	 			public void onClick(View arg0) {
-	 				
-	 				Intent intent = new Intent(CreationForm.this, MenuCreation.class);
-	 				startActivity(intent);
-	 			}
-	 		});
-
-	    
-	   
-	 
-/**Traitement de btnSupprimer//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/		    
-	    
-	    if(typeFonctionnalite.equals("Creer")){
-	    	
-	    	btnSupprimer.setVisibility(TRIM_MEMORY_UI_HIDDEN);
-	    }
-	    else{
-	    	
-	    	btnSupprimer.setEnabled(true);
-		    btnSupprimer.setOnClickListener(new OnClickListener(){
-		    	
-		    	public void onClick(View arg0){
-		    		
-		    		try {
-		    			
-		    			msgboxConf("COnfirmation", "Voulez-vous vraiment effacer cette mission?");
-						
-					} catch (Exception e) {
-						
-						e.printStackTrace();
-					}
-		    	}
-		    });
-	    }
-	    
-
-	  }
-	 
-
-	 
-=======
 	    //Bouton Annuler
 	    btnAnnuler.setOnClickListener(new OnClickListener() {		
 			@Override
@@ -214,7 +167,6 @@ public class CreationForm extends Activity{
 			}
 	    });
 	  } 
->>>>>>> c891a061ac7017a12c0844e08cf505f2b3d7e646
 	 
 	 //METHODES
 	 
@@ -242,7 +194,7 @@ public class CreationForm extends Activity{
 	     dlgAlert.setMessage(message); 
 	     dlgAlert.setPositiveButton("OK",new DialogInterface.OnClickListener() {
 	         public void onClick(DialogInterface dialog, int whichButton) {
-				 Intent intent = new Intent(CreationForm.this, MenuCreation.class);
+				 Intent intent = new Intent(CreationForm.this, MenuSelection.class);
 				 startActivity(intent);
 	         }
 	     });
@@ -250,46 +202,4 @@ public class CreationForm extends Activity{
 	     dlgAlert.setCancelable(true);
 	     dlgAlert.create().show();
 	 }
-<<<<<<< HEAD
-	 
-	 public void msgboxConf(String titre,String message){
-		 
-		 final boolean answer;
-	     AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);                      
-	     dlgAlert.setTitle(titre); 
-	     dlgAlert.setMessage(message); 
-	     
-	     //Suppression OK
-	     dlgAlert.setNegativeButton("Oui", new DialogInterface.OnClickListener() {
-	         public void onClick(DialogInterface dialog, int whichButton) {
-
-				try {
-					Mission deleteMission= clientMissions.getListeMissions().getMissions(txtNom.getText().toString());
-					clientMissions.supprimerMission(deleteMission);
-					msbox("Information","Mission supprimée avec succès !");
-					
-
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	         }
-	     });
-
-	     
-	     //Suppression KO
-	     dlgAlert.setPositiveButton("Non",new DialogInterface.OnClickListener() {
-	         public void onClick(DialogInterface dialog, int whichButton) {
-				 
-	        	 msbox("Information","Annulation de la suppression!");
-	         }
-	     });
-	     
-	     dlgAlert.setCancelable(true);
-	     dlgAlert.create().show();
-
-	 }
 }
-=======
-}
->>>>>>> c891a061ac7017a12c0844e08cf505f2b3d7e646

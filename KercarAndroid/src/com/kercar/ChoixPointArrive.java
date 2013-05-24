@@ -30,30 +30,30 @@ public class ChoixPointArrive extends Activity{
 	        requestWindowFeature(Window.FEATURE_NO_TITLE);
 	   
 	        /**Initialisation du gestionnaire des missions*/
+	        setContentView(R.layout.choix_point_arrive);
 	        clientMissions = new ClientMissions(getApplicationContext());
 	        arrive = new int[2];
-	        
+	        enregistrerMission = (Button)findViewById(R.id.buttonEnregistrerMission);
+	        OSM = (OSMAndroid)findViewById(R.id.OSM_choix_point);
 	        
 		    /**Reception de bundles*/
 		    //Creation du bundle et reception des objets transferes
 	        Bundle receptionBundle = this.getIntent().getExtras().getBundle("AjoutBundleDansIntent2");        
 	    	final Mission newMission = (Mission) receptionBundle.getSerializable("AjoutMissionDansBundle2");
 	    	final String typeFonctionnalite = receptionBundle.getString("Titre");
-	    	
-	        //ContentView
-	        setContentView(R.layout.choix_point_arrive);
+
 	        
-	        enregistrerMission = (Button)findViewById(R.id.buttonEnregistrerMission);
-	        OSM = (OSMAndroid)findViewById(R.id.OSM_choix_point);
+	        
+
 	        
 	        if(typeFonctionnalite.equals("Editer")){
 	        	try {
 					clientMissions.changerMissionEnCours(newMission);
 		        	int[] a = clientMissions.getPointArriveeMissionEnCours();
 
-		        	System.out.println("début : "+ a[0]);
-		        	System.out.println("début : "+ a[1]);
-		        	OSM.addPoint(a[0], a[1], "Point d'arrivé", "");
+		        	System.out.println("dï¿½but : "+ a[0]);
+		        	System.out.println("dï¿½but : "+ a[1]);
+		        	OSM.addPoint(a[0], a[1], "Point d'arrivï¿½", "");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -65,7 +65,7 @@ public class ChoixPointArrive extends Activity{
 				@Override
 				public void onClick(View v) {
 					
-					//Action lors de la création
+					//Action lors de la crï¿½ation
 					if(typeFonctionnalite.equals("Creer")){						
 						try {
 							//Enregistrement du point d'arrive du Robot
@@ -110,7 +110,8 @@ public class ChoixPointArrive extends Activity{
 			});
 	    }
 	 
-	 public void msbox(String titre,String message)
+/**Autres methodes ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+	 private void msbox(String titre,String message)
 	 {
 	     AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);                      
 	     dlgAlert.setTitle(titre); 
