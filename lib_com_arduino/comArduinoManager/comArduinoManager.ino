@@ -34,11 +34,11 @@ void loop(){
         char* msgAenvoyer;
         msgRecu.id = Serial.read();
         for(i=0;i<4;i++){
-            delay(10);
+            delay(25);
             msgRecu.param1.octets[i] = Serial.read();
         }
         for(i=0;i<4;i++){
-            delay(10);
+            delay(25);
             msgRecu.param2.octets[i] = Serial.read();
         }
         msgAenvoyer = call_order(&msgRecu);
