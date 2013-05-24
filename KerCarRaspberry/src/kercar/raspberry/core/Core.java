@@ -86,6 +86,7 @@ public class Core extends Thread implements IIA, SerialListener {
 		this.askCoordonnates();
 		this.waitMessage();*/
 		long startTimeAsk = System.currentTimeMillis();
+		long startTimeQueue = System.currentTimeMillis();
 		
 		//Sale bouuuuuuuuu
 		boolean first = true;
@@ -102,8 +103,10 @@ public class Core extends Thread implements IIA, SerialListener {
 	//			this.askBlocked();
 	//			this.waitMessage();
 				startTimeAsk = System.currentTimeMillis();
+			} else if( (System.currentTimeMillis() - startTimeQueue) >= 3000 ){
+				startTimeQueue = System.currentTimeMillis();
+				System.out.println(controlQueue.size() + " --- "+arduinoQueue.size());
 			}
-			System.out.println(controlQueue.size() + " --- "+arduinoQueue.size());
 			
 		/* (!arduinoQueue.isEmpty())
 				handler.handle(arduinoQueue.poll()); */
