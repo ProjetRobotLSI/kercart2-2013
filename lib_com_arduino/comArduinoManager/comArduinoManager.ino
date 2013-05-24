@@ -48,7 +48,7 @@ void loop(){
             for(i = 0; i < NB_OCTETS; i++)
             {
               Serial.print(msgAenvoyer[i]);
-              delay(10);
+              delay(35);
             }
             free(msgAenvoyer);
         }
