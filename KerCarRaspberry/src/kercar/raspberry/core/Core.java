@@ -240,7 +240,8 @@ public class Core extends Thread implements IIA, SerialListener {
 		System.out.println("Core : Turn left");
 		TurnLeft arduinoMsg = new TurnLeft();
 		arduinoMsg.setDegree(angle);
-		this.serialManager.write(arduinoMsg.toBytes());	
+		this.serialManager.write(arduinoMsg.toBytes());
+		this.waitMessage();	
 	}
 
 	@Override
@@ -249,6 +250,7 @@ public class Core extends Thread implements IIA, SerialListener {
 		TurnRight arduinoMsg = new TurnRight();
 		arduinoMsg.setDegree(angle);
 		this.serialManager.write(arduinoMsg.toBytes());
+		this.waitMessage();	
 	}
 
 	@Override
