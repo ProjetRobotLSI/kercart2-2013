@@ -12,18 +12,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.InputType;
-import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
-import android.view.View.OnFocusChangeListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 public class CreationForm extends Activity{
@@ -73,6 +67,7 @@ public class CreationForm extends Activity{
 	    if(typeFonctionnalite.equals("Creer")){
 	    	//Titre
 	    	lblTitre.setText(Html.fromHtml("Creer une mission"));
+	    	btnSupprimer.setVisibility(4);
 	    }
 	    //Menu Edition
 	    else if(typeFonctionnalite.equals("Editer")){
@@ -102,6 +97,20 @@ public class CreationForm extends Activity{
 	    	else if(!newMission.getPrendrePhotosArrivee() && cbxPhotoArrivee.isChecked()){
 	    		cbxPhotoArrivee.setChecked(false);
 	    	}
+	    	
+	    	//Bouton supprimer
+	    	btnSupprimer.setVisibility(0);
+		    btnSupprimer.setOnClickListener(new OnClickListener(){
+		    	public void onClick(View arg0){
+		    		try {
+		    			Mission deleteMission= clientMissions.getListeMissions().getMissions(txtNom.getText().toString());
+						clientMissions.supprimerMission(deleteMission);
+						msbox("Information","Mission supprimee avec succes !");
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+		    	}
+		    });
     	}
 	    //Sinon exception
 	    else{
@@ -157,25 +166,6 @@ public class CreationForm extends Activity{
 				startActivity(intent);
 			}
 	    });
-	    
-	    //Bouton Supprimer
-	    if(typeFonctionnalite.equals("Creer")){	    	
-	    	btnSupprimer.setEnabled(false);
-	    }
-	    else{	    	
-	    	btnSupprimer.setEnabled(true);
-		    btnSupprimer.setOnClickListener(new OnClickListener(){		    	
-		    	public void onClick(View arg0){		    		
-		    		try {		    			
-		    			Mission deleteMission= clientMissions.getListeMissions().getMissions(txtNom.getText().toString());
-						clientMissions.supprimerMission(deleteMission);
-						msbox("Information","Mission supprimee avec succes !");
-					} catch (Exception e) {						
-						e.printStackTrace();
-					}
-		    	}
-		    });
-	    }
 	  } 
 	 
 	 //METHODES

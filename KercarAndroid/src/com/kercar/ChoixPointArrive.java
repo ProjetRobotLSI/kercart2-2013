@@ -96,7 +96,7 @@ public class ChoixPointArrive extends Activity{
 //							int[] a = clientMissions.getPointArriveeMissionEnCours();
 >>>>>>> a89e8d4e4584329961bdcad2a7c68554811ca7f0*/
 					        
-							msbox("Information","Mission ajoutée avec succès !");
+							msbox("Information","Mission ajoutee avec succes !");
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -116,7 +116,7 @@ public class ChoixPointArrive extends Activity{
 //				        	System.out.println("a : "+ arrive[1]);
 //							OSM.addPoint(arrive[0], arrive[1], "Point Arrivee", "");
 							
-							msbox("Information", "Mission modifiée avec succès !");
+							msbox("Information", "Mission modifiee avec succes !");
 						} catch (Exception e) {
 							
 							e.printStackTrace();

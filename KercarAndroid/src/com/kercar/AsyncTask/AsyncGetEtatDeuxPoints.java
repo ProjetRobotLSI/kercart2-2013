@@ -1,14 +1,12 @@
 package com.kercar.AsyncTask;
 
 import java.util.LinkedList;
-import java.util.List;
 
 import com.kercar.osmandroid.OSMAndroid;
 
 import kercar.android.IComAndroid;
 import kercar.comAPI.IStateMessage;
 import android.os.AsyncTask;
-import android.util.Log;
 
 public class AsyncGetEtatDeuxPoints extends AsyncTask<Void, Integer, Void> {
 	//Attributs
