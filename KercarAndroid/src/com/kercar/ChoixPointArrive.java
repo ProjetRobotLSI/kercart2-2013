@@ -86,30 +86,21 @@ public class ChoixPointArrive extends Activity{
 					else if(typeFonctionnalite.equals("Editer")){
 						
 						try {
+							//Modification du point d'arrive du Robot
 					        int id1 = OSM.getLastStartPoint();
 					        int latitude1 = OSM.getPointLatitude(id1);
 					        int longitude1 = OSM.getPointLongitude(id1);
 					        arrive[0] = latitude1;
 					        arrive[1] = longitude1;
-				        	System.out.println("a : "+ arrive[0]);
-				        	System.out.println("a : "+ arrive[1]);
 				        	
-							//ENREGISTRER ROUTE DANS BASE DE DONNEE
-//							clientMissions.changerMissionEnCours(newMission);
+							//Modification des donnee
 							clientMissions.setEMailMissionEnCours(newMission.getEmail());
 							clientMissions.setRetourDepartMissionEnCours(newMission.getRetourDepart());
 							clientMissions.setPrendrePhotosArriveeMissionEnCours(newMission.getPrendrePhotosArrivee());
 							clientMissions.setPointArriveeMissionsEnCours(arrive);
-//							clientMissions.saveMissions(getApplicationContext());
-							
-//							arrive = clientMissions.getPointArriveeMissionEnCours();
-//				        	System.out.println("a : "+ arrive[0]);
-//				        	System.out.println("a : "+ arrive[1]);
-//							OSM.addPoint(arrive[0], arrive[1], "Point Arrivee", "");
 							
 							msbox("Information", "Mission modifiee avec succes !");
-						} catch (Exception e) {
-							
+						} catch (Exception e) {							
 							e.printStackTrace();
 						}
 					}
