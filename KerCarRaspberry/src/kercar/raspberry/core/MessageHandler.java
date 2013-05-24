@@ -76,6 +76,7 @@ public class MessageHandler {
 	public void handle(IArduinoMessage message) {
 		Core.Log("MessageHandler : Message from Arduino");
 		System.out.println("MessageHandler : Message from Arduino");
+		System.out.println("ID " + message.getID());
 		if(message.getID() == IArduinoMessage.RECEIVE_BLOCK) {
 			Core.Log("MessageHandler : RECEIVE_BLOCK");
 			System.out.println("MessageHandler : RECEIVE_BLOCK");

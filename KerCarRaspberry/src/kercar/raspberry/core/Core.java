@@ -73,7 +73,7 @@ public class Core extends Thread implements IIA, SerialListener {
 		serialManager.initialize();
 		
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(2000);
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -226,7 +226,7 @@ public class Core extends Thread implements IIA, SerialListener {
 	
 	private void askCoordonnates() {
 	//	Core.Log("Core : ASK_COORDONNATES");
-		System.out.println("Core : ASK_COORDONNATES");
+		System.out.println("Core : ASK_COORDINNATES");
 		AskPos arduinoMsg = new AskPos();
 		this.serialManager.write(arduinoMsg.toBytes());	
 	}
