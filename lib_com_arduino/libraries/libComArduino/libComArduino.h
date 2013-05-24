@@ -50,15 +50,15 @@ static inline void turnScrutation(char sens, int angleAtourner)
 	compass.sendOrder('A');
 	delay(10);
 	orientationCourante = compass.RetrieveValueNumeric();
-	Serial.print("Orient init : ");
-	Serial.println(orientationCourante);
+//	Serial.print("Orient init : ");
+//	Serial.println(orientationCourante);
 	//calcul modulo de l'angle que l'on veut obtenir
 	if(sens == 'L')
 		orientationFinale = (360 +  orientationCourante - angleAtourner) % 360;
 	else
 		orientationFinale = (orientationCourante + angleAtourner) % 360;
-	Serial.print("Finale : ");
-	Serial.println(orientationFinale);
+//	Serial.print("Finale : ");
+//	Serial.println(orientationFinale);
 	do{
 		if(sens == 'L')
 			servoMoteur_turnLeft(VITESSETOURNER);
@@ -78,10 +78,10 @@ static inline void turnScrutation(char sens, int angleAtourner)
 			if(orientationCourante < 360 && orientationCourante > orientationFinale)
 				orientationCourante -= 360;
 		}
-		Serial.print("Courant : ");
-		Serial.println(orientationCourante);
+//		Serial.print("Courant : ");
+//		Serial.println(orientationCourante);
 	}while((orientationCourante > orientationFinale+MARGEROTATION && sens == 'L') || (orientationCourante < orientationFinale-MARGEROTATION && sens == 'R'));
-	Serial.println("Stop");
+//	Serial.println("Stop");
 	servoMoteur_stop();
 }
 
