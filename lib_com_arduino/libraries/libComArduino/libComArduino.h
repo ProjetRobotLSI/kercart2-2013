@@ -24,6 +24,9 @@
 #define SENDGPSINFO 14
 #define STOPTURN 16
 
+#define LEFTANGLE 17
+#define RIGHTANGLE 18
+
 #define VITESSETOURNER 40
 #define MARGEROTATION 8
 
@@ -170,12 +173,10 @@ static inline char* call_order(message* msg)
 			servoMoteur_moveBackward((int) (msg->param1.entier));
 			break;
 		case LEFT :
-			turnScrutation('L', (int) (msg->param1.entier));
-			return(send_order(STOPTURN));
+			servoMoteur_turnLeft(90); 
 			break;
 		case RIGHT :
-			turnScrutation('R', (int) (msg->param1.entier));
-			return(send_order(STOPTURN));
+			servoMoteur_turnRight(90); 
 			break;
 		case IS_BLOCK :
 			return(send_order(IS_BLOCK));
@@ -189,6 +190,15 @@ static inline char* call_order(message* msg)
 		case GETGPSINFO :
 			return(send_order(msg->id));
 			break;
+		case LEFTANGLE :
+			turnScrutation('L', (int) (msg->param1.entier));
+			return(send_order(STOPTURN));
+			break;
+		case RIGHTANGLE :
+			turnScrutation('R', (int) (msg->param1.entier));
+			return(send_order(STOPTURN));
+			break;
+			
 	}
 	return NULL;
 }

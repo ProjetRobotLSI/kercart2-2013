@@ -28,11 +28,11 @@ void setup() {
 
 void loop(){
     int i, distTelemeter;
-    if(prems == 0)
+  /*  if(prems == 0)
     {
         servoMoteur_test();
         prems = 1;
-    }
+    }*/
     //on attend que le buffer ait le bon nombre d'octets (taille d'un message)
     if(Serial.available() == NB_OCTETS)
     {
