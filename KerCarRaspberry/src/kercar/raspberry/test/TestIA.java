@@ -20,7 +20,7 @@ public class TestIA {
 		System.out.println(testCalculAngle(4, 5, 2, 1, 295));
 		System.out.println(testCalculAngle(5, 0, 2, 1, 315));
 		
-		System.out.println(toGPSCompatibleData(301043242));
+		System.out.println(toGPSCompatibleData(301043241));
 		
 		/*
 		 * Commenter les lignes concernant le serial manager pour les tests dans Core
@@ -57,29 +57,31 @@ public class TestIA {
 		
 	}
 	
-	private static double toGPSCompatibleData(int data) {
+	private static int toGPSCompatibleData(int data) {
 		//2 chiffres les plus à gauche : degré
 		//2 suivant : minutes
 		//4 suivant : décimales minutes
 		//le plus à droite : orientation : N = O, S = 1, E = 2, W = 3
 		
-		// calc DD=Degré+min/60+sec/3600
 		/*301043242
-		
+		DD=Degré+min/60+sec/3600
 		30 = degré
 		10,4324 = minutes
 		2 = E*/
-		
-		String tmp = String.valueOf(data);
-		double degree = Integer.parseInt(tmp.substring(0, 2));
-		double minutes = Integer.parseInt(tmp.substring(2, 4));
-		double sec = Integer.parseInt(tmp.substring(4, 9));
-		
-		double result = degree + (minutes / 60.0) + (sec / 3600.0); 
-		
-		//int degree
-		
-		return result;
+		try {
+			String tmp = String.valueOf(data);
+			double degree = Integer.parseInt(tmp.substring(0, 2));
+			double minutes = Integer.parseInt(tmp.substring(2, 4));
+			double sec = Integer.parseInt(tmp.substring(4, 8));
+			int letter = Integer.parseInt(tmp.substring(8, 9));
+			
+			int result = (int) ((degree + (minutes / 60.0) + (sec / 3600.0))* 1E6);  
+			if(letter == 1 || letter == 3)
+				return (-result);
+			return result;
+		} catch (Exception e) {
+			return 0;
+		}
 	}
 	
 	public static int testCalculAngle(int pointLongitude, int pointLatitude, int gpsLongitude, int gpsLatitude, int compass) {

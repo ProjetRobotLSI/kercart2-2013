@@ -21,7 +21,9 @@ import kercar.raspberry.arduino.message.GoForward;
 import kercar.raspberry.arduino.message.IArduinoMessage;
 import kercar.raspberry.arduino.message.Stop;
 import kercar.raspberry.arduino.message.TurnLeft;
+import kercar.raspberry.arduino.message.TurnLeftAngle;
 import kercar.raspberry.arduino.message.TurnRight;
+import kercar.raspberry.arduino.message.TurnRightAngle;
 import kercar.raspberry.core.pathfinding.IPathfinder;
 import kercar.raspberry.core.pathfinding.Pathfinder;
 
@@ -51,7 +53,7 @@ public class Core extends Thread implements IIA, SerialListener {
 		System.out.println("Starting core...");
 		initUSB0(initPath);
 		Core.initPath = initPath;
-		new WifiIA(initPath);
+//		new WifiIA(initPath);
 		
 		controlQueue = new LinkedBlockingDeque<IMessage>();
 		arduinoQueue = new LinkedBlockingDeque<IArduinoMessage>();	
@@ -230,27 +232,41 @@ public class Core extends Thread implements IIA, SerialListener {
 	
 	private void askCoordonnates() {
 	//	Core.Log("Core : ASK_COORDONNATES");
-		System.out.println("Core : ASK_COORDINNATES");
+		System.out.println("Core : ASK_COORDONATES");
 		AskPos arduinoMsg = new AskPos();
 		this.serialManager.write(arduinoMsg.toBytes());	
 	}
 
 	@Override
-	public void turnLeft(int angle) {
+	public void turnLeft() {
 		System.out.println("Core : Turn left");
 		TurnLeft arduinoMsg = new TurnLeft();
-		arduinoMsg.setDegree(angle);
+//		arduinoMsg.setDegree(angle);
 		this.serialManager.write(arduinoMsg.toBytes());
-		this.waitMessage();	
 	}
 
 	@Override
-	public void turnRight(int angle) {
+	public void turnRight() {
 		System.out.println("Core : Turn Right");
 		TurnRight arduinoMsg = new TurnRight();
-		arduinoMsg.setDegree(angle);
+	//	arduinoMsg.setDegree(angle);
 		this.serialManager.write(arduinoMsg.toBytes());
-		this.waitMessage();	
+	}
+	
+	@Override
+	public void turnRightAngle(int degree) {
+		TurnRightAngle arduinoMsg = new TurnRightAngle();
+		arduinoMsg.setDegree(degree);
+		this.serialManager.write(arduinoMsg.toBytes());
+		this.waitMessage();
+	}
+	
+	@Override
+	public void turnLeftAngle(int degree) {
+		TurnLeftAngle arduinoMsg = new TurnLeftAngle();
+		arduinoMsg.setDegree(degree);
+		this.serialManager.write(arduinoMsg.toBytes());
+		this.waitMessage();
 	}
 
 	@Override
@@ -312,22 +328,49 @@ public class Core extends Thread implements IIA, SerialListener {
 	}
 	
 	public void setLatitude(int latitude) {
-		System.out.println("Latitude " + latitude);
-		this.latitude = latitude;
+		this.latitude = toGPSCompatibleData(latitude);
+		System.out.println("Latitude " + latitude + " " + this.latitude);
 		
-		if(latitude != 0)
+		if(this.latitude != 0)
 			this.gpsReady = true;
 		else
 			this.gpsReady = false;
 	}
 	
 	public void setLongitude(int longitude) {
-		System.out.println("Longitude " + longitude);
-		this.longitude = longitude;
+		this.longitude = toGPSCompatibleData(longitude);
+		System.out.println("Longitude " + longitude + " " + this.longitude);
 		
-		if(longitude != 0)
+		if(this.longitude != 0)
 			this.gpsReady = true;
 		else
 			this.gpsReady = false;
+	}
+	
+	private int toGPSCompatibleData(int data) {
+		//2 chiffres les plus à gauche : degré
+		//2 suivant : minutes
+		//4 suivant : décimales minutes
+		//le plus à droite : orientation : N = O, S = 1, E = 2, W = 3
+		
+		/*301043242
+		DD=Degré+min/60+sec/3600
+		30 = degré
+		10,4324 = minutes
+		2 = E*/
+		try {
+			String tmp = String.valueOf(data);
+			double degree = Integer.parseInt(tmp.substring(0, 2));
+			double minutes = Integer.parseInt(tmp.substring(2, 4));
+			double sec = Integer.parseInt(tmp.substring(4, 8));
+			int letter = Integer.parseInt(tmp.substring(8, 9));
+			
+			int result = (int) ((degree + (minutes / 60.0) + (sec / 3600.0))* 1E6);  
+			if(letter == 1 || letter == 3)
+				return (-result);
+			return result;
+		} catch (Exception e) {
+			return 0;
+		}
 	}
 }

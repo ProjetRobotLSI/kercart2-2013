@@ -4,8 +4,10 @@ import java.util.List;
 
 
 public interface IIA {
-	public void turnLeft(int angle);
-	public void turnRight(int angle);
+	public void turnLeft();
+	public void turnRight();
+	public void turnLeftAngle(int degree);
+	public void turnRightAngle(int degree);
 	public void forward(int speed);
 	public void backward(int speed);
 	public void stopKercar();

@@ -46,13 +46,11 @@ public class MessageHandler {
 			if (turn.isTurningRight())
 			{
 				Core.Log("RIGHT");
-				//TODO RECUP ANGLE
-				this.ia.turnRight(50);
+				this.ia.turnRight();
 			}
 			else {
 				Core.Log("LEFT");
-				//TODO RECUP ANGLE
-				this.ia.turnLeft(50);
+				this.ia.turnLeft();
 			}			
 		}
 		else if (message.getType() == Message.CMD_STOP)
@@ -68,7 +66,6 @@ public class MessageHandler {
 			this.ia.stopMission();
 			this.ia.stopKercar();
 			CMDMissionMessage mission = new CMDMissionMessage((Message)message);
-			//TODO GET SPEED
 			this.ia.launchMission(mission.getCoordinates(), mission.getMailAddress(), 75, mission.getPhoto());
 		}
 	}
@@ -93,36 +90,9 @@ public class MessageHandler {
 		else if(message.getID() == IArduinoMessage.RECEIVE_POS) {
 			Core.Log("MessageHandler : RECEIVE_POS");
 			System.out.println("MessageHandler : RECEIVE_POS");
-	//		GetPos pos = (GetPos) message;
-			
-			//TODO Traitement des coordonnées venant de l'arduino !
 			
 			this.ia.setLongitude(message.getParam(0));
 			this.ia.setLatitude(message.getParam(1));
 		}
-	}
-	
-	private double toGPSCompatibleData(int data) {
-		//2 chiffres les plus à gauche : degré
-		//2 suivant : minutes
-		//4 suivant : décimales minutes
-		//le plus à droite : orientation : N = O, S = 1, E = 2, W = 3
-		
-		/*301043242
-		
-		30 = degré
-		10,4324 = minutes
-		2 = E*/
-		
-		String tmp = String.valueOf(data);
-		double degree = Integer.parseInt(tmp.substring(0, 2));
-		double minutes = Integer.parseInt(tmp.substring(2, 4));
-		double sec = Integer.parseInt(tmp.substring(4, 9));
-		
-		double result = degree + (minutes / 60.0) + (sec / 3600.0); 
-		
-		//int degree
-		
-		return result;
 	}
 }

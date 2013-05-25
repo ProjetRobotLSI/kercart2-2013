@@ -34,9 +34,9 @@ public class Pathfinder implements IPathfinder {
 		int angle = this.calculateAngle(gpsLatitude, gpsLongitude, compass);
 		
 		if(angle < 180) 
-			this.iA.turnRight(angle);
+			this.iA.turnRightAngle(angle);
 		else
-			this.iA.turnLeft(360 - angle);
+			this.iA.turnLeftAngle(360 - angle);
 		
 		this.iA.waitMessage();
 		
@@ -53,9 +53,9 @@ public class Pathfinder implements IPathfinder {
 		if((angle >= compass && (pourcent(compass, angle) <= 90)) || (pourcent(angle, compass) <= 90)) {
 			if(turn) {
 				if(angle < 180) 
-					this.iA.turnRight(angle);
+					this.iA.turnRightAngle(angle);
 				else
-					this.iA.turnLeft(360 - angle);
+					this.iA.turnLeftAngle(360 - angle);
 				this.iA.waitMessage();
 			}	
 		} 		
