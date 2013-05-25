@@ -22,6 +22,10 @@ public class IArduinoMessage {
 	public static final byte RECEIVE_GPSINFO = 14;
 	public static final byte RECEIVE_TURN = 15;
 	
+	//STOP Turn est en 16 coté arduino ! 
+	public static final byte LEFTANGLE = 17;
+	public static final byte RIGHTANGLE = 18;
+	
 	public static final int LENGTH = 9;
 
 	protected byte id;
