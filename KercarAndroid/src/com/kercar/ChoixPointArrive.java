@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -49,19 +50,18 @@ public class ChoixPointArrive extends Activity{
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-	        	
-		        if(OSM.isLongClickable()){
-		        	int pointRemove = OSM.getLastEndPoint();
-					int pointNew = OSM.getLastStartPoint();
-					
-		        	OSM.removePoint(pointRemove);
 
-				    int latitude = OSM.getPointLatitude(pointNew);
-				    int longitude = OSM.getPointLongitude(pointNew);
-				    
-		        	OSM.addPoint(latitude, longitude, "Point d'arrive", "");
-		        	OSM.invalidate();
-		        }
+	        	OSM.setOnLongClickListener(new OnLongClickListener() {						
+					@Override
+					public boolean onLongClick(View v) {
+			        	int pointRemove = OSM.getLastEndPoint();
+						int pointNew = OSM.getLastStartPoint();
+						
+						OSM.removePoint(pointRemove);
+						OSM.removePoint(pointNew);
+						return false;
+					}
+				});
 	        }
 	        
 			//Listeners
