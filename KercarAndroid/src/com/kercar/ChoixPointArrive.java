@@ -40,23 +40,28 @@ public class ChoixPointArrive extends Activity{
 	        Bundle receptionBundle = this.getIntent().getExtras().getBundle("AjoutBundleDansIntent2");        
 	    	final Mission newMission = (Mission) receptionBundle.getSerializable("AjoutMissionDansBundle2");
 	    	final String typeFonctionnalite = receptionBundle.getString("Titre");
-
-	        
-	        
-
 	        
 	        if(typeFonctionnalite.equals("Editer")){
 	        	try {
 					clientMissions.changerMissionEnCours(newMission);
 		        	int[] a = clientMissions.getPointArriveeMissionEnCours();
-
-		        	System.out.println("d�but : "+ a[0]);
-		        	System.out.println("d�but : "+ a[1]);
-		        	OSM.addPoint(a[0], a[1], "Point d'arriv�", "");
+		        	OSM.addPoint(a[0], a[1], "Point d'arrive", "");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+	        	
+		        if(OSM.isLongClickable()){
+		        	int pointRemove = OSM.getLastEndPoint();
+					int pointNew = OSM.getLastStartPoint();
+					
+		        	OSM.removePoint(pointRemove);
 
+				    int latitude = OSM.getPointLatitude(pointNew);
+				    int longitude = OSM.getPointLongitude(pointNew);
+				    
+		        	OSM.addPoint(latitude, longitude, "Point d'arrive", "");
+		        	OSM.invalidate();
+		        }
 	        }
 	        
 			//Listeners
@@ -64,7 +69,7 @@ public class ChoixPointArrive extends Activity{
 				@Override
 				public void onClick(View v) {
 					
-					//Action lors de la cr�ation
+					//Action lors de la creation
 					if(typeFonctionnalite.equals("Creer")){						
 						try {
 							//Enregistrement du point d'arrive du Robot

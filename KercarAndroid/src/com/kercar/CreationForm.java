@@ -33,7 +33,7 @@ public class CreationForm extends Activity{
 	
 	private Button btnSuivant = null;
 	private Button btnSupprimer = null;
-	private Button btnAnnuler = null;
+//	private Button btnAnnuler = null;
 	
 	private ClientMissions clientMissions;
 	
@@ -55,7 +55,7 @@ public class CreationForm extends Activity{
 	    
 	    btnSuivant = (Button) findViewById(R.id.btnSuivant);
 	    btnSupprimer = (Button) findViewById(R.id.btnSupprimer);
-	    btnAnnuler = (Button) findViewById(R.id.btnAnnuler);
+//	    btnAnnuler = (Button) findViewById(R.id.btnAnnuler);
 
 	    clientMissions = new ClientMissions(getApplicationContext());
 	    
@@ -159,14 +159,14 @@ public class CreationForm extends Activity{
 			}
 		});
 	    
-	    //Bouton Annuler
-	    btnAnnuler.setOnClickListener(new OnClickListener() {		
-			@Override
-			public void onClick(View arg0) {			
-				Intent intent = new Intent(CreationForm.this, MenuCreation.class);
-				startActivity(intent);
-			}
-	    });
+//	    //Bouton Annuler
+//	    btnAnnuler.setOnClickListener(new OnClickListener() {		
+//			@Override
+//			public void onClick(View arg0) {			
+//				Intent intent = new Intent(CreationForm.this, MenuCreation.class);
+//				startActivity(intent);
+//			}
+//	    });
 	  } 
 	 
 	 //METHODES
@@ -195,7 +195,7 @@ public class CreationForm extends Activity{
 	     dlgAlert.setMessage(message); 
 	     dlgAlert.setPositiveButton("OK",new DialogInterface.OnClickListener() {
 	         public void onClick(DialogInterface dialog, int whichButton) {
-				 Intent intent = new Intent(CreationForm.this, MenuSelection.class);
+				 Intent intent = new Intent(CreationForm.this, MenuCreation.class);
 				 startActivity(intent);
 	         }
 	     });
