@@ -1,5 +1,8 @@
 package com.kercar;
 
+import org.osmdroid.util.GeoPoint;
+
+import android.view.GestureDetector.SimpleOnGestureListener;
 import BaseDeDonnees.Mission;
 import Client.ClientMissions;
 import android.app.Activity;
@@ -7,13 +10,16 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.GestureDetector;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.kercar.osmandroid.MapViewGestureListener;
 import com.kercar.osmandroid.OSMAndroid;
 
 public class ChoixPointArrive extends Activity{
@@ -23,6 +29,7 @@ public class ChoixPointArrive extends Activity{
 	private OSMAndroid OSM;
 	private int[] arrive;
 	private ClientMissions clientMissions;
+	private int currentPoint;
 	
 	 @Override
 	    protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +40,12 @@ public class ChoixPointArrive extends Activity{
 	        setContentView(R.layout.choix_point_arrive);
 	        clientMissions = new ClientMissions(getApplicationContext());
 	        arrive = new int[2];
+	        this.currentPoint = -1;
 	        enregistrerMission = (Button)findViewById(R.id.buttonEnregistrerMission);
 	        OSM = (OSMAndroid)findViewById(R.id.OSM_choix_point);
+	        GestureDetector gesture = new GestureDetector(this, new MapViewGestureListener());
+	        gesture.setIsLongpressEnabled(true);
+	        OSM.setListener(gesture);
 	        
 		    /**Reception de bundles*/
 		    //Creation du bundle et reception des objets transferes
@@ -46,23 +57,11 @@ public class ChoixPointArrive extends Activity{
 	        	try {
 					clientMissions.changerMissionEnCours(newMission);
 		        	int[] a = clientMissions.getPointArriveeMissionEnCours();
-		        	OSM.addPoint(a[0], a[1], "Point d'arrive", "");
+		        	currentPoint = OSM.addPoint(a[0], a[1], "Point d'arrive", "");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 	        }
-	        
-        	OSM.setOnLongClickListener(new OnLongClickListener() {						
-				@Override
-				public boolean onLongClick(View v) {
-		        	int pointRemove = OSM.getLastEndPoint();
-					int pointNew = OSM.getLastStartPoint();
-					
-					OSM.removePoint(pointRemove);
-					OSM.removePoint(pointNew);
-					return false;
-				}
-			});
 	        
 			//Listeners
 			enregistrerMission.setOnClickListener(new OnClickListener(){
@@ -73,9 +72,8 @@ public class ChoixPointArrive extends Activity{
 					if(typeFonctionnalite.equals("Creer")){						
 						try {
 							//Enregistrement du point d'arrive du Robot
-							int id = OSM.getLastStartPoint();
-						    int latitude = OSM.getPointLatitude(id);
-						    int longitude = OSM.getPointLongitude(id);
+						    int latitude = OSM.getPointLatitude(currentPoint);
+						    int longitude = OSM.getPointLongitude(currentPoint);
 						    arrive[0] = latitude;
 						    arrive[1] = longitude;
 					        newMission.setM_fin(arrive);
@@ -87,8 +85,7 @@ public class ChoixPointArrive extends Activity{
 							e.printStackTrace();
 						}
 					}
-					else if(typeFonctionnalite.equals("Editer")){
-						
+					else if(typeFonctionnalite.equals("Editer")){						
 						try {
 							//Modification du point d'arrive du Robot
 					        int id1 = OSM.getLastStartPoint();
@@ -135,5 +132,17 @@ public class ChoixPointArrive extends Activity{
 	        // Inflate the menu; this adds items to the action bar if it is present.
 	        getMenuInflater().inflate(R.menu.activity_main, menu);
 	        return true;
+	    }
+	    
+	    private class MapViewGestureListener extends SimpleOnGestureListener {
+	    	
+	    	@Override
+	    	public void onLongPress(MotionEvent e) {
+	    		if(currentPoint != -1)
+	    			OSM.removePoint(currentPoint);
+	    		GeoPoint point = (GeoPoint) OSM.getProjection().fromPixels(e.getX(), e.getY());
+	    		currentPoint = OSM.addPoint(point.getLatitudeE6(), point.getLongitudeE6(), "Arrivée", "");
+	    		OSM.invalidate();
+	    	}
 	    }
 }

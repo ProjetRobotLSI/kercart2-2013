@@ -26,7 +26,6 @@ public class OSMAndroid extends MapView implements OSMAndroidInterface {
 	private Context activity;
 	private int idRoad;
 	private int idPoint;
-	private GestureDetector gestureDetector;
 	
 	private Drawable defaultMarker;
 	private SparseArray<ExtendedOverlayItem> spArOverlayItem;
@@ -38,6 +37,7 @@ public class OSMAndroid extends MapView implements OSMAndroidInterface {
 	private int startPoint, endPoint;
 	private int lastRoad;
 	private boolean roadIsFinished;
+	private GestureDetector gestureDetector;
 	
 	/**
 	 * Map Creation
@@ -96,8 +96,6 @@ public class OSMAndroid extends MapView implements OSMAndroidInterface {
         this.endPoint = 0;
         this.setRoadIsFinished(false);
         this.setLongClickable(true);
-        this.gestureDetector = new GestureDetector(activity, new MapViewGestureListener(this));
-        this.gestureDetector.setIsLongpressEnabled(true);
         
         this.isStartPoint = true;
 	}
@@ -259,10 +257,16 @@ public class OSMAndroid extends MapView implements OSMAndroidInterface {
 
 	@Override 
     public boolean onTouchEvent(MotionEvent event){ 
-        this.gestureDetector.onTouchEvent(event);
+		if(gestureDetector != null) {
+			this.gestureDetector.onTouchEvent(event);
+		}
         // Be sure to call the superclass implementation
         return super.onTouchEvent(event);
     }
+	
+	public void setListener(GestureDetector gesture) {
+		this.gestureDetector = gesture;
+	}
 
 	@Override
 	public int getLastStartPoint() {
