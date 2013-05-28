@@ -50,19 +50,19 @@ public class ChoixPointArrive extends Activity{
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
-	        	OSM.setOnLongClickListener(new OnLongClickListener() {						
-					@Override
-					public boolean onLongClick(View v) {
-			        	int pointRemove = OSM.getLastEndPoint();
-						int pointNew = OSM.getLastStartPoint();
-						
-						OSM.removePoint(pointRemove);
-						OSM.removePoint(pointNew);
-						return false;
-					}
-				});
 	        }
+	        
+        	OSM.setOnLongClickListener(new OnLongClickListener() {						
+				@Override
+				public boolean onLongClick(View v) {
+		        	int pointRemove = OSM.getLastEndPoint();
+					int pointNew = OSM.getLastStartPoint();
+					
+					OSM.removePoint(pointRemove);
+					OSM.removePoint(pointNew);
+					return false;
+				}
+			});
 	        
 			//Listeners
 			enregistrerMission.setOnClickListener(new OnClickListener(){
