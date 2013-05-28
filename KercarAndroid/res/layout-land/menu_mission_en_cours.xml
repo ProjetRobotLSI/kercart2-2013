@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fond_portrait"
+    android:background="@drawable/fond_paysage"
     android:orientation="vertical" >
     
    	<TextView
@@ -62,6 +62,14 @@
 	    android:textSize="15sp"
 	    android:textColor="#e3e3e3"/>
     
+    <com.kercar.osmandroid.OSMAndroid
+        android:id="@+id/OSM_mission_cours"
+        android:layout_width="280dp"
+        android:layout_height="200dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="32dp"
+        android:layout_centerVertical="true"/>
+    
     <Button
         android:id="@+id/button_arreter"
         android:layout_width="180dp"
@@ -71,14 +79,5 @@
         android:text="@string/button_arreter_mission"
         android:textSize="18sp"
         android:textColor="#ffffff"/>
-
-    <com.kercar.osmandroid.OSMAndroid
-        android:id="@+id/OSM_mission_cours"
-        android:layout_width="280dp"
-        android:layout_height="200dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="32dp"
-        android:layout_centerVertical="true">
-    </com.kercar.osmandroid.OSMAndroid>
 
 </RelativeLayout>

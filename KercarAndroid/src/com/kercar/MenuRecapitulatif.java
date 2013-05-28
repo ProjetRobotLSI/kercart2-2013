@@ -85,8 +85,7 @@ public class MenuRecapitulatif extends Activity{
 		try {
 			clientMissions.changerMissionEnCours(newMission);
 	    	arrive = clientMissions.getPointArriveeMissionEnCours();
-	    	emplacement = OSM.addPoint(arrive[0], arrive[1], "Point Arrivee", "");
-	    	
+	    	emplacement = OSM.addPoint(48119587, -1635273, "Point Arrivee", "");
 			get = new AsyncGetEtatDeuxPoints(list, com, OSM, emplacement);
 			get.execute();
 		} catch (Exception e) {

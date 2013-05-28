@@ -91,7 +91,7 @@
         android:button="@drawable/checkbox"/>
     
    	<com.kercar.osmandroid.OSMAndroid
-	   android:id="@+id/OSM_choix_point"
+	   android:id="@+id/OSM_recap"
 	   android:layout_width="200dp"
 	   android:layout_height="210dp"
 	   android:layout_alignParentRight="true"
@@ -103,7 +103,7 @@
 	    android:layout_width="100dp"
 	    android:layout_height="40dp"
 	    android:layout_alignLeft="@id/txtNom"
-	    android:layout_alignBottom="@id/OSM_choix_point"
+	    android:layout_alignBottom="@id/OSM_recap"
 		android:text="@string/button_OK"
 		android:textSize="15sp"
 		android:textColor="#ffffff"/>
