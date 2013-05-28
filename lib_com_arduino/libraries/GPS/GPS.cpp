@@ -68,20 +68,6 @@ void GPS::retrieveLatitude() {
 		a_latitude += (long)this->getSingle(21)*10;
 		
 		a_latitude += this->getLetter(22);
-		
-		/*
-		Serial.print(this->getSingle(14));
-		Serial.print(this->getSingle(15));
-		Serial.print(" ");
-		Serial.print(this->getSingle(16));
-		Serial.print(this->getSingle(17));
-		Serial.print(".");
-		Serial.print(this->getSingle(18));
-		Serial.print(this->getSingle(19));
-		Serial.print(this->getSingle(20));
-		Serial.print(this->getSingle(21));
-		Serial.print("/");
-		Serial.println(this->getSingle(22));*/
 	}
 }
 void GPS::retrieveLongitude() {
@@ -101,19 +87,6 @@ void GPS::retrieveLongitude() {
 		a_longitude += (long)this->getSingle(30)*100;
 		a_longitude += (long)this->getSingle(31)*10;
 		a_longitude += this->getLetter(32)*1;
-		
-		/*
-		Serial.print(this->getSingle(23));
-		Serial.print(this->getSingle(24));
-		Serial.print(" ");
-		Serial.print(this->getSingle(25));
-		Serial.print(this->getSingle(26));
-		Serial.print(".");
-		Serial.print(this->getSingle(27));
-		Serial.print(this->getSingle(28));
-		Serial.print(this->getSingle(29));
-		Serial.print(this->getSingle(30));
-		Serial.println(this->getSingle(31));*/
 	}
 }
 int GPS::getLetter(int address){
@@ -181,6 +154,7 @@ int GPS::getSingle(int address) {
 int GPS::getState() {
 
 int state = this->getSingle(112);
+Serial.println(state);
 
 	if(state & 16 == 16) {
 		return 1;
@@ -193,38 +167,38 @@ void GPS::send(int choice) {
 	switch(choice)
 	{
 	case 0 :
-		Serial.print(a_time);
+		Serial.print(a_time, DEC);
 		break;
 	case 1 :
-		Serial.print(a_date);
+		Serial.print(a_date, DEC);
 		break;
 	case 2 :
-		Serial.print(a_speed);
+		Serial.print(a_speed, DEC);
 		break;
 	case 3 : 
-		Serial.print(a_heading);
+		Serial.print(a_heading, DEC);
 		break;
 	case 4: 
-		Serial.print(a_latitude);
+		Serial.print(a_latitude, DEC);
 		break;
 	case 5:
-		Serial.print(a_longitude);
+		Serial.print(a_longitude, DEC);
 		break;
 	}
 }
 
-
+//debug
 void GPS::sendAll() {
 		Serial.println("Time");
-		Serial.println(a_time);
+		Serial.println(a_time, DEC);
 		Serial.println("Date");
-		Serial.println(a_date);
+		Serial.println(a_date, DEC);
 		Serial.println("speed");
-		Serial.println(a_speed);
+		Serial.println(a_speed, DEC);
 		Serial.println("heading");
-		Serial.println(a_heading);
+		Serial.println(a_heading, DEC);
 		Serial.println("lat:");
-		Serial.println(a_latitude);
+		Serial.println(a_latitude, DEC);
 		Serial.println("long:");
-		Serial.println(a_longitude);
+		Serial.println(a_longitude, DEC);
 }
