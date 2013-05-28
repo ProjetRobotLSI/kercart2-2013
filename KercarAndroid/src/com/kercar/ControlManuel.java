@@ -21,6 +21,8 @@ import com.kercar.AsyncTask.AsyncGauche;
 import com.kercar.AsyncTask.AsyncPrendrePhoto;
 import com.kercar.AsyncTask.AsyncReculer;
 import com.kercar.AsyncTask.AsyncStop;
+import com.kercar.AsyncTask.ThreadMap;
+import com.kercar.osmandroid.OSMAndroid;
 
 public class ControlManuel extends Activity{
 	//Attributs
@@ -30,11 +32,13 @@ public class ControlManuel extends Activity{
 	private Button droite;
 	private Button photo;
 	private SeekBar vitesse;
+	private OSMAndroid OSM;
 	
 	private String url;
 	private IComAndroid com;
 	
 	private LinkedList<Integer> list;
+	private Thread threadMap;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,7 @@ public class ControlManuel extends Activity{
 		droite = (Button)findViewById(R.id.buttonDroite);
 		photo = (Button)findViewById(R.id.buttonPhoto);
 		vitesse = (SeekBar)findViewById(R.id.barVitesse);
+		OSM = (OSMAndroid)findViewById(R.id.OSM);
 
 		url = "http://kercar2013.no-ip.biz:8080/KerCarCommunication/";
 		
@@ -61,6 +66,56 @@ public class ControlManuel extends Activity{
 		list.add(0);
 		list.add(1);
 		list.add(2);
+		
+		threadMap = new ThreadMap(OSM, com);
+		threadMap.start();
+		
+//		new Thread(new Runnable() {
+//			
+//			private int tmp = 0;
+//			private int emplacement = 0;
+//			
+//			private IStateMessage stateMessage;
+//			private int latitude;
+//			private int longitude;
+//			
+//			@Override
+//			public void run() {
+//				while(true){
+//					try {
+//						stateMessage = com.demanderEtat();
+//						latitude = stateMessage.getLatitude();
+//						longitude = stateMessage.getLongitude();
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//					}
+//					
+//					//Localisation du robot
+//					if(tmp != 0){
+//						OSM.removePoint(emplacement);
+//						emplacement = OSM.addPoint(48119651, -1635100, "Emplacement du robot", "");
+//						OSM.postInvalidate();
+//					}
+//					try {
+//						Thread.sleep(3000);
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
+//	//				emplacement = OSM.addPoint(latitude, longitude, "Emplacement du robot", "");
+//					emplacement = OSM.addPoint(48119651, -1635262, "Emplacement du robot", "");
+//					OSM.postInvalidate();
+//	//				OSM.invalidate();
+//					try {
+//						Thread.sleep(3000);
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
+//					
+//					tmp = 1;
+//					System.out.println("ici");
+//				}
+//			}
+//		}).start();
 		
 		avance.setOnTouchListener(new OnTouchListener() {
 			@Override
@@ -135,5 +190,14 @@ public class ControlManuel extends Activity{
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
+    }
+    
+    @Override
+    protected void onDestroy() {
+    	
+    	super.onDestroy();
+
+    	threadMap.interrupt();
+    	threadMap = null;
     }
 }

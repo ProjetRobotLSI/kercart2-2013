@@ -35,6 +35,7 @@ public class MenuMissionEnCours extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        
         //ContentView
         setContentView(R.layout.menu_mission_en_cours);
 		
@@ -52,8 +53,7 @@ public class MenuMissionEnCours extends Activity{
 		
 		com = ComAndroid.getManager();
 		get = new AsyncGetEtat(com, latitude, longitude, boussole, OSM);
-		get.execute();
-		
+		get.execute();		
 		
 		//Listeners
 		arreter.setOnClickListener(new OnClickListener(){
