@@ -360,6 +360,9 @@ public class Core extends Thread implements IIA, SerialListener {
 		2 = E*/
 		try {
 			String tmp = String.valueOf(data);
+			
+			if(tmp.length() == 8)
+				tmp = "0" + tmp;
 			double degree = Integer.parseInt(tmp.substring(0, 2));
 			double minutes = Integer.parseInt(tmp.substring(2, 4));
 			double sec = Integer.parseInt(tmp.substring(4, 8));
