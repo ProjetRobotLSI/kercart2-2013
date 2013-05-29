@@ -98,14 +98,14 @@ public class Core extends Thread implements IIA, SerialListener {
 		{
 			if (!controlQueue.isEmpty()) {
 				handler.handle(controlQueue.poll());
-				this.waitMessage();
+		//		this.waitMessage();
 			}
 			if((System.currentTimeMillis() - startTimeAsk) >= 2000) {
 				this.askAngle();
 				//Sinon port serial saturé
-				this.waitMessage();		
+		//		this.waitMessage();		
 				this.askCoordonnates();
-				this.waitMessage();
+		//		this.waitMessage();
 	//			this.askBlocked();
 	//			this.waitMessage();
 				startTimeAsk = System.currentTimeMillis();
@@ -222,7 +222,8 @@ public class Core extends Thread implements IIA, SerialListener {
 	private void askBlocked() {
 		System.out.println("Core : ASK_ANGLE");
 		AskBlocked arduinoMsg = new AskBlocked();
-		this.serialManager.write(arduinoMsg.toBytes());	
+		this.serialManager.write(arduinoMsg.toBytes());
+		this.waitMessage();	
 	}
 	
 	private void askAngle() {
@@ -230,6 +231,7 @@ public class Core extends Thread implements IIA, SerialListener {
 		System.out.println("Core : ASK_ANGLE");
 		AskAngle arduinoMsg = new AskAngle();
 		this.serialManager.write(arduinoMsg.toBytes());	
+		this.waitMessage();
 	}
 	
 	private void askCoordonnates() {
@@ -237,6 +239,7 @@ public class Core extends Thread implements IIA, SerialListener {
 		System.out.println("Core : ASK_COORDONATES");
 		AskPos arduinoMsg = new AskPos();
 		this.serialManager.write(arduinoMsg.toBytes());	
+		this.waitMessage();
 	}
 
 	@Override
@@ -245,6 +248,7 @@ public class Core extends Thread implements IIA, SerialListener {
 		TurnLeft arduinoMsg = new TurnLeft();
 //		arduinoMsg.setDegree(angle);
 		this.serialManager.write(arduinoMsg.toBytes());
+		this.waitMessage();
 	}
 
 	@Override
@@ -253,6 +257,7 @@ public class Core extends Thread implements IIA, SerialListener {
 		TurnRight arduinoMsg = new TurnRight();
 	//	arduinoMsg.setDegree(angle);
 		this.serialManager.write(arduinoMsg.toBytes());
+		this.waitMessage();
 	}
 	
 	@Override
@@ -277,6 +282,7 @@ public class Core extends Thread implements IIA, SerialListener {
 		GoForward arduinoMsg = new GoForward();
 		arduinoMsg.setVitesse(speed);
 		this.serialManager.write(arduinoMsg.toBytes());
+		this.waitMessage();
 	}
 
 	@Override
@@ -285,6 +291,7 @@ public class Core extends Thread implements IIA, SerialListener {
 		GoBackward arduinoMsg = new GoBackward();
 		arduinoMsg.setVitesse(speed);
 		this.serialManager.write(arduinoMsg.toBytes());
+		this.waitMessage();
 	}
 
 	@Override
@@ -293,6 +300,7 @@ public class Core extends Thread implements IIA, SerialListener {
 		Core.Log("Core : stopCar");
 		Stop arduinoMsg = new Stop();
 		this.serialManager.write(arduinoMsg.toBytes());
+		this.waitMessage();
 	}
 
 	@Override

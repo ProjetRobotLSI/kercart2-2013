@@ -64,7 +64,7 @@ public class MessageHandler {
 			Core.Log("MessageHandler : CMD_MISSION");
 			System.out.println("MessageHandler : CMD_MISSION");
 			this.ia.stopMission();
-			this.ia.stopKercar();
+//			this.ia.stopKercar();
 			CMDMissionMessage mission = new CMDMissionMessage((Message)message);
 			this.ia.launchMission(mission.getCoordinates(), mission.getMailAddress(), 75, mission.getPhoto());
 		}

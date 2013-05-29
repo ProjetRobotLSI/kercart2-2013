@@ -38,7 +38,7 @@ public class Pathfinder implements IPathfinder {
 		else
 			this.iA.turnLeftAngle(360 - angle);
 		
-		this.iA.waitMessage();
+	//	this.iA.waitMessage();
 		
 		this.iA.forward(currentSpeed);
 	}
@@ -56,7 +56,7 @@ public class Pathfinder implements IPathfinder {
 					this.iA.turnRightAngle(angle);
 				else
 					this.iA.turnLeftAngle(360 - angle);
-				this.iA.waitMessage();
+//				this.iA.waitMessage();
 			}	
 		} 		
 		this.iA.forward(this.currentSpeed);
