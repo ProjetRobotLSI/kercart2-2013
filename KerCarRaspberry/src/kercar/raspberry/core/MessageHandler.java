@@ -93,6 +93,9 @@ public class MessageHandler {
 			
 			this.ia.setLongitude(message.getParam(0));
 			this.ia.setLatitude(message.getParam(1));
+		} else if(message.getID() == IArduinoMessage.OK) {
+			Core.Log("MessageHandler : OK");
+			System.out.println("MessageHandler : OK");
 		}
 	}
 }

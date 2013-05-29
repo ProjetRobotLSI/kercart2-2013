@@ -98,6 +98,7 @@ public class Core extends Thread implements IIA, SerialListener {
 		{
 			if (!controlQueue.isEmpty()) {
 				handler.handle(controlQueue.poll());
+				this.waitMessage();
 			}
 			if((System.currentTimeMillis() - startTimeAsk) >= 2000) {
 				this.askAngle();
