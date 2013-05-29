@@ -83,6 +83,7 @@ public class Pathfinder implements IPathfinder {
 		int angleBeta = (int) ((180 * angleBetaRadian) / Math.PI);
 		System.out.println("angleBeta " + angleBeta);
 		
+		//On retourne un angle de la position du robot jusqu'à sa destination. Angle toujours vers la droite !
 		if(compass <= 180) {
 			if(pointLongitude >= XNord)
 				return compass + angleBeta;

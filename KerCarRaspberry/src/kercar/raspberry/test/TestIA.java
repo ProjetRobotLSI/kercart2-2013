@@ -13,15 +13,18 @@ public class TestIA {
 	
 	public static void main(String args[]) {
 		
-		System.out.println(testCalculAngle(7, 4, 3, 1, 45));
-		System.out.println(testCalculAngle(2, 4, 6, 1, 106));
-		System.out.println(testCalculAngle(1, 1, 4, 2, 23));
-		System.out.println(testCalculAngle(1, 4, 4, 1, 295));
-		System.out.println(testCalculAngle(4, 5, 2, 1, 295));
-		System.out.println(testCalculAngle(5, 0, 2, 1, 315));
+		System.out.println("CALCUL ANGLE");
+		System.out.println(testCalculAngle(7, 4, 3, 1, 45) == 98);
+		System.out.println(testCalculAngle(2, 4, 6, 1, 106) == 53);
+		System.out.println(testCalculAngle(1, 1, 4, 2, 23) == 312);
+		System.out.println(testCalculAngle(1, 4, 4, 1, 295) == 250);
+		System.out.println(testCalculAngle(4, 5, 2, 1, 295) == 321);
+		System.out.println(testCalculAngle(5, 0, 2, 1, 315) == 26);
 		
-		System.out.println(toGPSCompatibleData(301043241));
-		
+		System.out.println("GPS COMPATIBLE DATA");
+		System.out.println(toGPSCompatibleData(301043240) == 30173873);
+		System.out.println(toGPSCompatibleData(301043241) == -30173873);
+		System.out.println(toGPSCompatibleData(21043241) == -2173873);
 		/*
 		 * Commenter les lignes concernant le serial manager pour les tests dans Core
 		 * Décommenter updateAnglet, goToNextPoint et isArrived dans Core pour ne pas utiliser les valeurs de l'arduino
@@ -70,16 +73,22 @@ public class TestIA {
 		2 = E*/
 		try {
 			String tmp = String.valueOf(data);
+			
+			if(tmp.length() == 8)
+				tmp = "0" + tmp;
 			double degree = Integer.parseInt(tmp.substring(0, 2));
 			double minutes = Integer.parseInt(tmp.substring(2, 4));
-			double sec = Integer.parseInt(tmp.substring(4, 8));
+			double mdec = Integer.parseInt(tmp.substring(4, 8));
+			minutes = minutes + (mdec/10000);
+			
 			int letter = Integer.parseInt(tmp.substring(8, 9));
 			
-			int result = (int) ((degree + (minutes / 60.0) + (sec / 3600.0))* 1E6);  
+			int result = (int) ((degree + (minutes / 60.0))* 1E6);  
 			if(letter == 1 || letter == 3)
 				return (-result);
 			return result;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return 0;
 		}
 	}

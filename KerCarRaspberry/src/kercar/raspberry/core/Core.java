@@ -138,6 +138,7 @@ public class Core extends Thread implements IIA, SerialListener {
 					}
 				} else if((System.currentTimeMillis() - startTimeUpdate) >= 2000){
 		//			this.pathfinder.updateAngle(1, 1, 10);
+					Core.Log("Core : UpdateAngle");
 					this.pathfinder.updateAngle(this.latitude, this.longitude, this.angle);
 					startTimeUpdate = 0;
 				}	
@@ -306,6 +307,7 @@ public class Core extends Thread implements IIA, SerialListener {
 	@Override
 	public void launchMission(List<Integer> points, String mail, int speed, boolean takePhoto) {
 		System.out.println("Launching mission...");
+		Core.Log("Core : LAUNCHING MISSION");
 	//	this.mail = mail;
 		this.takePhoto = 
 		this.inMission = true;
