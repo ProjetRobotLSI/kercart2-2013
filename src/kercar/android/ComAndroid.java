@@ -76,26 +76,22 @@ public class ComAndroid implements IComAndroid {
 	 * @param message Le message a envoyer
 	 */
 	@Override
-	public void envoyerMessage(Message message) throws SocketTimeoutException, Exception {
+	public void envoyerMessage(Message message) throws SocketTimeoutException, IOException, Exception {
 		if(this.adresseRaspberry == null){
 			throw new Exception("Aucune URL de définie !");
 		}
 		
-		try {
-			con = (HttpURLConnection)this.adresseRaspberry.openConnection();
-			con.setReadTimeout(5000);
-			con.setDoOutput(true);
-			con.setDoInput(true);
-			con.setRequestMethod("POST");
-			BufferedWriter bf = new BufferedWriter(new OutputStreamWriter(con.getOutputStream()));
-			message.setMessageNum(this.numPackets++);
-			System.out.println(this.adresseRaspberry);
-			System.out.println("message="+message.toString());
-			bf.write("message="+message.toString());
-			bf.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		con = (HttpURLConnection)this.adresseRaspberry.openConnection();
+		con.setReadTimeout(5000);
+		con.setDoOutput(true);
+		con.setDoInput(true);
+		con.setRequestMethod("POST");
+		BufferedWriter bf = new BufferedWriter(new OutputStreamWriter(con.getOutputStream()));
+		message.setMessageNum(this.numPackets++);
+		System.out.println(this.adresseRaspberry);
+		System.out.println("message="+message.toString());
+		bf.write("message="+message.toString());
+		bf.close();
 	}
 
 	/**
@@ -106,21 +102,15 @@ public class ComAndroid implements IComAndroid {
 		if(con == null){
 			throw new Exception("Aucune connexion ouverte");
 		}
-		try{
-			BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-			String temp;
-			StringBuilder content = new StringBuilder();
-			while( (temp = br.readLine()) != null ){
-				content.append(temp);
-			}
-			br.close();
-			System.out.println(content.toString());
-			return content.toString();
-		} catch(Exception e){
-			System.err.println("Impossible de lire la réponse");
-			e.printStackTrace();
+		BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		String temp;
+		StringBuilder content = new StringBuilder();
+		while( (temp = br.readLine()) != null ){
+			content.append(temp);
 		}
-		return null;
+		br.close();
+		System.out.println(content.toString());
+		return content.toString();
 	}
 	
 	/**
