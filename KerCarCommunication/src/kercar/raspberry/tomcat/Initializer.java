@@ -28,10 +28,11 @@ public class Initializer extends GenericServlet implements ServletContextListene
 	@Override
 	public void contextDestroyed(ServletContextEvent event) {
 		if(core != null){
-			System.out.println("Core terminated");
+			System.out.println("Core terminating...");
 			core.terminate();
 			try{
 				core.join();
+				System.out.println("Arrêt du core OK");
 			} catch(Exception e){
 				System.err.println("Erreur à l'arrêt du Thread core");
 			}

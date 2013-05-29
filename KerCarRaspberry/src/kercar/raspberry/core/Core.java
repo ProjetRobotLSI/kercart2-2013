@@ -379,11 +379,12 @@ public class Core extends Thread implements IIA, SerialListener {
 	}
 	
 	public void terminate(){
-		System.out.println("Core class terminated");
+		System.out.println("Wifi terminating...");
 		running = false;
 		wifiIA.terminate();
 		try{
 			wifiIA.join();
+			System.out.println("Arrêt du Wifi OK");
 		} catch(Exception e){
 			System.err.println("Erreur à l'arrêt du module IA");
 		}
