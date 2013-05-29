@@ -197,6 +197,8 @@ public class ControlManuel extends Activity{
     	
     	super.onDestroy();
 
+    	new AsyncStop(com).execute();
+    	
     	threadMap.interrupt();
     	threadMap = null;
     }
