@@ -154,7 +154,6 @@ int GPS::getSingle(int address) {
 int GPS::getState() {
 
 int state = this->getSingle(112);
-Serial.println(state);
 
 	if(state & 16 == 16) {
 		return 1;
