@@ -7,6 +7,7 @@
 #define NB_OCTETS (1 + (NB_PARAM * SIZE_PARAM))
 
 //Functions
+#define OK 0
 #define STOP 1
 #define FORWARD 2
 #define BACKWARD 3
@@ -97,6 +98,9 @@ static inline char* send_order(int id)
 	
 	switch(id)
 	{
+		case OK :
+			message[0] = OK;
+			break;
 		case BLOCK :
 			message[0] = BLOCK;
 			break;
@@ -158,18 +162,23 @@ static inline char* call_order(message* msg)
 	{
 		case STOP : 
 			servoMoteur_stop();
+			return(send_order(OK));
 			break;
 		case FORWARD :
 			servoMoteur_moveForward((int) (msg->param1.entier));
+			return(send_order(OK));
 			break;
 		case BACKWARD :
 			servoMoteur_moveBackward((int) (msg->param1.entier));
+			return(send_order(OK));
 			break;
 		case LEFT :
-			servoMoteur_turnLeft(90); 
+			servoMoteur_turnLeft(90);
+			return(send_order(OK));
 			break;
 		case RIGHT :
-			servoMoteur_turnRight(90); 
+			servoMoteur_turnRight(90);
+			return(send_order(OK));
 			break;
 		case IS_BLOCK :
 			return(send_order(IS_BLOCK));
