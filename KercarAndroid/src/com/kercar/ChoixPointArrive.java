@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.kercar.osmandroid.OSMAndroid;
 
@@ -66,6 +67,7 @@ public class ChoixPointArrive extends Activity{
 			@Override
 			public void onClick(View v) {
 				
+
 				//Action lors de la creation
 				if(typeFonctionnalite.equals("Creer")){						
 					try {
@@ -80,7 +82,14 @@ public class ChoixPointArrive extends Activity{
 				        
 						msbox("Information","Mission ajoutee avec succes !");
 					} catch (Exception e) {
-						e.printStackTrace();
+						
+						if(e instanceof NullPointerException){
+
+							Toast toast = Toast.makeText(getApplicationContext(), "Attention ! Veuillez choisir un point dans la carte !", Toast.LENGTH_SHORT);
+							toast.show();
+						}
+						else
+							e.printStackTrace();
 					}
 				}
 				else if(typeFonctionnalite.equals("Editer")){						
@@ -100,7 +109,14 @@ public class ChoixPointArrive extends Activity{
 						
 						msbox("Information", "Mission modifiee avec succes !");
 					} catch (Exception e) {							
-						e.printStackTrace();
+						
+						if(e instanceof NullPointerException){
+
+							Toast toast = Toast.makeText(getApplicationContext(), "Attention ! Veuillez choisir un point dans la carte !", Toast.LENGTH_SHORT);
+							toast.show();
+						}
+						else
+							e.printStackTrace();
 					}
 				}
 				else
@@ -140,7 +156,7 @@ public class ChoixPointArrive extends Activity{
     		 GeoPoint point = (GeoPoint) OSM.getProjection().fromPixels(e.getX(), e.getY());
     		 System.out.println(point.getLatitudeE6());
     		 System.out.println(point.getLongitudeE6());
-    		 currentPoint = OSM.addPoint(point.getLatitudeE6(), point.getLongitudeE6(), "Arrivée", "");
+    		 currentPoint = OSM.addPoint(point.getLatitudeE6(), point.getLongitudeE6(), "Arrivï¿½e", "");
     		 OSM.invalidate();
     	 }
     }

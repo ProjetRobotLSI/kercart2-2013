@@ -4,13 +4,16 @@ import BaseDeDonnees.Mission;
 import Client.ClientMissions;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class MenuLancement extends Activity{
 	
@@ -30,7 +33,19 @@ public class MenuLancement extends Activity{
 		clientMissions = new ClientMissions(getApplicationContext());
 		
 		// Affichage des missions crees		
-		ArrayAdapter<Mission> adapter = new ArrayAdapter<Mission>(this, android.R.layout.simple_list_item_1, clientMissions.getListeMissions().getListe());
+		ArrayAdapter<Mission> adapter = new ArrayAdapter<Mission>(this, android.R.layout.simple_list_item_1, clientMissions.getListeMissions().getListe()){
+			
+			//Affichage du texte en blanc
+			public View getView(int position, View convertView,
+					ViewGroup parent) {
+				View view =super.getView(position, convertView, parent);
+
+				TextView textView=(TextView) view.findViewById(android.R.id.text1);
+				textView.setTextColor(Color.WHITE);
+
+				return view;
+			}
+		};
 		listeMissions.setAdapter(adapter);
 		
 		/**

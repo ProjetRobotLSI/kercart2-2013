@@ -104,9 +104,8 @@ public class CreationForm extends Activity{
 		    btnSupprimer.setOnClickListener(new OnClickListener(){
 		    	public void onClick(View arg0){
 		    		try {
-						msbox("Information","Mission supprimee avec succes !");
-		    			Mission deleteMission= clientMissions.getListeMissions().getMissions(txtNom.getText().toString());
-						clientMissions.supprimerMission(deleteMission);
+		    			
+		    			msgBoxConfirmerSuppression();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -171,7 +170,7 @@ public class CreationForm extends Activity{
 	 
 	 //METHODES
 	 
-	 public boolean isEmailValid(String email) {
+	 private boolean isEmailValid(String email) {
 		 String regExpn =
 	             "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
 	                 +"((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
@@ -189,18 +188,57 @@ public class CreationForm extends Activity{
 	     else return false;
 	}
 	 
-	 public void msbox(String titre,String message) {
+	 private void msbox(String titre,String message, final boolean delete) {
 	     AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);                      
 	     dlgAlert.setTitle(titre); 
 	     dlgAlert.setMessage(message); 
 	     dlgAlert.setPositiveButton("OK",new DialogInterface.OnClickListener() {
 	         public void onClick(DialogInterface dialog, int whichButton) {
-				 Intent intent = new Intent(CreationForm.this, MenuCreation.class);
-				 startActivity(intent);
+
+	        	 if(delete){
+	        		 
+	        		Intent intent = new Intent(CreationForm.this, MenuCreation.class);
+					startActivity(intent); 
+	        	 }
+	        		 
 	         }
 	     });
 	     
 	     dlgAlert.setCancelable(true);
 	     dlgAlert.create().show();
 	 }
+	 
+	 private void msgBoxConfirmerSuppression(){
+		 
+		 DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+			    @Override
+			    public void onClick(DialogInterface dialog, int which) {
+			        switch (which){
+			        case DialogInterface.BUTTON_POSITIVE:{
+			        	
+						try {
+							Mission deleteMission= clientMissions.getListeMissions().getMissions(txtNom.getText().toString());
+							clientMissions.supprimerMission(deleteMission);
+							msbox("Information","Mission supprimee avec succes !", true);
+
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+			        }
+			        break;
+
+			        case DialogInterface.BUTTON_NEGATIVE:
+			            
+			        	msbox("Information","Annulation de la mission !", false);
+			            break;
+			        }
+			    }
+			};
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage("Voulez vous vraiment supprimer la mission?").setPositiveButton("Oui", dialogClickListener)
+			    .setNegativeButton("Non", dialogClickListener).show();
+	 }
+	 
 }
