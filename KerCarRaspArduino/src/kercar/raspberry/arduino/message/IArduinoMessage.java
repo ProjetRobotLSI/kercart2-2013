@@ -5,7 +5,8 @@ import java.nio.ByteOrder;
 
 public class IArduinoMessage {
 	
-	public static final byte ERROR = 0;
+	public static final byte ERROR = -1;
+	public static final byte OK = 0;
 	public static final byte STOP = 1;
 	public static final byte FORWARD = 2;
 	public static final byte BACKWARD = 3;
