@@ -366,10 +366,12 @@ public class Core extends Thread implements IIA, SerialListener {
 				tmp = "0" + tmp;
 			double degree = Integer.parseInt(tmp.substring(0, 2));
 			double minutes = Integer.parseInt(tmp.substring(2, 4));
-			double sec = Integer.parseInt(tmp.substring(4, 8));
+			double mdec = Integer.parseInt(tmp.substring(4, 8));
+			minutes = minutes + (mdec/10000);
+			
 			int letter = Integer.parseInt(tmp.substring(8, 9));
 			
-			int result = (int) ((degree + (minutes / 60.0) + (sec / 3600.0))* 1E6);  
+			int result = (int) ((degree + (minutes / 60.0))* 1E6);  
 			if(letter == 1 || letter == 3)
 				return (-result);
 			return result;
