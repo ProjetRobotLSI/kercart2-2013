@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 
 import kercar.comAPI.GETStateMessage;
@@ -75,13 +76,14 @@ public class ComAndroid implements IComAndroid {
 	 * @param message Le message a envoyer
 	 */
 	@Override
-	public void envoyerMessage(Message message) throws Exception{
+	public void envoyerMessage(Message message) throws SocketTimeoutException, Exception {
 		if(this.adresseRaspberry == null){
 			throw new Exception("Aucune URL de définie !");
 		}
 		
 		try {
 			con = (HttpURLConnection)this.adresseRaspberry.openConnection();
+			con.setReadTimeout(5000);
 			con.setDoOutput(true);
 			con.setDoInput(true);
 			con.setRequestMethod("POST");

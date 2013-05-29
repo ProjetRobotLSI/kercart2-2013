@@ -20,7 +20,7 @@ public interface IComAndroid {
 	 * @param Message  Le Message a envoyer
 	 * @throws Exception En cas de problème à l'envoi
 	 */
-	public void envoyerMessage(Message Message) throws Exception;
+	public void envoyerMessage(Message message) throws Exception;
 	
 	/**
 	 * Lit la réponse du Raspberry Pi
