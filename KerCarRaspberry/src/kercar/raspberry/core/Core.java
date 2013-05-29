@@ -56,7 +56,7 @@ public class Core extends Thread implements IIA, SerialListener {
 		initUSB0(initPath);
 		Core.initPath = initPath;
 		wifiIA = new WifiIA(initPath);
-		
+		wifiIA.setName("Thread Wifi");
 		controlQueue = new LinkedBlockingDeque<IMessage>();
 		arduinoQueue = new LinkedBlockingDeque<IArduinoMessage>();	
 	}
@@ -382,5 +382,10 @@ public class Core extends Thread implements IIA, SerialListener {
 		System.out.println("Core class terminated");
 		running = false;
 		wifiIA.terminate();
+		try{
+			wifiIA.join();
+		} catch(Exception e){
+			System.err.println("Erreur à l'arrêt du module IA");
+		}
 	}
 }

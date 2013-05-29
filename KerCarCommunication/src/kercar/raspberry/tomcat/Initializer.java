@@ -30,12 +30,18 @@ public class Initializer extends GenericServlet implements ServletContextListene
 		if(core != null){
 			System.out.println("Core terminated");
 			core.terminate();
+			try{
+				core.join();
+			} catch(Exception e){
+				System.err.println("Erreur à l'arrêt du Thread core");
+			}
 		}
 	}
 
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
 		core = new Core(System.getProperty("catalina.home"));
+		core.setName("Thread Core");
 		core.start();
 		ServletContext appli;
 		appli = arg0.getServletContext();
