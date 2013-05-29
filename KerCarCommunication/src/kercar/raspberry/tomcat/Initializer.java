@@ -31,7 +31,7 @@ public class Initializer extends GenericServlet implements ServletContextListene
 			System.out.println("Core terminating...");
 			core.terminate();
 			try{
-				core.join();
+				//core.join();
 				System.out.println("Arrêt du core OK");
 			} catch(Exception e){
 				System.err.println("Erreur à l'arrêt du Thread core");
