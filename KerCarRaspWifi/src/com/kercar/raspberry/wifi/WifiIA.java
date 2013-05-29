@@ -27,7 +27,7 @@ public class WifiIA extends Thread {
 		}
 	}
 	
-	public void end(){
+	public void terminate(){
 		this.run = false;
 	}
 }

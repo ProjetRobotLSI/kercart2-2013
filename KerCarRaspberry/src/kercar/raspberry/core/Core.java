@@ -42,18 +42,20 @@ public class Core extends Thread implements IIA, SerialListener {
 	private boolean inMission;
 	private boolean takePhoto = false;
 	private boolean blocked = false;
+	private WifiIA wifiIA;
 	
 	private int angle = 0;
 	private int longitude = 0;
 	private int latitude = 0;
 	private boolean gpsReady = false;
+	boolean running = true;
 //	private CMDMissionMessage misssionPaused;
 	
 	public Core(String initPath){
 		System.out.println("Starting core...");
 		initUSB0(initPath);
 		Core.initPath = initPath;
-		new WifiIA(initPath);
+		wifiIA = new WifiIA(initPath);
 		
 		controlQueue = new LinkedBlockingDeque<IMessage>();
 		arduinoQueue = new LinkedBlockingDeque<IArduinoMessage>();	
@@ -92,7 +94,7 @@ public class Core extends Thread implements IIA, SerialListener {
 		
 		//Sale bouuuuuuuuu
 		boolean first = true;
-		while(true)
+		while(running)
 		{
 			if (!controlQueue.isEmpty()) {
 				handler.handle(controlQueue.poll());
@@ -375,5 +377,10 @@ public class Core extends Thread implements IIA, SerialListener {
 		} catch (Exception e) {
 			return 0;
 		}
+	}
+	
+	public void terminate(){
+		running = false;
+		wifiIA.terminate();
 	}
 }

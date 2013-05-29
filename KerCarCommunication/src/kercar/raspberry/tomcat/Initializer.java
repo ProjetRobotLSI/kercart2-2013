@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServlet;
 import kercar.raspberry.core.Core;
 
 public class Initializer extends GenericServlet implements ServletContextListener {
+	
+	private Core core;
 
 	/**
 	 * 
@@ -24,14 +26,15 @@ public class Initializer extends GenericServlet implements ServletContextListene
 	
 	
 	@Override
-	public void contextDestroyed(ServletContextEvent arg0) {
-		// TODO Auto-generated method stub
-
+	public void contextDestroyed(ServletContextEvent event) {
+		if(core != null){
+			core.terminate();
+		}
 	}
 
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
-		Core core = new Core(System.getProperty("catalina.home"));
+		core = new Core(System.getProperty("catalina.home"));
 		core.start();
 		ServletContext appli;
 		appli = arg0.getServletContext();
