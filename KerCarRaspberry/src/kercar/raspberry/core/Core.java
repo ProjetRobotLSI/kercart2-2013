@@ -98,7 +98,8 @@ public class Core extends Thread implements IIA, SerialListener {
 		{
 			if (!controlQueue.isEmpty()) {
 				handler.handle(controlQueue.poll());
-			} else if((System.currentTimeMillis() - startTimeAsk) >= 5000) {
+			}
+			if((System.currentTimeMillis() - startTimeAsk) >= 2000) {
 				this.askAngle();
 				//Sinon port serial saturé
 				this.waitMessage();		
@@ -107,9 +108,6 @@ public class Core extends Thread implements IIA, SerialListener {
 	//			this.askBlocked();
 	//			this.waitMessage();
 				startTimeAsk = System.currentTimeMillis();
-			} else if( (System.currentTimeMillis() - startTimeQueue) >= 3000 ){
-				startTimeQueue = System.currentTimeMillis();
-				System.out.println(controlQueue.size() + " --- "+arduinoQueue.size());
 			}
 			
 		/* (!arduinoQueue.isEmpty())
@@ -147,6 +145,7 @@ public class Core extends Thread implements IIA, SerialListener {
 					startTimeUpdate = System.currentTimeMillis();
 			}		
 		}
+		serialManager.close();
 	}
 	
 	public void waitMessage() {
@@ -380,6 +379,7 @@ public class Core extends Thread implements IIA, SerialListener {
 	}
 	
 	public void terminate(){
+		System.out.println("Core class terminated");
 		running = false;
 		wifiIA.terminate();
 	}
