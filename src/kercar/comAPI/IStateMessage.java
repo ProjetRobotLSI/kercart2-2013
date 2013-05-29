@@ -24,6 +24,9 @@ public interface IStateMessage {
 	public boolean isStuck();
 	public void stick(boolean obstacle);
 	
+	public boolean getGPSState();
+	public void setGPSState(boolean state);
+	
 	/*
 	 * @return informations du Télémètre
 	 *
