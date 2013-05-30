@@ -3,6 +3,7 @@ package kercar.raspberry.core;
 import kercar.comAPI.CMDMissionMessage;
 import kercar.comAPI.CMDMoveMessage;
 import kercar.comAPI.CMDTurnMessage;
+import kercar.comAPI.CMDPhotoMessage;
 import kercar.comAPI.IMessage;
 import kercar.comAPI.Message;
 import kercar.raspberry.arduino.message.GetAngle;
