@@ -85,7 +85,7 @@ public class ChoixPointArrive extends Activity{
 						
 						if(e instanceof NullPointerException){
 
-							Toast toast = Toast.makeText(getApplicationContext(), "Attention ! Veuillez choisir un point dans la carte !", Toast.LENGTH_SHORT);
+							Toast toast = Toast.makeText(getApplicationContext(), "Attention ! Veuillez choisir un point sur la carte !", Toast.LENGTH_SHORT);
 							toast.show();
 						}
 						else
@@ -95,9 +95,8 @@ public class ChoixPointArrive extends Activity{
 				else if(typeFonctionnalite.equals("Editer")){						
 					try {
 						//Modification du point d'arrive du Robot
-				        int id1 = OSM.getLastStartPoint();
-				        int latitude1 = OSM.getPointLatitude(id1);
-				        int longitude1 = OSM.getPointLongitude(id1);
+				        int latitude1 = OSM.getPointLatitude(currentPoint);
+				        int longitude1 = OSM.getPointLongitude(currentPoint);
 				        arrive[0] = latitude1;
 				        arrive[1] = longitude1;
 			        	
@@ -112,7 +111,7 @@ public class ChoixPointArrive extends Activity{
 						
 						if(e instanceof NullPointerException){
 
-							Toast toast = Toast.makeText(getApplicationContext(), "Attention ! Veuillez choisir un point dans la carte !", Toast.LENGTH_SHORT);
+							Toast toast = Toast.makeText(getApplicationContext(), "Attention ! Veuillez choisir un point sur la carte !", Toast.LENGTH_SHORT);
 							toast.show();
 						}
 						else

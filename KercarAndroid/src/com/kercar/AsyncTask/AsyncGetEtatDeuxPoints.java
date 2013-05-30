@@ -1,6 +1,7 @@
 package com.kercar.AsyncTask;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import com.kercar.osmandroid.OSMAndroid;
 
@@ -14,7 +15,7 @@ public class AsyncGetEtatDeuxPoints extends AsyncTask<Void, Integer, Void> {
 	private int longitude;
 	private int orientation;
 	
-	private LinkedList<Integer> list;
+	private List<Integer> list;
 	private IComAndroid comAndroid;
 	private OSMAndroid OSM;
 	
@@ -56,6 +57,7 @@ public class AsyncGetEtatDeuxPoints extends AsyncTask<Void, Integer, Void> {
 		emplacement = OSM.addPoint(values[0], values[1], "Emplacement du robot", "");
 		route = OSM.addRoad(emplacement, arrive);
 		OSM.invalidate();
+		list = OSM.getRoadStep(route);
 		tmp = 1;
 	}
 

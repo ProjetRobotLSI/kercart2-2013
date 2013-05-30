@@ -22,6 +22,7 @@ import com.kercar.AsyncTask.AsyncPrendrePhoto;
 import com.kercar.AsyncTask.AsyncReculer;
 import com.kercar.AsyncTask.AsyncStop;
 import com.kercar.AsyncTask.ThreadMap;
+import com.kercar.AsyncTask.ThreadPing;
 import com.kercar.osmandroid.OSMAndroid;
 
 public class ControlManuel extends Activity{
@@ -69,53 +70,6 @@ public class ControlManuel extends Activity{
 		
 		threadMap = new ThreadMap(OSM, com);
 		threadMap.start();
-		
-//		new Thread(new Runnable() {
-//			
-//			private int tmp = 0;
-//			private int emplacement = 0;
-//			
-//			private IStateMessage stateMessage;
-//			private int latitude;
-//			private int longitude;
-//			
-//			@Override
-//			public void run() {
-//				while(true){
-//					try {
-//						stateMessage = com.demanderEtat();
-//						latitude = stateMessage.getLatitude();
-//						longitude = stateMessage.getLongitude();
-//					} catch (Exception e) {
-//						e.printStackTrace();
-//					}
-//					
-//					//Localisation du robot
-//					if(tmp != 0){
-//						OSM.removePoint(emplacement);
-//						emplacement = OSM.addPoint(48119651, -1635100, "Emplacement du robot", "");
-//						OSM.postInvalidate();
-//					}
-//					try {
-//						Thread.sleep(3000);
-//					} catch (InterruptedException e) {
-//						e.printStackTrace();
-//					}
-//	//				emplacement = OSM.addPoint(latitude, longitude, "Emplacement du robot", "");
-//					emplacement = OSM.addPoint(48119651, -1635262, "Emplacement du robot", "");
-//					OSM.postInvalidate();
-//	//				OSM.invalidate();
-//					try {
-//						Thread.sleep(3000);
-//					} catch (InterruptedException e) {
-//						e.printStackTrace();
-//					}
-//					
-//					tmp = 1;
-//					System.out.println("ici");
-//				}
-//			}
-//		}).start();
 		
 		avance.setOnTouchListener(new OnTouchListener() {
 			@Override
@@ -180,7 +134,7 @@ public class ControlManuel extends Activity{
 		photo.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				new AsyncPrendrePhoto("novalis@live.fr", com);
+				new AsyncPrendrePhoto("quentin.de.gr@gmail.com", com);
 			}
 		});
     }

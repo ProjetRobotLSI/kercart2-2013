@@ -1,5 +1,10 @@
 package com.kercar;
 
+import kercar.android.ComAndroid;
+import kercar.android.IComAndroid;
+
+import com.kercar.AsyncTask.ThreadPing;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +20,9 @@ public class MenuStart extends Activity{
 	//Attributs
 	private Button start;
 	private Button about;
+	private Thread threadPing;
+	private String url;
+	private IComAndroid com;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +35,15 @@ public class MenuStart extends Activity{
 		//Initialisation des attributs
 		start = (Button)findViewById(R.id.buttonStart);
 		about = (Button)findViewById(R.id.buttonAbout);
+		url = "http://kercar2013.no-ip.biz:8080/KerCarCommunication/";
+		
+		//ComManager
+		com = ComAndroid.getManager();
+		com.setURL(url);
+		
+		//Ping
+		threadPing = new ThreadPing(com, getApplicationContext(), this);
+		threadPing.start();
 		
 		//Listeners
 		start.setOnClickListener(new OnClickListener(){

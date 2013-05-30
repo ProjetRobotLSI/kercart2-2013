@@ -93,10 +93,8 @@
    	<com.kercar.osmandroid.OSMAndroid
 	   android:id="@+id/OSM_recap"
 	   android:layout_width="500dp"
-	   android:layout_height="540dp"
-	   android:layout_alignParentRight="true"
-	   android:layout_marginTop="70dp"
-	   android:layout_marginRight="90dp"/>
+	   android:layout_height="fill_parent"
+	   android:layout_alignParentRight="true"/>
        	
     <Button
 	    android:id="@+id/btnOK"

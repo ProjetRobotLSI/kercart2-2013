@@ -14,6 +14,7 @@ import Client.ClientMissions;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
@@ -86,10 +87,12 @@ public class MenuRecapitulatif extends Activity{
 			clientMissions.changerMissionEnCours(newMission);
 	    	arrive = clientMissions.getPointArriveeMissionEnCours();
 	    	emplacement = OSM.addPoint(arrive[0], arrive[1], "Point Arrivee", "");
+	    	OSM.invalidate();
 			get = new AsyncGetEtatDeuxPoints(list, com, OSM, emplacement);
 			get.execute();
 		} catch (Exception e) {
 			e.printStackTrace();
+			Log.e("coucou", "la");
 		}
 		
 		/**Traitement de btnOK*/
@@ -98,7 +101,7 @@ public class MenuRecapitulatif extends Activity{
 			public void onClick(View v) {
 				//Envoi de la mission au robot
 				get.cancel(true);
-				new AsyncLancerMission(new LinkedList<Integer>(), newMission.getPrendrePhotosArrivee(), newMission.getRetourDepart(), newMission.getEmail(), com).execute();
+				new AsyncLancerMission(list, newMission.getPrendrePhotosArrivee(), newMission.getRetourDepart(), newMission.getEmail(), com).execute();
 				
 				//Demarrage de l'activite
 				Intent intent = new Intent(MenuRecapitulatif.this, MenuMissionEnCours.class);

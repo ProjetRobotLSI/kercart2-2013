@@ -20,7 +20,7 @@
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_marginTop="80dp"
-	    android:layout_marginLeft="150dp"
+	    android:layout_marginLeft="270dp"
 	    android:textSize="40sp"
 	    android:textColor="#e3e3e3"/>   
     
@@ -38,7 +38,7 @@
 	    android:id="@+id/longitudeEdit"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_marginLeft="150dp"
+	    android:layout_marginLeft="270dp"
 	    android:layout_marginTop="160dp"
 	    android:textSize="40sp"
 	    android:textColor="#e3e3e3"/>
@@ -57,7 +57,7 @@
 	    android:id="@+id/boussoleEdit"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_marginLeft="150dp"
+	    android:layout_marginLeft="270dp"
 	    android:layout_marginTop="240dp"
 	    android:textSize="40sp"
 	    android:textColor="#e3e3e3"/>
