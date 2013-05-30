@@ -103,6 +103,6 @@ public class MessageHandler {
 		} else if(message.getID() == IArduinoMessage.OK) {
 			Core.Log("MessageHandler : OK");
 			System.out.println("MessageHandler : OK");
-		}
+		} 
 	}
 }
