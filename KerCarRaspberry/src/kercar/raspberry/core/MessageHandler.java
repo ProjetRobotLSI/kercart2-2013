@@ -71,6 +71,7 @@ public class MessageHandler {
 		}
 		else if (message.getType() == Message.CMD_PHOTO) {
 			Core.Log("MessageHandler : CMD_PHOTO");
+			System.out.println("MessageHandler : CMD_PHOTO");
 			CMDPhotoMessage msg = new CMDPhotoMessage((Message)message);
 			this.ia.takePhoto(msg.getMailAddress());
 		}

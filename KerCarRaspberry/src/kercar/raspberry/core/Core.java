@@ -392,6 +392,7 @@ public class Core extends Thread implements IIA, SerialListener {
 	}
 	
 	public void takePhoto(String mail){
+		System.out.println("Taking photo...");
 		JapaneseTourist.takePhoto();
 		JapaneseTourist.sendPhotos();
 	}
