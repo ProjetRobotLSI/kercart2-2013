@@ -132,6 +132,9 @@
         <fileset dir="${build}/${comBranch}/${export}">
           <include name="*.jar"/>
         </fileset>
+        <fileset dir="${base}/${raspCore}/${lib}">
+          <include name="javax.mail.jar"/>
+        </fileset>
       </classpath>
     </javac>
   </target>
