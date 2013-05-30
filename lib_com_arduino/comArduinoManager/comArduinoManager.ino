@@ -4,17 +4,17 @@
 #include <servoMoteur.h>
 #include <compass.h>
 #include <GPS.h>
-#include <Telemeter.h>
+//#include <Telemeter.h>
 #include <libComArduino.h>
 
-#define PIN_TELEMETER_BACK 2
-#define PIN_TELEMETER_FRONT 4
+//#define PIN_TELEMETER_BACK 2
+//#define PIN_TELEMETER_FRONT 4
 #define SEUIL_ARRET 15
 
 int compassAddress = 0x42 >> 1;
 int prems = 0;
-Telemeter frontTelemeter(PIN_TELEMETER_FRONT);
-Telemeter backTelemeter(PIN_TELEMETER_BACK);
+//Telemeter frontTelemeter(PIN_TELEMETER_FRONT);
+//Telemeter backTelemeter(PIN_TELEMETER_BACK);
 
 void setup() {
   Serial.begin(9600);
@@ -60,7 +60,7 @@ void loop(){
         }
     }
     //Traitement du télémetre
-    if(forward == 1)
+    /*if(forward == 1)
     {
         distTelemeter = frontTelemeter.retreiveValue();
     }
@@ -76,6 +76,6 @@ void loop(){
     else
     {
         isRobotBlock = 0; 
-    }
+    }*/
     delay(25);
 }
