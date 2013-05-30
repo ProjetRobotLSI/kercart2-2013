@@ -83,7 +83,8 @@ public class JapaneseTourist {
 			System.out.println("Done");
  
 		} catch (MessagingException e) {
-			throw new RuntimeException(e);
+			System.out.println("Erreur à l'envoi du mail");
+			e.printStackTrace();
 		}	
 	}
 	
