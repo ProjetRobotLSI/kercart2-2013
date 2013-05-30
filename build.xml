@@ -113,7 +113,7 @@
         <fileset dir="${build}/${comBranch}/${export}">
           <include name="libCom.jar"/>
         </fileset>
-        <fileset dir="${build}/${comBranch}/${export}">
+        <fileset dir="${base}/${raspCore}/${lib}">
           <include name="javax.mail.jar"/>
         </fileset>
       </classpath>
