@@ -156,6 +156,7 @@
       <fileset dir="${build}/${raspberryBranch}/${raspArduino}/${export}"/>
       <fileset dir="${build}/${raspberryBranch}/${raspWifi}/${export}"/>
     </jar>
+    <copy file="${base}/${raspCore}/${lib}/javax.mail.jar" tofile="${build}/${raspberryBranch}/${raspCore}/${export}/javax.mail.jar"/>
   </target>
 
   <target name="export_raspComm" depends="compile_raspComm" description="Export du war raspberry">
