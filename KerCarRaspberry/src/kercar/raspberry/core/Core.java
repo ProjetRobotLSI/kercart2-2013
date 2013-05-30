@@ -101,11 +101,10 @@ public class Core extends Thread implements IIA, SerialListener {
 		//		this.waitMessage();
 			}
 			if((System.currentTimeMillis() - startTimeAsk) >= 2000) {
-				// TODO UNCOMMENT BITCH
-				//this.askAngle();
+				this.askAngle();
 				//Sinon port serial saturé
 		//		this.waitMessage();		
-				//this.askCoordonnates();
+				this.askCoordonnates();
 		//		this.waitMessage();
 	//			this.askBlocked();
 	//			this.waitMessage();
