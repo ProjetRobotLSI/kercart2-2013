@@ -391,6 +391,11 @@ public class Core extends Thread implements IIA, SerialListener {
 		}
 	}
 	
+	public void takePhoto(String mailAddr){
+		JapaneseTourist.takePhoto();
+		JapaneseTourist.sendPhotos();
+	}
+	
 	public void terminate(){
 		System.out.println("Wifi terminating...");
 		running = false;

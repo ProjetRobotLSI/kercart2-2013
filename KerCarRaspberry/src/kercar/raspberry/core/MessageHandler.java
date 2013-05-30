@@ -68,6 +68,11 @@ public class MessageHandler {
 			CMDMissionMessage mission = new CMDMissionMessage((Message)message);
 			this.ia.launchMission(mission.getCoordinates(), mission.getMailAddress(), 75, mission.getPhoto());
 		}
+		else if (message.getType() == Message.CMD_PHOTO) {
+			Core.Log("MessageHandler : CMD_PHOTO");
+			CMDPhotoMessage msg = new CMDPhotoMessage((Message)message);
+			this.ia.takePhoto(msg.getMailAddress());
+		}
 	}
 	
 	public void handle(IArduinoMessage message) {
