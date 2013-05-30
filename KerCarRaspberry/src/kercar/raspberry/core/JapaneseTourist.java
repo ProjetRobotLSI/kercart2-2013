@@ -16,7 +16,7 @@ public class JapaneseTourist {
 	
 	private static int id = 0;
 
-	public static void takePhoto2(){
+	public static void takePhoto(){
 		System.out.println("Kawaii desu ne ?");
 		ProcessBuilder pb = new ProcessBuilder("fswebcam", "-r 640x480", "/home/pi/photo_"+String.valueOf(id++)+".jpg");
 		try {
@@ -30,7 +30,7 @@ public class JapaneseTourist {
 		}
 	}
 	
-	public static void takePhoto(){
+	public static void sendPhotos(){
 		final String username = "kercart2.2013@gmail.com";
 		final String password = "canard56";
  
@@ -102,7 +102,7 @@ public class JapaneseTourist {
 		}
 	}
 	
-	public static void sendPhotos(){
+	public static void sendPhotos2(){
 		System.out.println("Envoi des photos");
 		ProcessBuilder pb = new ProcessBuilder("/opt/apache-tomcat-7.0.35/sendPhotos.sh");
 		try {
