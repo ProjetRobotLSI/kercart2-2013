@@ -20,5 +20,7 @@ public interface IIA {
 	public void setAngle(int angle);
 	public void setLongitude(int longitude);
 	public void setLatitude(int latitude);
+	
+	public void takePhoto(String mail);
 //	public MessageHandler getMessageHandler();
 }
