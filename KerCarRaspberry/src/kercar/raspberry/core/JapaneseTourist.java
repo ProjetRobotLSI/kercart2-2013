@@ -76,7 +76,7 @@ public class JapaneseTourist {
 		    message.setContent(mp);
 		    
 		    // set the Date: header
-			message.setSentDate(new Date()
+			message.setSentDate(new Date());
  
 			Transport.send(message);
  
